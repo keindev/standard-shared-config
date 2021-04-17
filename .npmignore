@@ -1,0 +1,31 @@
+# folders
+**/__mocks__/**
+**/__tests__/**
+node_modules/
+example/
+coverage/
+media/
+src/
+docs/
+
+# configs
+.github
+.vscode
+.env
+.editorconfig
+.gitattributes
+.eslintignore
+.eslintrc
+.husky
+.prettierignore
+.prettierrc
+.changelogrc.yml
+codegen.yml
+.ghinfo
+jest.config.js
+tsconfig.json
+typedoc.json
+
+# docs
+CODE_OF_CONDUCT.md
+
