@@ -1,4 +1,6 @@
-root: .config
+rootDir: ".config"
+outDir: "."
+include: ['.github/**/*']
 
 rules:
   ".vscode/cspell.json": [ "words" ]
