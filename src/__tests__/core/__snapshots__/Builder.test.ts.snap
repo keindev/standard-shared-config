@@ -3,7 +3,7 @@
 exports[`Config build 1`] = `
 Array [
   Array [
-    "/home/kein/projects/standard-shared-config/dependencies.js",
+    "dependencies.js",
     "/* eslint-disable */
 /* prettier-ignore */
 module.exports = [
@@ -14,7 +14,7 @@ module.exports = [
 ]",
   ],
   Array [
-    "/home/kein/projects/standard-shared-config/scripts.js",
+    "scripts.js",
     "/* eslint-disable */
 /* prettier-ignore */
 module.exports = [
@@ -25,7 +25,7 @@ module.exports = [
 ]",
   ],
   Array [
-    "/home/kein/projects/standard-shared-config/snapshots.js",
+    "snapshots.js",
     "/* eslint-disable */
 /* prettier-ignore */
 module.exports = [
@@ -46,7 +46,7 @@ module.exports = [
 ]",
   ],
   Array [
-    "/home/kein/projects/standard-shared-config/index.js",
+    "index.js",
     "/* --------------------------------------------------------------- */
 /* This file generated automatically                               */
 /* @see https://www.npmjs.com/package/standard-shared-config       */
@@ -61,7 +61,7 @@ const snapshots = require('./snapshots');
 sharedConfig.share({ dependencies, scripts, snapshots });",
   ],
   Array [
-    "/home/kein/projects/standard-shared-config/bin/test",
+    "bin/test",
     "#!/usr/bin/env node
 require('../index.js');",
   ],
@@ -71,7 +71,7 @@ require('../index.js');",
 exports[`Config process 1`] = `
 Array [
   Array [
-    "/home/kein/projects/test/.gitignore",
+    "../test/.gitignore",
     "*.log
 .env
 coverage
@@ -80,7 +80,7 @@ yarn-debug.log*
 yarn-error.log*",
   ],
   Array [
-    "/home/kein/projects/test/config2.json",
+    "../test/config2.json",
     "{}",
   ],
 ]

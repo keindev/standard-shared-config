@@ -38,15 +38,16 @@ jest.spyOn(fs, 'readFile').mockImplementation(filePath => {
 describe('Config', () => {
   const config = new Config();
   const builder = new Builder();
+  let files: [string, string][] = [];
+
+  jest.spyOn(fs, 'writeFile').mockImplementation((name, data) => {
+    files.push([path.relative(process.cwd(), name.toString()), data.toString()]);
+
+    return Promise.resolve();
+  });
 
   it('build', async () => {
-    const files: [string, string][] = [];
-
-    jest.spyOn(fs, 'writeFile').mockImplementation((name, data) => {
-      files.push([name.toString(), data.toString()]);
-
-      return Promise.resolve();
-    });
+    files = [];
 
     await builder.build('test', config);
 
@@ -54,13 +55,7 @@ describe('Config', () => {
   });
 
   it('process', async () => {
-    const files: [string, string][] = [];
-
-    jest.spyOn(fs, 'writeFile').mockImplementation((name, data) => {
-      files.push([name.toString(), data.toString()]);
-
-      return Promise.resolve();
-    });
+    files = [];
 
     await builder.process([
       {
