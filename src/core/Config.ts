@@ -12,7 +12,7 @@ export interface IConfigFile {
   rootDir?: string;
   outDir?: string;
   include?: string[];
-  rules?: { [key: string]: string[] | null };
+  rules?: { [key: string]: string[] | null | boolean };
   scripts?: { [key: string]: string };
   dependencies?: (string | { [key: string]: string })[];
 }
@@ -100,9 +100,9 @@ export default class Config {
   private normalizeRules(rules: NonNullable<IConfigFile['rules']>): Map<string, IMergeRule> {
     return new Map(
       Object.entries(rules).reduce((acc, [key, value]) => {
-        if (Array.isArray(value) || value === null) {
-          acc.push([key, Array.isArray(value) ? value.filter(item => typeof item === 'string') : !!value]);
-        }
+        if (Array.isArray(value)) acc.push([key, value.filter(item => typeof item === 'string')]);
+        if (value === null) acc.push([key, !value]);
+        if (typeof value === 'boolean') acc.push([key, value]);
 
         return acc;
       }, [] as [string, IMergeRule][])

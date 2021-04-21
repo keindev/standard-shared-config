@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`File utils Get file hash 1`] = `"27a40f27cd71808962e218cfa221d14ff53b7f0d9db5ea56666d3422bb5d4e94"`;

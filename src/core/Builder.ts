@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import { TaskTree } from 'tasktree-cli';
 import { Task } from 'tasktree-cli/lib/Task';
 
 import { EntityName, FileType, ISnapshot } from '../types';
@@ -13,15 +14,17 @@ export default class Builder {
 
     const { dependencies, scripts, outDir } = config;
     const snapshots = await Promise.all(config.paths.map(filePath => this.createSnapshot(filePath, config)));
-    const entities = await Promise.all([
-      this.writeEntityScript(EntityName.Dependencies, dependencies, outDir),
-      this.writeEntityScript(EntityName.Scripts, scripts, outDir),
-      this.writeEntityScript(
-        EntityName.Snapshots,
-        snapshots.sort((a, b) => b.path.split('/').length - a.path.split('/').length || a.path.localeCompare(b.path)),
-        outDir
-      ),
-    ]);
+    const entities = (
+      await Promise.all([
+        this.writeEntityScript(EntityName.Dependencies, dependencies, outDir),
+        this.writeEntityScript(EntityName.Scripts, scripts, outDir),
+        this.writeEntityScript(
+          EntityName.Snapshots,
+          snapshots.sort((a, b) => b.path.split('/').length - a.path.split('/').length || a.path.localeCompare(b.path)),
+          outDir
+        ),
+      ])
+    ).filter(Boolean);
 
     await fs.writeFile(
       `${outDir}/index.js`,
@@ -42,8 +45,11 @@ export default class Builder {
     await fs.writeFile(`${outDir}/bin/${name}`, ['#!/usr/bin/env node', "require('../index.js');"].join('\n'));
   }
 
-  async process(snapshots: ISnapshot[], task: Task): Promise<void> {
+  async process(snapshots: ISnapshot[]): Promise<void> {
+    const task = TaskTree.add('Processing config files...');
+
     await Promise.all(snapshots.map(snapshot => this.shareConfig(snapshot, task)));
+    task.complete('Processed configs:');
   }
 
   private async shareConfig(snapshot: ISnapshot, task: Task): Promise<void> {

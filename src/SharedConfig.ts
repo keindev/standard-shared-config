@@ -29,7 +29,7 @@ export class SharedConfig {
     const pkg = new Package();
 
     pkg.lint(dependencies);
-    await this.#builder.process(snapshots, task);
+    await this.#builder.process(snapshots);
     await pkg.insert(scripts);
     task.complete('Shared configs:');
   }

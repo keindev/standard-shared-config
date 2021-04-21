@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Config build 1`] = `
+Array [
+  Array [
+    "/home/kein/projects/standard-shared-config/dependencies.js",
+    "/* eslint-disable */
+/* prettier-ignore */
+module.exports = [
+  [
+    \\"@types/jest\\",
+    \\"1.x\\"
+  ]
+]",
+  ],
+  Array [
+    "/home/kein/projects/standard-shared-config/scripts.js",
+    "/* eslint-disable */
+/* prettier-ignore */
+module.exports = [
+  [
+    \\"test\\",
+    \\"jest\\"
+  ]
+]",
+  ],
+  Array [
+    "/home/kein/projects/standard-shared-config/snapshots.js",
+    "/* eslint-disable */
+/* prettier-ignore */
+module.exports = [
+  {
+    \\"path\\": \\"../test/config1.json\\",
+    \\"hash\\": \\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\\",
+    \\"merge\\": false,
+    \\"type\\": \\"json\\",
+    \\"content\\": \\"\\"
+  },
+  {
+    \\"path\\": \\"../test/config2.json\\",
+    \\"hash\\": \\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\\",
+    \\"merge\\": false,
+    \\"type\\": \\"json\\",
+    \\"content\\": \\"\\"
+  }
+]",
+  ],
+  Array [
+    "/home/kein/projects/standard-shared-config/index.js",
+    "/* --------------------------------------------------------------- */
+/* This file generated automatically                               */
+/* @see https://www.npmjs.com/package/standard-shared-config       */
+/* --------------------------------------------------------------- */
+
+/* eslint-disable */
+const sharedConfig = require('standard-shared-config');
+const dependencies = require('./dependencies');
+const scripts = require('./scripts');
+const snapshots = require('./snapshots');
+
+sharedConfig.share({ dependencies, scripts, snapshots });",
+  ],
+  Array [
+    "/home/kein/projects/standard-shared-config/bin/test",
+    "#!/usr/bin/env node
+require('../index.js');",
+  ],
+]
+`;
+
+exports[`Config process 1`] = `
+Array [
+  Array [
+    "/home/kein/projects/test/.gitignore",
+    "*.log
+.env
+coverage
+logs
+yarn-debug.log*
+yarn-error.log*",
+  ],
+  Array [
+    "/home/kein/projects/test/config2.json",
+    "{}",
+  ],
+]
+`;
