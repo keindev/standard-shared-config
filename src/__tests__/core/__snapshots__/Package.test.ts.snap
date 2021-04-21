@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Package lint 1`] = `
-"  [38;2;0;200;81m✔[39m All dependencies from shared config is presented in package.json
-  [38;2;255;68;68m✖[39m Some dependencies are missing or have wrong version: [38;2;131;133;132m[fail][39m
-  [38;2;255;68;68m[38;2;46;46;46m─[39m[38;2;255;68;68m [38;2;255;68;68m✖[39m[38;2;255;68;68m typescript version is must be >=5.x![39m"
+"  ✔ All dependencies from shared config is presented in package.json
+  ✖ Some dependencies are missing or have wrong version: [fail]
+  ─ ✖ typescript version is must be >=5.x!"
 `;
