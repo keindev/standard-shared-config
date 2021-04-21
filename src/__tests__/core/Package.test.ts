@@ -1,5 +1,4 @@
 import fs from 'fs';
-import stripAnsi from 'strip-ansi';
 import { TaskTree } from 'tasktree-cli';
 import { PackageJson } from 'type-fest';
 
@@ -56,6 +55,6 @@ describe('Package', () => {
     });
 
     expect(errors.length).toBe(1);
-    expect(stripAnsi(task.render().join('\n'))).toMatchSnapshot();
+    expect(task.render().join('\n')).toMatchSnapshot();
   });
 });
