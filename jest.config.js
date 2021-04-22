@@ -1,4 +1,4 @@
-const modules = require('./jest.esModules');
+const modules = require('./jest.modules');
 
 module.exports = {
   preset: 'ts-jest',
@@ -12,5 +12,5 @@ module.exports = {
     '^.+\\.(ts|tsx)?$': 'ts-jest',
     '^.+\\.(js|jsx)$': 'babel-jest',
   },
-  transformIgnorePatterns: [`/node_modules/(?!${modules.join('|')})`],
+  transformIgnorePatterns: [`/node_modules/(?!${modules.es6.join('|')})`],
 };
