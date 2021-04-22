@@ -9,6 +9,8 @@
 
 One shared config to rule them all :loop::package:
 
+> The configuration files is an important part of your project, and as such, you may want to share it with other projects or people. Shareable configs allow you to publish your configuration settings on npm and have others download and use it in their projects.
+
 ## Install
 
 ```console
@@ -16,6 +18,39 @@ npm install standard-shared-config
 ```
 
 ## Usage
+
+### Create a shared configuration package
+
+- Create `package.json` with `name`, `version` and `description`.
+- Create `.config` directory and copy all the configuration files you want to share.
+- Create `.sharedconfig.yml` - file containing schema and rules for your shared configuration and specify the [usage parameters](https://github.com/keindev/standard-shared-config/blob/master/docs/config.md).
+- Run `shared-config build`
+
+After completing the command execution, you will get the following structure inside the `outDir`:
+
+- `bin/[you shared config name from package]`
+- `dependencies.js` - List of `devDependencies`, see [`.sharedconfig.yml`](https://github.com/keindev/standard-shared-config/blob/master/docs/config.md)
+- `scripts.js` - Script commands which will be added to the `package.json`, see [`.sharedconfig.yml`](https://github.com/keindev/standard-shared-config/blob/master/docs/config.md)
+- `snapshots.js` - snapshots of config files from `rootDir`
+- `index.js` - will be called when your config is applied to copy config files to the project
+
+Now publish your shared configuration package to NPM!
+
+### Use shared configuration
+
+- install your shared configuration package
+- add script with your shared configuration package name to `package.json` scripts for creating sharable configuration files:
+
+```json
+{
+  "scripts": {
+    "prepare:config": "my-shared-config",
+    ...
+  }
+}
+```
+
+> Do not forget to add the shared configuration files in the `.gitignore`, because you no longer need them in the repository
 
 ## API
 

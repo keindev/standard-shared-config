@@ -5,16 +5,25 @@ import Config from './core/Config';
 import Package from './core/Package';
 import { EntityName, IDependency, IScript, ISnapshot } from './types';
 
-export type IBuildOptions = { conf?: string };
-export type IShareOptions = Partial<{
-  [EntityName.Dependencies]: IDependency[];
-  [EntityName.Scripts]: IScript[];
-  [EntityName.Snapshots]: ISnapshot[];
-}>;
+export type IBuildOptions = {
+  /** Configuration file path */
+  conf?: string;
+};
 
+export type IShareOptions = {
+  /** Package devDependencies list */
+  [EntityName.Dependencies]?: IDependency[];
+  /** List of package scripts */
+  [EntityName.Scripts]?: IScript[];
+  /** Configuration files snapshots */
+  [EntityName.Snapshots]?: ISnapshot[];
+};
+
+/** Shared configuration manager */
 export class SharedConfig {
   #builder = new Builder();
 
+  /** Build a shared configuration npm package structure */
   async build({ conf }: IBuildOptions): Promise<void> {
     const task = TaskTree.add('Building...');
     const pkg = new Package();
@@ -24,6 +33,7 @@ export class SharedConfig {
     task.complete('Shared config package is builded!');
   }
 
+  /** Create configuration files by shared config structure */
   async share({ dependencies = [], scripts = [], snapshots = [] }: IShareOptions): Promise<void> {
     const task = TaskTree.add('Share configs:');
     const pkg = new Package();
