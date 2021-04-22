@@ -37,4 +37,12 @@ ___
 
 ### IShareOptions
 
-Ƭ **IShareOptions**: *Partial*<{ `dependencies`: IDependency[] ; `scripts`: IScript[] ; `snapshots`: ISnapshot[]  }\>
+Ƭ **IShareOptions**: *object*
+
+#### Type declaration:
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dependencies?` | IDependency[] | Package devDependencies list |
+| `scripts?` | IScript[] | List of package scripts |
+| `snapshots?` | ISnapshot[] | Configuration files snapshots |

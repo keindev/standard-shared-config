@@ -41,7 +41,7 @@ ___
 
 ### share
 
-▸ **share**(`__namedParameters`: *Partial*<{ `dependencies`: IDependency[] ; `scripts`: IScript[] ; `snapshots`: ISnapshot[]  }\>): *Promise*<void\>
+▸ **share**(`__namedParameters`: [*IShareOptions*](../index.md#ishareoptions)): *Promise*<void\>
 
 Create configuration files by shared config structure
 
@@ -49,6 +49,6 @@ Create configuration files by shared config structure
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | *Partial*<{ `dependencies`: IDependency[] ; `scripts`: IScript[] ; `snapshots`: ISnapshot[]  }\> |
+| `__namedParameters` | [*IShareOptions*](../index.md#ishareoptions) |
 
 **Returns:** *Promise*<void\>
