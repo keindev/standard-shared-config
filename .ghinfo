@@ -1,6 +1,6 @@
 {
     "name": "standard-shared-config",
-    "version": "0.9.0",
+    "version": "0.9.1",
     "description": "One shared config to rule them all",
     "keywords": [
         "automated",
