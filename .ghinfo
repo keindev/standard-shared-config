@@ -1,24 +1,24 @@
 {
-    "name": "standard-shared-config",
-    "version": "0.9.0",
-    "description": "One shared config to rule them all",
-    "keywords": [
-        "automated",
-        "shared",
-        "config",
-        "cli",
-        "unify",
-        "standard",
-        "one"
-    ],
-    "repo": "keindev/standard-shared-config",
-    "type": "utils",
-    "links": {
-        "git": "https://github.com/keindev/standard-shared-config",
-        "npm": "https://www.npmjs.com/package/standard-shared-config",
-        "homepage": "https://github.com/keindev/standard-shared-config#readme"
-    },
-    "files": {
-        "logo": "media/logo.svg"
-    }
+  "name": "standard-shared-config",
+  "version": "0.9.1",
+  "description": "One shared config to rule them all",
+  "keywords": [
+    "automated",
+    "shared",
+    "config",
+    "cli",
+    "unify",
+    "standard",
+    "one"
+  ],
+  "repo": "keindev/standard-shared-config",
+  "type": "utils",
+  "links": {
+    "git": "https://github.com/keindev/standard-shared-config",
+    "npm": "https://www.npmjs.com/package/standard-shared-config",
+    "homepage": "https://github.com/keindev/standard-shared-config#readme"
+  },
+  "files": {
+    "logo": "media/logo.svg"
+  }
 }

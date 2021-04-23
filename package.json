@@ -1,6 +1,6 @@
 {
   "name": "standard-shared-config",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "One shared config to rule them all",
   "homepage": "https://github.com/keindev/standard-shared-config#readme",
   "license": "MIT",
@@ -30,7 +30,8 @@
     "url": "https://github.com/keindev/standard-shared-config/issues"
   },
   "scripts": {
-    "prepare": "husky install",
+    "prepare:husky": "husky install",
+    "prepare": "npm-run-all prepare:*",
     "check:lint": "rimraf coverage && eslint \"src/**\" --ext .ts",
     "check:spell": "cspell -c .vscode/cspell.json --no-summary \"README.md\" \"src/**/*.ts\"",
     "check": "npm-run-all check:*",

@@ -8,7 +8,7 @@ import { IDependency } from '../../types';
 
 const PACKAGE_CONTENT = `
 {
-  "name": "standard-shared-config",
+  "name": "@tagproject/standard-shared-config",
   "version": "0.1.0",
   "description": "One shared config to rule them all",
   "homepage": "https://github.com/keindev/standard-shared-config#readme",

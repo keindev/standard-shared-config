@@ -15,7 +15,7 @@ export default class Package {
   }
 
   get name(): string {
-    return this.#data.name ?? '';
+    return path.basename(this.#data.name ?? '');
   }
 
   async update(): Promise<void> {

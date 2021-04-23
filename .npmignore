@@ -22,7 +22,9 @@ docs/
 .changelogrc.yml
 codegen.yml
 .ghinfo
+babel.config.js
 jest.config.js
+jest.modules.json
 tsconfig.json
 typedoc.json
 
