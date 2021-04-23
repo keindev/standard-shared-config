@@ -4,7 +4,7 @@ import { TaskTree } from 'tasktree-cli';
 import yaml from 'yaml';
 
 import { IDependency, IMergeRule, IScript } from '../types';
-import { getFileContent } from '../utils/file';
+import { readFile } from '../utils/file';
 
 export type IConfigOptions = { conf?: string };
 
@@ -62,7 +62,7 @@ export default class Config {
     if (this.#isInitialized) return;
 
     try {
-      const content = await getFileContent(this.#path);
+      const content = await readFile(this.#path);
       const { rules, scripts, dependencies, rootDir, outDir, include }: IConfigFile = content
         ? yaml.parse(content)
         : {};

@@ -39,13 +39,13 @@ Now publish your shared configuration package to NPM!
 ### Use shared configuration
 
 - install your shared configuration package
-- add script with your shared configuration package name to `package.json` scripts for creating sharable configuration files:
+- add script with your shared configuration package name to `package.json` scripts for creating sharable configuration files.
+- override parts of config files in `rootDir`, if needed (`.config` by default)
 
 ```json
 {
   "scripts": {
-    "prepare:config": "my-shared-config",
-    ...
+    "prepare:config": "my-shared-config"
   }
 }
 ```

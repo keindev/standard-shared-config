@@ -4,7 +4,7 @@ import { TaskTree } from 'tasktree-cli';
 import { Task } from 'tasktree-cli/lib/Task';
 
 import { EntityName, FileType, ISnapshot } from '../types';
-import { getFileContent, getFileHash, getFileType, writeFile } from '../utils/file';
+import { getHash, getType, readFile, writeFile } from '../utils/file';
 import { merge, parse, stringify } from '../utils/json';
 import Config from './Config';
 
@@ -32,41 +32,36 @@ export default class Builder {
       "const sharedConfig = require('standard-shared-config');",
       ...entities.map(entity => `const ${entity} = require('./${entity}');`),
       '',
-      `sharedConfig.share({ ${entities.join(', ')} });`,
+      `sharedConfig.share("${path.relative(process.cwd(), config.root)}", { ${entities.join(', ')} });`,
     ]);
 
     await writeFile(`${outDir}/bin/${name}`, ['#!/usr/bin/env node', "require('../index.js');"]);
   }
 
-  async process(snapshots: ISnapshot[]): Promise<void> {
+  async process(rootDir: string, snapshots: ISnapshot[]): Promise<void> {
     const task = TaskTree.add('Processing config files...');
 
-    await Promise.all(snapshots.map(snapshot => this.shareConfig(snapshot, task)));
+    await Promise.all(snapshots.map(snapshot => this.shareConfig(rootDir, snapshot, task)));
     task.complete('Processed configs:');
   }
 
-  private async shareConfig(snapshot: ISnapshot, task: Task): Promise<void> {
+  private async shareConfig(rootDir: string, snapshot: ISnapshot, task: Task): Promise<void> {
     const filePath = path.resolve(process.cwd(), snapshot.path);
-    const content = await getFileContent(filePath);
+    const extendFileData = snapshot.merge ? await readFile(path.resolve(process.cwd(), rootDir, snapshot.path)) : false;
 
-    if (content) {
-      const hash = getFileHash(content);
+    if (extendFileData) {
+      await writeFile(filePath, this.mergeFilesContent(snapshot, extendFileData));
+      task.log(`${snapshot.path} merged`);
+    } else {
+      const currentFileData = await readFile(filePath);
+      const hash = currentFileData ? getHash(currentFileData) : undefined;
 
       if (hash !== snapshot.hash) {
-        if (snapshot.merge) {
-          await writeFile(filePath, this.mergeFilesContent(snapshot, content));
-          task.log(`${snapshot.path} merged`);
-        } else {
-          await writeFile(filePath, snapshot.content);
-          task.log(`${snapshot.path} updated`);
-        }
+        await writeFile(filePath, snapshot.content);
+        task.log(`${snapshot.path} ${currentFileData ? 'updated' : 'created'}`);
       } else {
         task.log(`${snapshot.path} is not changed`);
       }
-    } else {
-      await writeFile(filePath, snapshot.content);
-
-      task.log(`${snapshot.path} created`);
     }
   }
 
@@ -113,14 +108,14 @@ export default class Builder {
   }
 
   private async createSnapshot(filePath: string, config: Config): Promise<ISnapshot> {
-    const content = (await getFileContent(filePath)) ?? '';
+    const content = (await readFile(filePath)) ?? '';
     const relativePath = path.relative(config.root, filePath);
-    const type = getFileType(filePath);
+    const type = getType(filePath);
     const rule = config.findRule(relativePath);
 
     return {
       path: relativePath,
-      hash: getFileHash(content),
+      hash: getHash(content),
       merge: [FileType.GLOB, FileType.Text].includes(type) && rule ? true : rule ?? false,
       type,
       content,

@@ -34,12 +34,12 @@ export class SharedConfig {
   }
 
   /** Create configuration files by shared config structure */
-  async share({ dependencies = [], scripts = [], snapshots = [] }: IShareOptions): Promise<void> {
+  async share(rootDir: string, { dependencies = [], scripts = [], snapshots = [] }: IShareOptions): Promise<void> {
     const task = TaskTree.add('Share configs:');
     const pkg = new Package();
 
     pkg.lint(dependencies);
-    await this.#builder.process(snapshots);
+    await this.#builder.process(rootDir, snapshots);
     await pkg.insert(scripts);
     task.complete('Shared configs:');
   }

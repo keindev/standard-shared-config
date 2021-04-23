@@ -58,7 +58,7 @@ const dependencies = require('./dependencies');
 const scripts = require('./scripts');
 const snapshots = require('./snapshots');
 
-sharedConfig.share({ dependencies, scripts, snapshots });",
+sharedConfig.share(\\".config\\", { dependencies, scripts, snapshots });",
   ],
   Array [
     "bin/test",
