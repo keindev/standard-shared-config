@@ -57,7 +57,7 @@ describe('Config', () => {
   it('process', async () => {
     files = [];
 
-    await builder.process([
+    await builder.process('.config', [
       {
         path: '../test/.gitignore',
         hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',

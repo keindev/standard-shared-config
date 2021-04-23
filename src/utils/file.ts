@@ -5,7 +5,7 @@ import strip from 'strip-comments';
 
 import { FileType } from '../types';
 
-export const getFileContent = async (filePath: string): Promise<string | undefined> => {
+export const readFile = async (filePath: string): Promise<string | undefined> => {
   const isExists = await fs
     .access(filePath, constants.R_OK)
     .then(() => true)
@@ -17,13 +17,13 @@ export const getFileContent = async (filePath: string): Promise<string | undefin
   return content ? strip(content) : undefined;
 };
 
-export const getFileHash = (content: string): string => {
+export const getHash = (data: string): string => {
   const hash = crypto.createHash('sha256');
 
-  return hash.update(content, 'utf8').digest('hex');
+  return hash.update(data, 'utf8').digest('hex');
 };
 
-export const getFileType = (filePath: string): FileType => {
+export const getType = (filePath: string): FileType => {
   const extname = path.extname(filePath);
   const normalizedExtname = extname.substring(1).toLowerCase();
   let type;
