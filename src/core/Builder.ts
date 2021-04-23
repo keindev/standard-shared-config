@@ -4,7 +4,7 @@ import { TaskTree } from 'tasktree-cli';
 import { Task } from 'tasktree-cli/lib/Task';
 
 import { EntityName, FileType, ISnapshot } from '../types';
-import { getFileContent, getFileHash, getFileType } from '../utils/file';
+import { getFileContent, getFileHash, getFileType, writeFile } from '../utils/file';
 import { merge, parse, stringify } from '../utils/json';
 import Config from './Config';
 
@@ -16,33 +16,26 @@ export default class Builder {
     const snapshots = await Promise.all(config.paths.map(filePath => this.createSnapshot(filePath, config)));
     const entities = (
       await Promise.all([
-        this.writeEntityScript(EntityName.Dependencies, dependencies, outDir),
-        this.writeEntityScript(EntityName.Scripts, scripts, outDir),
-        this.writeEntityScript(
-          EntityName.Snapshots,
-          snapshots.sort((a, b) => b.path.split('/').length - a.path.split('/').length || a.path.localeCompare(b.path)),
-          outDir
-        ),
+        this.writeScript(EntityName.Dependencies, dependencies, outDir),
+        this.writeScript(EntityName.Scripts, scripts, outDir),
+        this.writeScript(EntityName.Snapshots, snapshots, outDir),
       ])
     ).filter(Boolean);
 
-    await fs.writeFile(
-      `${outDir}/index.js`,
-      [
-        '/* --------------------------------------------------------------- */',
-        '/* This file generated automatically                               */',
-        '/* @see https://www.npmjs.com/package/standard-shared-config       */',
-        '/* --------------------------------------------------------------- */',
-        '',
-        '/* eslint-disable */',
-        "const sharedConfig = require('standard-shared-config');",
-        ...entities.map(entity => `const ${entity} = require('./${entity}');`),
-        '',
-        `sharedConfig.share({ ${entities.join(', ')} });`,
-      ].join('\n')
-    );
+    await writeFile(`${outDir}/index.js`, [
+      '/* --------------------------------------------------------------- */',
+      '/* This file generated automatically                               */',
+      '/* @see https://www.npmjs.com/package/standard-shared-config       */',
+      '/* --------------------------------------------------------------- */',
+      '',
+      '/* eslint-disable */',
+      "const sharedConfig = require('standard-shared-config');",
+      ...entities.map(entity => `const ${entity} = require('./${entity}');`),
+      '',
+      `sharedConfig.share({ ${entities.join(', ')} });`,
+    ]);
 
-    await fs.writeFile(`${outDir}/bin/${name}`, ['#!/usr/bin/env node', "require('../index.js');"].join('\n'));
+    await writeFile(`${outDir}/bin/${name}`, ['#!/usr/bin/env node', "require('../index.js');"]);
   }
 
   async process(snapshots: ISnapshot[]): Promise<void> {
@@ -61,18 +54,17 @@ export default class Builder {
 
       if (hash !== snapshot.hash) {
         if (snapshot.merge) {
-          await fs.writeFile(filePath, this.mergeFilesContent(snapshot, content));
+          await writeFile(filePath, this.mergeFilesContent(snapshot, content));
           task.log(`${snapshot.path} merged`);
         } else {
-          await fs.writeFile(filePath, snapshot.content);
+          await writeFile(filePath, snapshot.content);
           task.log(`${snapshot.path} updated`);
         }
       } else {
         task.log(`${snapshot.path} is not changed`);
       }
     } else {
-      await fs.mkdir(path.dirname(filePath), { recursive: true });
-      await fs.writeFile(filePath, snapshot.content);
+      await writeFile(filePath, snapshot.content);
 
       task.log(`${snapshot.path} created`);
     }
@@ -104,14 +96,15 @@ export default class Builder {
     return result;
   }
 
-  private async writeEntityScript<T>(name: EntityName, values: T[], outDir: string): Promise<string> {
+  private async writeScript<T>(name: EntityName, values: T[], outDir: string): Promise<string> {
     const filePath = `${outDir}/${name}.js`;
 
     if (values.length) {
-      await fs.writeFile(
-        filePath,
-        ['/* eslint-disable */', '/* prettier-ignore */', `module.exports = ${stringify(values)}`].join('\n')
-      );
+      await writeFile(filePath, [
+        '/* eslint-disable */',
+        '/* prettier-ignore */',
+        `module.exports = ${stringify(values)}`,
+      ]);
     } else {
       await fs.unlink(filePath);
     }

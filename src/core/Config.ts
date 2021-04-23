@@ -35,7 +35,7 @@ export default class Config {
   }
 
   get paths(): string[] {
-    return this.#include;
+    return this.#include.sort((a, b) => b.split('/').length - a.split('/').length || a.localeCompare(b));
   }
 
   get root(): string {
