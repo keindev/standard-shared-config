@@ -43,7 +43,7 @@ describe('Config', () => {
     expect(config.findRule('.npmignore')).toBeFalsy();
     expect(config.outDir).toBe(process.cwd());
     expect(config.root).toBe(path.resolve(process.cwd(), '.config'));
-    expect(config.paths).toEqual(['.github/dependabot.yml', '.github/workflows/build.yml']);
+    expect(config.paths).toEqual(['.github/workflows/build.yml', '.github/dependabot.yml']);
     expect(config.scripts).toEqual([
       ['prepare', 'husky install'],
       ['test', 'jest'],
