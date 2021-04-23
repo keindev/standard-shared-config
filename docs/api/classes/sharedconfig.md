@@ -41,7 +41,7 @@ ___
 
 ### share
 
-▸ **share**(`__namedParameters`: [*IShareOptions*](../index.md#ishareoptions)): *Promise*<void\>
+▸ **share**(`rootDir`: *string*, `__namedParameters`: [*IShareOptions*](../index.md#ishareoptions)): *Promise*<void\>
 
 Create configuration files by shared config structure
 
@@ -49,6 +49,7 @@ Create configuration files by shared config structure
 
 | Name | Type |
 | :------ | :------ |
+| `rootDir` | *string* |
 | `__namedParameters` | [*IShareOptions*](../index.md#ishareoptions) |
 
 **Returns:** *Promise*<void\>
