@@ -29,10 +29,11 @@ export default class Builder {
       '/* --------------------------------------------------------------- */',
       '',
       '/* eslint-disable */',
-      "const sharedConfig = require('standard-shared-config');",
+      "const SharedConfig = require('standard-shared-config').default;",
       ...entities.map(entity => `const ${entity} = require('./${entity}');`),
+      'const config = new SharedConfig();',
       '',
-      `sharedConfig.share("${path.relative(process.cwd(), config.root)}", { ${entities.join(', ')} });`,
+      `config.share("${path.relative(process.cwd(), config.root)}", { ${entities.join(', ')} });`,
     ]);
 
     await writeFile(`${outDir}/bin/${name}`, ['#!/usr/bin/env node', "require('../index.js');"]);

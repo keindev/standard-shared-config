@@ -53,12 +53,13 @@ module.exports = [
 /* --------------------------------------------------------------- */
 
 /* eslint-disable */
-const sharedConfig = require('standard-shared-config');
+const SharedConfig = require('standard-shared-config').default;
 const dependencies = require('./dependencies');
 const scripts = require('./scripts');
 const snapshots = require('./snapshots');
+const config = new SharedConfig();
 
-sharedConfig.share(\\".config\\", { dependencies, scripts, snapshots });",
+config.share(\\".config\\", { dependencies, scripts, snapshots });",
   ],
   Array [
     "bin/test",
