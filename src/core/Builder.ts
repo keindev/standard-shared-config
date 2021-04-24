@@ -48,7 +48,8 @@ export default class Builder {
 
   private async shareConfig(rootDir: string, snapshot: ISnapshot, task: Task): Promise<void> {
     const filePath = path.resolve(process.cwd(), snapshot.path);
-    const extendFileData = snapshot.merge ? await readFile(path.resolve(process.cwd(), rootDir, snapshot.path)) : false;
+    const extendFilePath = snapshot.type === FileType.GLOB ? snapshot.path : path.join(rootDir, snapshot.path);
+    const extendFileData = snapshot.merge ? await readFile(path.resolve(process.cwd(), extendFilePath)) : false;
 
     if (extendFileData) {
       await writeFile(filePath, this.mergeFilesContent(snapshot, extendFileData));
@@ -60,8 +61,6 @@ export default class Builder {
       if (hash !== snapshot.hash) {
         await writeFile(filePath, snapshot.content);
         task.log(`${snapshot.path} ${currentFileData ? 'updated' : 'created'}`);
-      } else {
-        task.log(`${snapshot.path} is not changed`);
       }
     }
   }
@@ -73,17 +72,14 @@ export default class Builder {
     switch (type) {
       case FileType.GLOB:
         result = [...new Set([...content.split('\n'), ...snapshot.split('\n')].filter(Boolean)).values()]
-          .map(row => row.trim())
           .sort()
           .join('\n');
-        break;
-      case FileType.Text:
-        result = [...snapshot.split('\n'), ...content.split('\n')].join('\n');
         break;
       case FileType.JSON:
       case FileType.YAML:
         result = stringify(merge({ left: parse(content, type), right: parse(snapshot, type), excludes }), type);
         break;
+      case FileType.Text:
       default:
         result = snapshot;
         break;

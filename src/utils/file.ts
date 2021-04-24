@@ -1,7 +1,6 @@
 import crypto from 'crypto';
 import { constants, promises as fs } from 'fs';
 import path from 'path';
-import strip from 'strip-comments';
 
 import { FileType } from '../types';
 
@@ -14,7 +13,7 @@ export const readFile = async (filePath: string): Promise<string | undefined> =>
 
   if (isExists) content = await fs.readFile(filePath, 'utf8');
 
-  return content ? strip(content) : undefined;
+  return content;
 };
 
 export const getHash = (data: string): string => {
