@@ -18,6 +18,7 @@
 # :bug: Bug Fixes
 
 - Fix file writing, add dir creation [`ec05096`](https://github.com/keindev/standard-shared-config/commit/ec05096c4082061a71b09b9b935a10a52cea04d0)
+- Fix configurations sharing [`ce66fbb`](https://github.com/keindev/standard-shared-config/commit/ce66fbb3e6b9a86587a52206da253e11ba238296)
 
 ---
 
