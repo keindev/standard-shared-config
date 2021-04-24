@@ -1,5 +1,4 @@
 import isEqual from 'lodash.isequal';
-// import mergeWith from 'lodash.mergewith';
 import unionWith from 'lodash.unionwith';
 import { JsonValue } from 'type-fest';
 import yaml from 'yaml';
