@@ -60,8 +60,6 @@ export default class Builder {
       if (hash !== snapshot.hash) {
         await writeFile(filePath, snapshot.content);
         task.log(`${snapshot.path} ${currentFileData ? 'updated' : 'created'}`);
-      } else {
-        task.log(`${snapshot.path} is not changed`);
       }
     }
   }
