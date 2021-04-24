@@ -1,3 +1,6 @@
+import isEqual from 'lodash.isequal';
+// import mergeWith from 'lodash.mergewith';
+import unionWith from 'lodash.unionwith';
 import { JsonValue } from 'type-fest';
 import yaml from 'yaml';
 
@@ -28,7 +31,7 @@ export const merge = ({ left, right, excludes = new Set<string>(), path = [] }: 
   if (typeof right === 'object' && typeof left === 'object' && right !== null && left !== null) {
     if (Array.isArray(right) && Array.isArray(left)) {
       result = isMerge
-        ? [...right, ...(left.length > right.length ? left.slice(right.length - left.length) : [])]
+        ? unionWith(right, left, isEqual)
         : right.map((value, index) => merge({ left: left[index], right: value, excludes, path: [...path, index] }));
     }
 
