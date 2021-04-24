@@ -51,7 +51,6 @@
     "glob": "^7.1.6",
     "jsonfile": "^6.1.0",
     "semver": "^7.3.5",
-    "strip-comments": "^2.0.1",
     "tasktree-cli": "^4.0.1",
     "write-pkg": "^4.0.0",
     "yaml": "^1.10.2",

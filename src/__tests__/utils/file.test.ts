@@ -17,7 +17,7 @@ describe('File utils', () => {
   it('Get file content', async () => {
     const content = await readFile('path');
 
-    expect(content).toBe('\n\n# Comment 2\ntest: true\n');
+    expect(content).toBe(FILE_CONTENT);
   });
 
   it('Get file hash', () => {
