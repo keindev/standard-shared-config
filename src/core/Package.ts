@@ -59,7 +59,9 @@ export default class Package {
         currentScripts[key] = value;
       });
 
-      this.#data.scripts = currentScripts;
+      this.#data.scripts = Object.keys(currentScripts)
+        .sort((a, b) => a.localeCompare(b))
+        .reduce((acc, key) => ({ ...acc, [key]: currentScripts[key] }), {});
       await this.write();
       task.complete('Inserting the required scripts');
     }
