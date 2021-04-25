@@ -5,6 +5,7 @@
 # :memo: Internal changes
 
 - Add `sync-labels`: true to build action [`e1f1ab8`](https://github.com/keindev/standard-shared-config/commit/e1f1ab8ad3d843e01b433e81ebddeb21c7135be9)
+- Add test for Package.insert [`e5f5c8a`](https://github.com/keindev/standard-shared-config/commit/e5f5c8ab5346c3a068baab0cbac0eb068db1a8be)
 
 ---
 
