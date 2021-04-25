@@ -81,7 +81,7 @@ export default class Builder {
         break;
       case FileType.Text:
       default:
-        result = snapshot;
+        result = content;
         break;
     }
 
