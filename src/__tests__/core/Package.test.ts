@@ -13,6 +13,10 @@ const PACKAGE_CONTENT = `
   "description": "One shared config to rule them all",
   "homepage": "https://github.com/keindev/standard-shared-config#readme",
   "license": "MIT",
+  "scripts": {
+    "F2": "run 2",
+    "A1": "run 1"
+  },
   "devDependencies": {
     "typescript": "4.2.4"
   }
@@ -35,14 +39,14 @@ describe('Package', () => {
     expect(pkg.name).toBe('standard-shared-config');
   });
 
-  it('update', async () => {
+  it('update info', async () => {
     await pkg.update();
 
     expect(data?.main).toBe('index.js');
     expect(typeof data?.bin === 'object' ? data?.bin[pkg.name] : data?.bin).toBe(`bin/${pkg.name}`);
   });
 
-  it('lint', () => {
+  it('lint dependencies', () => {
     const task = TaskTree.tree();
     const errors: Error[] = [];
     const variations = [[['typescript', '4.x']], [['typescript', '5.x']]];
@@ -57,5 +61,11 @@ describe('Package', () => {
 
     expect(errors.length).toBe(1);
     expect(stripAnsi(task.render().join('\n'))).toMatchSnapshot();
+  });
+
+  it('insert scripts', async () => {
+    await pkg.insert([['D3', 'run 3']]);
+
+    expect(data.scripts).toEqual({ A1: 'run 1', D3: 'run 3', F2: 'run 2' });
   });
 });
