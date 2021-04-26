@@ -56,14 +56,14 @@ export default class Builder {
     const extendFileData = snapshot.merge ? await readFile(path.resolve(process.cwd(), extendFilePath)) : false;
 
     if (extendFileData) {
-      await writeFile(filePath, this.mergeFilesContent(snapshot, extendFileData));
+      await writeFile(filePath, this.mergeFilesContent(snapshot, extendFileData), snapshot.executable);
       task.log(`${snapshot.path} merged`);
     } else {
       const currentFileData = await readFile(filePath);
       const hash = currentFileData ? getHash(currentFileData) : undefined;
 
       if (hash !== snapshot.hash) {
-        await writeFile(filePath, snapshot.content);
+        await writeFile(filePath, snapshot.content, snapshot.executable);
         task.log(`${snapshot.path} ${currentFileData ? 'updated' : 'created'}`);
       }
     }

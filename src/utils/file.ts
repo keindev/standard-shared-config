@@ -4,6 +4,11 @@ import path from 'path';
 
 import { FileType } from '../types';
 
+enum FileMode {
+  Default = 0o0666,
+  Executable = 0o0755,
+}
+
 export const readFile = async (filePath: string): Promise<string | undefined> => {
   const isExists = await fs
     .access(filePath, constants.R_OK)
@@ -47,9 +52,7 @@ export const getType = (filePath: string): FileType => {
 
 export const writeFile = async (filePath: string, data: string | string[], executable = false): Promise<void> => {
   await fs.mkdir(path.dirname(filePath), { recursive: true });
-  await fs.writeFile(filePath, Array.isArray(data) ? data.join('\n') : data);
-
-  if (executable) {
-    await fs.chmod(filePath, '755');
-  }
+  await fs.writeFile(filePath, Array.isArray(data) ? data.join('\n') : data, {
+    mode: executable ? FileMode.Executable : FileMode.Default,
+  });
 };
