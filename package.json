@@ -61,11 +61,11 @@
   "devDependencies": {
     "@babel/preset-env": "^7.13.15",
     "@types/glob": "^7.1.3",
-    "@types/jest": "^26.0.22",
+    "@types/jest": "^26.0.23",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.unionwith": "^4.6.6",
-    "@types/node": "^14.14.41",
-    "@types/semver": "^7.3.4",
+    "@types/node": "^15.0.0",
+    "@types/semver": "^7.3.5",
     "@types/strip-comments": "^2.0.0",
     "@types/yargs": "^16.0.1",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
@@ -76,7 +76,7 @@
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.3.5",
+    "eslint-plugin-jest": "^24.3.6",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-optimize-regex": "^1.2.0",
     "eslint-plugin-promise": "^5.1.0",
@@ -91,7 +91,7 @@
     "ts-node": "^9.1.1",
     "type-fest": "^1.0.2",
     "typedoc": "^0.20.36",
-    "typedoc-plugin-markdown": "^3.7.1",
+    "typedoc-plugin-markdown": "^3.7.2",
     "typescript": "4.2.4"
   }
 }
