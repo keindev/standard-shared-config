@@ -12,7 +12,9 @@ export interface IConfigFile {
   rootDir?: string;
   outDir?: string;
   include?: string[];
-  rules?: { [key: string]: string[] | null | boolean };
+  mergeRules?: { [key: string]: string[] | null | boolean };
+  ignorePatterns?: { [key: string]: string[] };
+  executableFiles?: string[];
   scripts?: { [key: string]: string };
   dependencies?: (string | { [key: string]: string })[];
 }
@@ -20,8 +22,10 @@ export interface IConfigFile {
 export default class Config {
   #rootDir: string;
   #outDir: string;
-  #include: string[];
-  #rules = new Map<string, IMergeRule>();
+  #include: string[] = [];
+  #ignorePatterns?: Map<string, string[]>;
+  #executableFiles?: Set<string>;
+  #mergeRules = new Map<string, IMergeRule>();
   #scripts: IScript[] = [];
   #dependencies: IDependency[] = [];
   #path: string;
@@ -31,7 +35,6 @@ export default class Config {
     this.#path = path.resolve(process.cwd(), conf);
     this.#rootDir = path.resolve(process.cwd(), '.config');
     this.#outDir = process.cwd();
-    this.#include = [];
   }
 
   get paths(): string[] {
@@ -40,6 +43,10 @@ export default class Config {
 
   get root(): string {
     return this.#rootDir;
+  }
+
+  get ignorePatterns(): [string, string[]][] {
+    return this.#ignorePatterns ? [...this.#ignorePatterns.entries()] : [];
   }
 
   get outDir(): string {
@@ -63,13 +70,22 @@ export default class Config {
 
     try {
       const content = await readFile(this.#path);
-      const { rules, scripts, dependencies, rootDir, outDir, include }: IConfigFile = content
-        ? yaml.parse(content)
-        : {};
+      const {
+        mergeRules,
+        ignorePatterns,
+        scripts,
+        dependencies,
+        executableFiles,
+        rootDir,
+        outDir,
+        include,
+      }: IConfigFile = content ? yaml.parse(content) : {};
 
-      if (scripts) this.#scripts = this.normalizeScripts(scripts);
+      if (mergeRules) this.#mergeRules = this.normalizeMergeRules(mergeRules);
+      if (ignorePatterns) this.#ignorePatterns = new Map(Object.entries(ignorePatterns));
+      if (scripts) this.#scripts = Object.entries(scripts);
       if (dependencies) this.#dependencies = this.normalizeDependencies(dependencies);
-      if (rules) this.#rules = this.normalizeRules(rules);
+      if (executableFiles) this.#executableFiles = new Set(executableFiles);
       if (rootDir) this.#rootDir = path.resolve(process.cwd(), rootDir);
       if (outDir) this.#outDir = path.resolve(process.cwd(), outDir);
 
@@ -83,12 +99,12 @@ export default class Config {
     }
   }
 
-  findRule(filePath: string): IMergeRule | undefined {
-    return this.#rules.get(filePath);
+  findMergeRule(filePath: string): IMergeRule | undefined {
+    return this.#mergeRules.get(filePath);
   }
 
-  private normalizeScripts(scripts: NonNullable<IConfigFile['scripts']>): IScript[] {
-    return Object.entries(scripts);
+  isExecutable(filePath: string): boolean {
+    return !!this.#executableFiles?.size && this.#executableFiles.has(filePath);
   }
 
   private normalizeDependencies(dependencies: NonNullable<IConfigFile['dependencies']>): IDependency[] {
@@ -97,7 +113,7 @@ export default class Config {
     );
   }
 
-  private normalizeRules(rules: NonNullable<IConfigFile['rules']>): Map<string, IMergeRule> {
+  private normalizeMergeRules(rules: NonNullable<IConfigFile['mergeRules']>): Map<string, IMergeRule> {
     return new Map(
       Object.entries(rules).reduce((acc, [key, value]) => {
         if (Array.isArray(value)) acc.push([key, value.filter(item => typeof item === 'string')]);

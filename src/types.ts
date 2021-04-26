@@ -19,6 +19,7 @@ export interface ISnapshot {
   path: string;
   hash: string;
   merge: IMergeRule;
+  executable: boolean;
   type: FileType;
   content: string;
 }
