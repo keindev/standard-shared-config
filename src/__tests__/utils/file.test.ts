@@ -11,6 +11,7 @@ test: true
 `;
 
 jest.spyOn(fs, 'access').mockImplementation(() => Promise.resolve());
+jest.spyOn(fs, 'chmod').mockImplementation(() => Promise.resolve());
 jest.spyOn(fs, 'readFile').mockImplementation(() => Promise.resolve(FILE_CONTENT));
 
 describe('File utils', () => {

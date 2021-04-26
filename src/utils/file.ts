@@ -45,7 +45,11 @@ export const getType = (filePath: string): FileType => {
   return type;
 };
 
-export const writeFile = async (filePath: string, data: string | string[]): Promise<void> => {
+export const writeFile = async (filePath: string, data: string | string[], executable = false): Promise<void> => {
   await fs.mkdir(path.dirname(filePath), { recursive: true });
   await fs.writeFile(filePath, Array.isArray(data) ? data.join('\n') : data);
+
+  if (executable) {
+    await fs.chmod(filePath, '755');
+  }
 };

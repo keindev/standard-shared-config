@@ -18,7 +18,11 @@ export default class Builder {
       await Promise.all([
         this.writeScript(EntityName.Dependencies, dependencies, outDir),
         this.writeScript(EntityName.Scripts, scripts, outDir),
-        this.writeScript(EntityName.Snapshots, snapshots, outDir),
+        this.writeScript(
+          EntityName.Snapshots,
+          [...snapshots, ...this.createSnapshotsFromIgnorePatterns(config)],
+          outDir
+        ),
       ])
     ).filter(Boolean);
 
@@ -108,14 +112,30 @@ export default class Builder {
     const content = (await readFile(filePath)) ?? '';
     const relativePath = path.relative(config.root, filePath);
     const type = getType(filePath);
-    const rule = config.findRule(relativePath);
+    const rule = config.findMergeRule(relativePath);
 
     return {
       path: relativePath,
       hash: getHash(content),
       merge: [FileType.GLOB, FileType.Text].includes(type) && rule ? true : rule ?? false,
+      executable: config.isExecutable(relativePath),
       type,
       content,
     };
+  }
+
+  private createSnapshotsFromIgnorePatterns(config: Config): ISnapshot[] {
+    return config.ignorePatterns.map(([filePath, rows]) => {
+      const content = rows.join('\n');
+
+      return {
+        path: filePath,
+        hash: getHash(content),
+        merge: !!config.findMergeRule(filePath),
+        executable: config.isExecutable(filePath),
+        type: FileType.GLOB,
+        content,
+      };
+    });
   }
 }

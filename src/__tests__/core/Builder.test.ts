@@ -10,9 +10,16 @@ const CONFIG_CONTENT = `
 rootDir: ".config"
 outDir: "."
 
-rules:
+mergeRules:
   ".vscode/launch.json": [ "configurations" ]
   ".gitignore":
+
+ignorePatterns:
+  ".gitignore": [".env", "node_modules/"]
+
+executableFiles: [
+  ".husky/commit-msg"
+]
 
 scripts:
   "test": "jest"
@@ -25,6 +32,7 @@ jest.spyOn(glob, 'sync').mockImplementation(() => ['test/config1.json', 'test/co
 jest.spyOn(fs, 'access').mockImplementation(() => Promise.resolve());
 jest.spyOn(fs, 'unlink').mockImplementation(() => Promise.resolve());
 jest.spyOn(fs, 'mkdir').mockImplementation(() => Promise.resolve(''));
+jest.spyOn(fs, 'chmod').mockImplementation(() => Promise.resolve());
 jest.spyOn(fs, 'readFile').mockImplementation(filePath => {
   const basename = path.basename(filePath as string);
   let content = '';
@@ -62,6 +70,7 @@ describe('Config', () => {
         path: '../test/.gitignore',
         hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
         merge: true,
+        executable: false,
         type: FileType.GLOB,
         content: 'logs\ncoverage\n*.log\nyarn-debug.log*\nyarn-error.log*',
       },
@@ -69,6 +78,7 @@ describe('Config', () => {
         path: '../test/config2.json',
         hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
         merge: false,
+        executable: false,
         type: FileType.JSON,
         content: '{}',
       },
