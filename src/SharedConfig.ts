@@ -43,6 +43,7 @@ export class SharedConfig {
       const config = new LocalConfig();
       const pkg = new Package();
 
+      await config.init();
       pkg.lint(dependencies.filter(([key]) => !config.isIgnoreDependency(key)));
       await this.#builder.process(rootDir, snapshots);
       await pkg.insert(scripts.map(([key, value]) => [key, config.findScript(key) ?? value]));
