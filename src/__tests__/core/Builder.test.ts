@@ -30,13 +30,6 @@ dependencies:
   - "ts-jest": "26.x"
 `;
 
-const LOCAL_CONFIG_CONTENT = `
-overrideScripts:
-  "build": "tsc --extendedDiagnostics"
-
-ignoreDependencies: ['ts-jest']
-`;
-
 jest.spyOn(glob, 'sync').mockImplementation(() => ['test/config1.json', 'test/config2.json']);
 jest.spyOn(fs, 'access').mockImplementation(() => Promise.resolve());
 jest.spyOn(fs, 'unlink').mockImplementation(() => Promise.resolve());
@@ -46,7 +39,6 @@ jest.spyOn(fs, 'readFile').mockImplementation(filePath => {
   let content = '';
 
   if (basename === '.sharedconfig.yml') content = LIBRARY_CONFIG_CONTENT;
-  if (basename === '.sharedconfig.override.yml') content = LOCAL_CONFIG_CONTENT;
   if (basename === '.gitignore') content = 'logs\ncoverage\n*.log\nyarn-debug.log*\nyarn-error.log*\n.env';
 
   return Promise.resolve(content);

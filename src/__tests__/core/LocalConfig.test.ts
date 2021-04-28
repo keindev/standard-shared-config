@@ -13,7 +13,7 @@ jest.spyOn(fs, 'access').mockImplementation(() => Promise.resolve());
 jest.spyOn(fs, 'readFile').mockImplementation(() => Promise.resolve(CONFIG_CONTENT));
 
 describe('Config', () => {
-  const config = new LocalConfig();
+  const config = new LocalConfig('.config');
 
   it('initialization', async () => {
     expect(config.isInitialized).toBeFalsy();

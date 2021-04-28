@@ -16,8 +16,8 @@ export default class LocalConfig {
   #dependencies = new Set<string>();
   #isInitialized = false;
 
-  constructor() {
-    this.#path = path.resolve(process.cwd(), '.sharedconfig.override.yml');
+  constructor(rootDir: string) {
+    this.#path = path.resolve(process.cwd(), rootDir, '.sharedconfig.override.yml');
   }
 
   get overrideScripts(): IScript[] {

@@ -40,7 +40,7 @@ export class SharedConfig {
 
     try {
       const task = TaskTree.add('Share configs:');
-      const config = new LocalConfig();
+      const config = new LocalConfig(rootDir);
       const pkg = new Package();
 
       await config.init();
