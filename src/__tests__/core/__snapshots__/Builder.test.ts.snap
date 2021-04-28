@@ -10,6 +10,10 @@ module.exports = [
   [
     \\"@types/jest\\",
     \\"1.x\\"
+  ],
+  [
+    \\"ts-jest\\",
+    \\"26.x\\"
   ]
 ]",
   ],
@@ -21,6 +25,10 @@ module.exports = [
   [
     \\"test\\",
     \\"jest\\"
+  ],
+  [
+    \\"build\\",
+    \\"tsc\\"
   ]
 ]",
   ],

@@ -3,10 +3,10 @@ import glob from 'glob';
 import path from 'path';
 
 import Builder from '../../core/Builder';
-import Config from '../../core/Config';
+import LibraryConfig from '../../core/LibraryConfig';
 import { FileType } from '../../types';
 
-const CONFIG_CONTENT = `
+const LIBRARY_CONFIG_CONTENT = `
 rootDir: ".config"
 outDir: "."
 
@@ -23,28 +23,37 @@ executableFiles: [
 
 scripts:
   "test": "jest"
+  "build": "tsc"
 
 dependencies:
   - "@types/jest": "1.x"
+  - "ts-jest": "26.x"
+`;
+
+const LOCAL_CONFIG_CONTENT = `
+overrideScripts:
+  "build": "tsc --extendedDiagnostics"
+
+ignoreDependencies: ['ts-jest']
 `;
 
 jest.spyOn(glob, 'sync').mockImplementation(() => ['test/config1.json', 'test/config2.json']);
 jest.spyOn(fs, 'access').mockImplementation(() => Promise.resolve());
 jest.spyOn(fs, 'unlink').mockImplementation(() => Promise.resolve());
 jest.spyOn(fs, 'mkdir').mockImplementation(() => Promise.resolve(''));
-jest.spyOn(fs, 'chmod').mockImplementation(() => Promise.resolve());
 jest.spyOn(fs, 'readFile').mockImplementation(filePath => {
   const basename = path.basename(filePath as string);
   let content = '';
 
-  if (basename === '.sharedconfig.yml') content = CONFIG_CONTENT;
+  if (basename === '.sharedconfig.yml') content = LIBRARY_CONFIG_CONTENT;
+  if (basename === '.sharedconfig.override.yml') content = LOCAL_CONFIG_CONTENT;
   if (basename === '.gitignore') content = 'logs\ncoverage\n*.log\nyarn-debug.log*\nyarn-error.log*\n.env';
 
   return Promise.resolve(content);
 });
 
 describe('Config', () => {
-  const config = new Config();
+  const config = new LibraryConfig();
   const builder = new Builder();
   let files: [string, string][] = [];
 

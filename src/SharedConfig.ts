@@ -1,7 +1,8 @@
 import { TaskTree } from 'tasktree-cli';
 
 import Builder from './core/Builder';
-import Config from './core/Config';
+import LibraryConfig from './core/LibraryConfig';
+import LocalConfig from './core/LocalConfig';
 import Package from './core/Package';
 import { EntityName, IDependency, IScript, ISnapshot } from './types';
 
@@ -28,7 +29,7 @@ export class SharedConfig {
     const task = TaskTree.add('Building...');
     const pkg = new Package();
 
-    await this.#builder.build(pkg.name, new Config(conf));
+    await this.#builder.build(pkg.name, new LibraryConfig(conf));
     await pkg.update();
     task.complete('Shared config package is builded!');
   }
@@ -39,11 +40,12 @@ export class SharedConfig {
 
     try {
       const task = TaskTree.add('Share configs:');
+      const config = new LocalConfig();
       const pkg = new Package();
 
-      pkg.lint(dependencies);
+      pkg.lint(dependencies.filter(([key]) => !config.isIgnoreDependency(key)));
       await this.#builder.process(rootDir, snapshots);
-      await pkg.insert(scripts);
+      await pkg.insert(scripts.map(([key, value]) => [key, config.findScript(key) ?? value]));
       task.complete('Shared configs:');
       tree.exit();
     } catch (error) {

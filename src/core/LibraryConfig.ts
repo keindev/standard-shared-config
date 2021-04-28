@@ -6,9 +6,9 @@ import yaml from 'yaml';
 import { IDependency, IMergeRule, IScript } from '../types';
 import { readFile } from '../utils/file';
 
-export type IConfigOptions = { conf?: string };
+export type ILibraryConfigOptions = { conf?: string };
 
-export interface IConfigFile {
+export interface ILibraryConfig {
   rootDir?: string;
   outDir?: string;
   include?: string[];
@@ -19,7 +19,7 @@ export interface IConfigFile {
   dependencies?: (string | { [key: string]: string })[];
 }
 
-export default class Config {
+export default class LibraryConfig {
   #rootDir: string;
   #outDir: string;
   #include: string[] = [];
@@ -79,7 +79,7 @@ export default class Config {
         rootDir,
         outDir,
         include,
-      }: IConfigFile = content ? yaml.parse(content) : {};
+      }: ILibraryConfig = content ? yaml.parse(content) : {};
 
       if (mergeRules) this.#mergeRules = this.normalizeMergeRules(mergeRules);
       if (ignorePatterns) this.#ignorePatterns = new Map(Object.entries(ignorePatterns));
@@ -107,13 +107,13 @@ export default class Config {
     return !!this.#executableFiles?.size && this.#executableFiles.has(filePath);
   }
 
-  private normalizeDependencies(dependencies: NonNullable<IConfigFile['dependencies']>): IDependency[] {
+  private normalizeDependencies(dependencies: NonNullable<ILibraryConfig['dependencies']>): IDependency[] {
     return dependencies.map(
       dependency => (typeof dependency === 'string' ? [dependency] : Object.entries(dependency).pop()) as IDependency
     );
   }
 
-  private normalizeMergeRules(rules: NonNullable<IConfigFile['mergeRules']>): Map<string, IMergeRule> {
+  private normalizeMergeRules(rules: NonNullable<ILibraryConfig['mergeRules']>): Map<string, IMergeRule> {
     return new Map(
       Object.entries(rules).reduce((acc, [key, value]) => {
         if (Array.isArray(value)) acc.push([key, value.filter(item => typeof item === 'string')]);

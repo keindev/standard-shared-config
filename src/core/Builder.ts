@@ -6,10 +6,10 @@ import { Task } from 'tasktree-cli/lib/Task';
 import { EntityName, FileType, ISnapshot } from '../types';
 import { getHash, getType, readFile, writeFile } from '../utils/file';
 import { merge, parse, stringify } from '../utils/json';
-import Config from './Config';
+import LibraryConfig from './LibraryConfig';
 
 export default class Builder {
-  async build(name: string, config: Config): Promise<void> {
+  async build(name: string, config: LibraryConfig): Promise<void> {
     if (!config.isInitialized) await config.init();
 
     const { dependencies, scripts, outDir } = config;
@@ -108,7 +108,7 @@ export default class Builder {
     return values.length ? name : '';
   }
 
-  private async createSnapshot(filePath: string, config: Config): Promise<ISnapshot> {
+  private async createSnapshot(filePath: string, config: LibraryConfig): Promise<ISnapshot> {
     const content = (await readFile(filePath)) ?? '';
     const relativePath = path.relative(config.root, filePath);
     const type = getType(filePath);
@@ -124,7 +124,7 @@ export default class Builder {
     };
   }
 
-  private createSnapshotsFromIgnorePatterns(config: Config): ISnapshot[] {
+  private createSnapshotsFromIgnorePatterns(config: LibraryConfig): ISnapshot[] {
     return config.ignorePatterns.map(([filePath, rows]) => {
       const content = rows.join('\n');
 

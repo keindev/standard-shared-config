@@ -2,7 +2,7 @@ import { promises as fs } from 'fs';
 import glob from 'glob';
 import path from 'path';
 
-import Config from '../../core/Config';
+import LibraryConfig from '../../core/LibraryConfig';
 
 const CONFIG_CONTENT = `
 rootDir: ".config"
@@ -34,12 +34,11 @@ dependencies:
 `;
 
 jest.spyOn(fs, 'access').mockImplementation(() => Promise.resolve());
-jest.spyOn(fs, 'chmod').mockImplementation(() => Promise.resolve());
 jest.spyOn(fs, 'readFile').mockImplementation(() => Promise.resolve(CONFIG_CONTENT));
 jest.spyOn(glob, 'sync').mockImplementation(() => ['.github/dependabot.yml', '.github/workflows/build.yml']);
 
 describe('Config', () => {
-  const config = new Config();
+  const config = new LibraryConfig();
 
   it('initialization', async () => {
     expect(config.isInitialized).toBeFalsy();
