@@ -16,7 +16,6 @@
 ```yaml
 rootDir: '.config'
 outDir: '.'
-include: ['.github/**/*']
 
 mergeRules:
   # Rule for merging `paths` in .eslintrc configuration

@@ -30,7 +30,7 @@ After completing the command execution, you will get the following structure ins
 
 - `bin/[you shared config name from package]`
 - `dependencies.js` - List of `devDependencies`, see [`.sharedconfig.yml`](https://github.com/keindev/standard-shared-config/blob/master/docs/config.md)
-- `scripts.js` - Script commands which will be added to the `package.json`, see [`.sharedconfig.yml`](https://github.com/keindev/standard-shared-config/blob/master/docs/config.md)
+- `scripts.js` - Script commands which will be added to the `package.json`, see [`.sharedconfig.yml`](https://github.com/keindev/standard-shared-config/blob/master/docs/library-config.md)
 - `snapshots.js` - snapshots of config files from `rootDir`
 - `index.js` - will be called when your config is applied to copy config files to the project
 
@@ -41,6 +41,7 @@ Now publish your shared configuration package to NPM!
 - install your shared configuration package
 - add script with your shared configuration package name to `package.json` scripts for creating sharable configuration files.
 - override parts of config files in `rootDir`, if needed (`.config` by default)
+- override package scripts and dependencies in [`.sharedconfig.override.yml`](https://github.com/keindev/standard-shared-config/blob/master/docs/local-config.md) in `rootDir`, if needed (`.config` by default)
 
 ```json
 {
