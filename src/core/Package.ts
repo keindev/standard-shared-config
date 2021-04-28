@@ -63,7 +63,8 @@ export default class Package {
         .sort((a, b) => a.localeCompare(b))
         .reduce((acc, key) => ({ ...acc, [key]: currentScripts[key] }), {});
       await this.write();
-      task.complete('Inserting the required scripts');
+
+      task.complete('Package scripts have been updated!');
     }
   }
 
