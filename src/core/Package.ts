@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { coerce, lt } from 'semver';
-import { TaskTree } from 'tasktree-cli';
+import TaskTree from 'tasktree-cli';
 import { PackageJson } from 'type-fest';
 import writePkg from 'write-pkg';
 

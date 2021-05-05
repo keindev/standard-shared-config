@@ -1,4 +1,4 @@
-import { TaskTree } from 'tasktree-cli';
+import TaskTree from 'tasktree-cli';
 
 import Builder from './core/Builder';
 import LibraryConfig from './core/LibraryConfig';

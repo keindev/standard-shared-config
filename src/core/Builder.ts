@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { TaskTree } from 'tasktree-cli';
+import TaskTree from 'tasktree-cli';
 import { Task } from 'tasktree-cli/lib/Task';
 
 import { EntityName, FileType, ISnapshot } from '../types';

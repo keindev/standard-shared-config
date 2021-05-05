@@ -1,5 +1,5 @@
 import path from 'path';
-import { TaskTree } from 'tasktree-cli';
+import TaskTree from 'tasktree-cli';
 import yaml from 'yaml';
 
 import { IScript } from '../types';
