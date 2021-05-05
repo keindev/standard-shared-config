@@ -29,7 +29,7 @@ Shared configuration manager
 
 Build a shared configuration npm package structure
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -45,7 +45,7 @@ ___
 
 Create configuration files by shared config structure
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
