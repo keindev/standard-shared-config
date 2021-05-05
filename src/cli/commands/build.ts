@@ -1,20 +1,7 @@
-import { TaskTree } from 'tasktree-cli';
+import TaskTree from 'tasktree-cli';
 import { Arguments } from 'yargs';
 
 import SharedConfig, { IBuildOptions } from '../../SharedConfig';
-
-export const command = 'build';
-export const alias = 'b';
-export const desc = 'Build shared config map';
-export const showInHelp = true;
-export const builder = {
-  conf: {
-    string: true,
-    alias: 'c',
-    description: 'Path to shared configuration',
-    default: '.sharedconfig.yml',
-  },
-};
 
 const build = async (options: IBuildOptions): Promise<void> => {
   const tree = TaskTree.tree().start();
@@ -28,4 +15,18 @@ const build = async (options: IBuildOptions): Promise<void> => {
   }
 };
 
-export const handler = (options: Arguments<IBuildOptions>): Promise<void> => build(options);
+export default {
+  command: 'build',
+  alias: 'b',
+  desc: 'Build shared config map',
+  showInHelp: true,
+  builder: {
+    conf: {
+      string: true,
+      alias: 'c',
+      description: 'Path to shared configuration',
+      default: '.sharedconfig.yml',
+    },
+  },
+  handler: (options: Arguments<IBuildOptions>): Promise<void> => build(options),
+};

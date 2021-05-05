@@ -1,8 +1,8 @@
 import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
-yargs
-  .commandDir('commands', { extensions: ['js', 'ts'], exclude: /.+\.d\.ts/ })
-  .demandCommand()
-  .wrap(yargs.terminalWidth())
-  .help()
-  .parse();
+import build from './commands/build';
+
+const argv = yargs(hideBin(process.argv));
+
+argv.command(build).demandCommand().wrap(argv.terminalWidth()).help().parse();

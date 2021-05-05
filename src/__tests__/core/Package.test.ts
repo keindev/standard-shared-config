@@ -1,6 +1,6 @@
 import fs from 'fs';
 import stripAnsi from 'strip-ansi';
-import { TaskTree } from 'tasktree-cli';
+import TaskTree from 'tasktree-cli';
 import { PackageJson } from 'type-fest';
 
 import Package from '../../core/Package';

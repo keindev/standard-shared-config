@@ -27,7 +27,7 @@ Renames and exports: [SharedConfig](classes/sharedconfig.md)
 
 Ƭ **IBuildOptions**: *object*
 
-#### Type declaration:
+#### Type declaration
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
@@ -39,7 +39,7 @@ ___
 
 Ƭ **IShareOptions**: *object*
 
-#### Type declaration:
+#### Type declaration
 
 | Name | Type | Description |
 | :------ | :------ | :------ |

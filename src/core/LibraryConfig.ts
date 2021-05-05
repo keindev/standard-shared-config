@@ -1,6 +1,6 @@
 import glob from 'glob';
 import path from 'path';
-import { TaskTree } from 'tasktree-cli';
+import TaskTree from 'tasktree-cli';
 import yaml from 'yaml';
 
 import { IDependency, IMergeRule, IScript } from '../types';

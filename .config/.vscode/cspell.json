@@ -1,13 +1,3 @@
 {
-  "words": [
-    "sharedconfig",
-    "tasktree",
-    "nodir",
-    "npmignore",
-    "tagproject",
-    "dependabot",
-    "mergewith",
-    "unionwith",
-    "isequal"
-  ]
+  "words": ["sharedconfig", "nodir", "isequal", "unionwith"]
 }

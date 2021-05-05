@@ -6,7 +6,7 @@ Array [
     "dependencies.js",
     "/* eslint-disable */
 /* prettier-ignore */
-module.exports = [
+export default [
   [
     \\"@types/jest\\",
     \\"1.x\\"
@@ -21,7 +21,7 @@ module.exports = [
     "scripts.js",
     "/* eslint-disable */
 /* prettier-ignore */
-module.exports = [
+export default [
   [
     \\"test\\",
     \\"jest\\"
@@ -36,7 +36,7 @@ module.exports = [
     "snapshots.js",
     "/* eslint-disable */
 /* prettier-ignore */
-module.exports = [
+export default [
   {
     \\"path\\": \\"../test/config1.json\\",
     \\"hash\\": \\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\\",
@@ -71,18 +71,17 @@ module.exports = [
 /* --------------------------------------------------------------- */
 
 /* eslint-disable */
-const SharedConfig = require('standard-shared-config').default;
-const dependencies = require('./dependencies');
-const scripts = require('./scripts');
-const snapshots = require('./snapshots');
-const config = new SharedConfig();
+import SharedConfig from 'standard-shared-config'
+import dependencies from './dependencies'
+import scripts from './scripts'
+import snapshots from './snapshots'
 
-config.share(\\".config\\", { dependencies, scripts, snapshots });",
+await new SharedConfig().share(\\".config\\", { dependencies, scripts, snapshots });",
   ],
   Array [
     "bin/test",
     "#!/usr/bin/env node
-require('../index.js');",
+import '../index.js';",
   ],
 ]
 `;
