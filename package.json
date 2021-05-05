@@ -21,7 +21,8 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "bin": {
-    "shared-config": "bin/shared-config.js"
+    "standard-shared-config": "bin/shared-config",
+    "shared-config": "bin/shared-config"
   },
   "repository": {
     "type": "git",

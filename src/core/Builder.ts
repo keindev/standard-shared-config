@@ -33,14 +33,13 @@ export default class Builder {
       '/* --------------------------------------------------------------- */',
       '',
       '/* eslint-disable */',
-      "const SharedConfig = require('standard-shared-config').default;",
-      ...entities.map(entity => `const ${entity} = require('./${entity}');`),
-      'const config = new SharedConfig();',
+      "import SharedConfig from 'standard-shared-config'",
+      ...entities.map(entity => `import ${entity} from './${entity}'`),
       '',
-      `config.share("${path.relative(process.cwd(), config.root)}", { ${entities.join(', ')} });`,
+      `await new SharedConfig().share("${path.relative(process.cwd(), config.root)}", { ${entities.join(', ')} });`,
     ]);
 
-    await writeFile(`${outDir}/bin/${name}`, ['#!/usr/bin/env node', "require('../index.js');"]);
+    await writeFile(`${outDir}/bin/${name}`, ['#!/usr/bin/env node', "import '../index.js';"]);
   }
 
   async process(rootDir: string, snapshots: ISnapshot[]): Promise<void> {
@@ -99,7 +98,7 @@ export default class Builder {
       await writeFile(filePath, [
         '/* eslint-disable */',
         '/* prettier-ignore */',
-        `module.exports = ${stringify(values)}`,
+        `export default ${stringify(values)}`,
       ]);
     } else {
       await fs.unlink(filePath);
