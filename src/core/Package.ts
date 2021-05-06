@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { coerce, lt } from 'semver';
+import semver from 'semver';
 import TaskTree from 'tasktree-cli';
 import { PackageJson } from 'type-fest';
 import writePkg from 'write-pkg';
@@ -20,7 +20,7 @@ export default class Package {
 
   async update(): Promise<void> {
     this.#data.main = 'index.js';
-    this.#data.bin = { [this.name]: `bin/${this.name}` };
+    this.#data.bin = { [this.name]: `bin/${this.name}.js` };
     await this.write();
   }
 
@@ -29,12 +29,12 @@ export default class Package {
       const task = TaskTree.add('Lint package devDependencies:');
 
       dependencies.forEach(([name, version]) => {
-        const currentVersion = coerce((this.#data.devDependencies ?? {})[name]);
-        const requiredVersion = coerce(version);
+        const currentVersion = semver.coerce((this.#data.devDependencies ?? {})[name]);
+        const requiredVersion = semver.coerce(version);
 
         if (!currentVersion) {
           task.error(`${name} is not presented!`, false);
-        } else if (requiredVersion && lt(currentVersion, requiredVersion)) {
+        } else if (requiredVersion && semver.lt(currentVersion, requiredVersion)) {
           task.error(`${name} version is must be >=${version}!`, false);
         }
       });
