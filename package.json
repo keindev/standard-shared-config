@@ -21,8 +21,8 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "bin": {
-    "standard-shared-config": "bin/shared-config",
-    "shared-config": "bin/shared-config"
+    "standard-shared-config": "bin/shared-config.js",
+    "shared-config": "bin/shared-config.js"
   },
   "repository": {
     "type": "git",
@@ -77,7 +77,7 @@
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@typescript-eslint/parser": "^4.22.1",
     "babel-jest": "^26.6.3",
-    "changelog-guru": "3.0.0",
+    "changelog-guru": "3.0.1",
     "cspell": "^5.4.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",

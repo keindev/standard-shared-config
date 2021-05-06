@@ -79,7 +79,7 @@ import snapshots from './snapshots'
 await new SharedConfig().share(\\".config\\", { dependencies, scripts, snapshots });",
   ],
   Array [
-    "bin/test",
+    "bin/test.js",
     "#!/usr/bin/env node
 import '../index.js';",
   ],

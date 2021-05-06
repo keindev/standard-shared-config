@@ -39,7 +39,7 @@ export default class Builder {
       `await new SharedConfig().share("${path.relative(process.cwd(), config.root)}", { ${entities.join(', ')} });`,
     ]);
 
-    await writeFile(`${outDir}/bin/${name}`, ['#!/usr/bin/env node', "import '../index.js';"]);
+    await writeFile(`${outDir}/bin/${name}.js`, ['#!/usr/bin/env node', "import '../index.js';"]);
   }
 
   async process(rootDir: string, snapshots: ISnapshot[]): Promise<void> {
