@@ -1,5 +1,0 @@
-overrideScripts:
-  "prepare:config": "ts-package-shared-config"
-
-ignoreDependencies: ["changelog-guru"]
-
