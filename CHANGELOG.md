@@ -1,17 +1,6 @@
-# Important Changes
-
-## Dependencies
-
-<details>
-<summary>Dev Dependencies</summary>
-
-- Bumped **[changelog-guru](https://www.npmjs.com/package/changelog-guru/v/3.0.1)** from `3.0.0` to `3.0.1`
-
-</details>
-
 # :bug: Bug Fixes
 
-- Add .js ext to bin script [`8a35ab6`](https://github.com/keindev/standard-shared-config/commit/8a35ab6bfe93900052b610ea29ebe4e249072474)
+- Fix semver import, add js ext to bin in `shared-config` package [`21e241c`](https://github.com/keindev/standard-shared-config/commit/21e241cd949debe3b9401ab518d82779e3bee4db)
 
 ---
 

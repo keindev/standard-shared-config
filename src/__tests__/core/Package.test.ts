@@ -43,7 +43,7 @@ describe('Package', () => {
     await pkg.update();
 
     expect(data?.main).toBe('index.js');
-    expect(typeof data?.bin === 'object' ? data?.bin[pkg.name] : data?.bin).toBe(`bin/${pkg.name}`);
+    expect(typeof data?.bin === 'object' ? data?.bin[pkg.name] : data?.bin).toBe(`bin/${pkg.name}.js`);
   });
 
   it('lint dependencies', () => {
