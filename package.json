@@ -1,7 +1,7 @@
 {
   "name": "standard-shared-config",
   "version": "3.0.3",
-  "description": "One shared config to rule them all",
+  "description": "One shared config to rule them all! Easy way to create and share your boilerplate configs.",
   "homepage": "https://github.com/keindev/standard-shared-config#readme",
   "license": "MIT",
   "author": {
