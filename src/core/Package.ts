@@ -33,7 +33,7 @@ export default class Package {
         const requiredVersion = semver.coerce(version);
 
         if (!currentVersion) {
-          task.error(`${name} is not presented!`, false);
+          task.error(`{bold ${name}} is not presented!`, false);
         } else if (requiredVersion && semver.lt(currentVersion, requiredVersion)) {
           task.error(`${name} version is must be >=${version}!`, false);
         }
