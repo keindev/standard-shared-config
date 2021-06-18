@@ -70,7 +70,7 @@
     "@types/jest": "^26.0.23",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.unionwith": "^4.6.6",
-    "@types/node": "^15.0.2",
+    "@types/node": "^15.12.4",
     "@types/semver": "^7.3.5",
     "@types/strip-comments": "^2.0.0",
     "@types/yargs": "^16.0.1",
