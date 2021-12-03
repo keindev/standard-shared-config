@@ -84,7 +84,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.3.6",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-optimize-regex": "^1.2.0",
+    "eslint-plugin-optimize-regex": "^1.2.1",
     "eslint-plugin-promise": "^5.1.0",
     "ghinfo": "^2.0.3",
     "husky": "^6.0.0",
