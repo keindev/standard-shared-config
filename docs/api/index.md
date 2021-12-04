@@ -1,48 +1,28 @@
-# standard-shared-config
+# SharedConfig
 
-## Table of contents
+Shared configuration manager
 
-### References
+## Methods
 
-- [default](index.md#default)
+### build
 
-### Classes
+Build a shared configuration npm package structure.
 
-- [SharedConfig](classes/sharedconfig.md)
+#### Parameters
 
-### Type aliases
+| Name         | Type     | Description             |
+| :----------- | :------- | :---------------------- |
+| `configPath` | `string` | Configuration file path |
 
-- [IBuildOptions](index.md#ibuildoptions)
-- [IShareOptions](index.md#ishareoptions)
+### share
 
-## References
+Create configuration files by shared config structure
 
-### default
+#### Parameters
 
-Renames and exports: [SharedConfig](classes/sharedconfig.md)
-
-## Type aliases
-
-### IBuildOptions
-
-Ƭ **IBuildOptions**: *object*
-
-#### Type declaration
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `conf?` | *string* | Configuration file path |
-
-___
-
-### IShareOptions
-
-Ƭ **IShareOptions**: *object*
-
-#### Type declaration
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `dependencies?` | IDependency[] | Package devDependencies list |
-| `scripts?` | IScript[] | List of package scripts |
-| `snapshots?` | ISnapshot[] | Configuration files snapshots |
+| Name                    | Type            | Description                             |
+| :---------------------- | :-------------- | :-------------------------------------- |
+| `sharedDir`             | `string`        | Package root directory to share configs |
+| `options.dependencies?` | `IDependency[]` | Package devDependencies list            |
+| `options.scripts?`      | `IScript[]`     | List of package scripts                 |
+| `options.snapshots?`    | `ISnapshot[]`   | Configuration files snapshots           |

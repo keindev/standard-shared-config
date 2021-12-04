@@ -1,6 +1,11 @@
+// @see https://github.com/facebook/jest/issues/9430
+// eslint-disable-next-line node/no-extraneous-import
+import { jest } from '@jest/globals';
 import { promises as fs } from 'fs';
 
 import LocalConfig from '../../core/LocalConfig';
+
+jest.useFakeTimers();
 
 const CONFIG_CONTENT = `
 overrideScripts:

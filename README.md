@@ -23,15 +23,15 @@ npm install standard-shared-config
 
 - Create `package.json` with `name`, `version` and `description`.
 - Create `.config` directory and copy all the configuration files you want to share.
-- Create `.sharedconfig.yml` - file containing schema and rules for your shared configuration and specify the [usage parameters](https://github.com/keindev/standard-shared-config/blob/master/docs/config.md).
+- Create `.sharedconfig.yml` - file containing schema and rules for your shared configuration and specify the [usage parameters](docs/config.md).
 - Run `shared-config build`
 
-After completing the command execution, you will get the following structure inside the `outDir`:
+After completing the command execution, you will get the following structure inside the `outputDir`:
 
 - `bin/[you shared config name from package]`
-- `dependencies.js` - List of `devDependencies`, see [`.sharedconfig.yml`](https://github.com/keindev/standard-shared-config/blob/master/docs/config.md)
-- `scripts.js` - Script commands which will be added to the `package.json`, see [`.sharedconfig.yml`](https://github.com/keindev/standard-shared-config/blob/master/docs/library-config.md)
-- `snapshots.js` - snapshots of config files from `rootDir`
+- `dependencies.js` - List of `devDependencies`, see [`.sharedconfig.yml`](docs/config.md)
+- `scripts.js` - Script commands which will be added to the `package.json`, see [`.sharedconfig.yml`](docs/config.md)
+- `snapshots.js` - snapshots of config files from `sharedDir`
 - `index.js` - will be called when your config is applied to copy config files to the project
 
 Now publish your shared configuration package to NPM!
@@ -40,8 +40,8 @@ Now publish your shared configuration package to NPM!
 
 - install your shared configuration package
 - add script with your shared configuration package name to `package.json` scripts for creating sharable configuration files.
-- override parts of config files in `rootDir`, if needed (`.config` by default)
-- override package scripts and dependencies in [`.sharedconfig.override.yml`](https://github.com/keindev/standard-shared-config/blob/master/docs/local-config.md) in `rootDir`, if needed (`.config` by default)
+- override parts of config files in `sharedDir`, if needed (`.config` by default)
+- override package scripts and dependencies in [`.sharedconfig.yml`](docs/config.md) in `sharedDir`, if needed (`.config` by default)
 
 ```json
 {
@@ -55,4 +55,4 @@ Now publish your shared configuration package to NPM!
 
 ## API
 
-Read the [API documentation](https://github.com/keindev/standard-shared-config/blob/master/docs/api/index.md) for more information.
+Read the [API documentation](docs/api/index.md) for more information.

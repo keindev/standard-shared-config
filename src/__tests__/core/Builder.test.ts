@@ -1,14 +1,18 @@
+// @see https://github.com/facebook/jest/issues/9430
+// eslint-disable-next-line node/no-extraneous-import
+import { jest } from '@jest/globals';
 import { promises as fs } from 'fs';
 import glob from 'glob';
 import path from 'path';
 
 import Builder from '../../core/Builder';
-import LibraryConfig from '../../core/LibraryConfig';
 import { FileType } from '../../types';
 
+jest.useFakeTimers();
+
 const LIBRARY_CONFIG_CONTENT = `
-rootDir: ".config"
-outDir: "."
+sharedDir: ".config"
+outputDir: "."
 
 mergeRules:
   ".vscode/launch.json": [ "configurations" ]
@@ -45,7 +49,7 @@ jest.spyOn(fs, 'readFile').mockImplementation(filePath => {
 });
 
 describe('Config', () => {
-  const config = new LibraryConfig();
+  const config = new PackageConfig('.sharedconfig.yml', process.cwd());
   const builder = new Builder();
   let files: [string, string][] = [];
 
