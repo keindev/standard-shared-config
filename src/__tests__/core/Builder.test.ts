@@ -3,7 +3,6 @@
 import { jest } from '@jest/globals';
 import { promises as fs } from 'fs';
 import glob from 'glob';
-import Package from 'package-json-helper';
 import path from 'path';
 
 import Builder from '../../core/Builder';
@@ -51,28 +50,24 @@ jest.spyOn(fs, 'readFile').mockImplementation(filePath => {
   let content = '';
 
   if (basename === '.sharedconfig.yml') content = CONFIG;
+  if (basename === 'package.json') content = JSON.stringify({ name: 'test' });
 
   return Promise.resolve(content);
 });
 
 describe('Builder', () => {
-  const builder = new Builder('test');
-  const pkg = new Package();
-  let files: [string, string][] = [];
-
-  jest.spyOn(fs, 'writeFile').mockImplementation((name, data) => {
-    files.push([path.relative(process.cwd(), name.toString()), data.toString()]);
-
-    return Promise.resolve();
-  });
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  jest.spyOn(pkg, 'save').mockImplementation(() => {});
-
   it('build', async () => {
-    files = [];
+    const builder = new Builder();
+    const files: [string, string][] = [];
 
-    await builder.build('.sharedconfig.yml', pkg);
+    jest.spyOn(fs, 'writeFile').mockImplementation((name, data) => {
+      files.push([path.relative(process.cwd(), name.toString()), data.toString()]);
+
+      return Promise.resolve();
+    });
+
+    await builder.build('.sharedconfig.yml');
+    await Promise.resolve();
 
     expect(files).toMatchSnapshot();
   });

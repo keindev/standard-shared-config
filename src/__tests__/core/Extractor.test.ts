@@ -20,73 +20,65 @@ jest.spyOn(fs, 'readFile').mockImplementation(filePath => {
   let content = '';
 
   if (basename === '.gitignore') content = 'logs\ncoverage\n*.log\nyarn-debug.log*\nyarn-error.log*\n.env';
+  if (basename === 'package.json') {
+    content = JSON.stringify({ name: 'test', devDependencies: { '@types/jest': '^1.x', 'ts-jest': '^26.x' } });
+  }
 
   return Promise.resolve(content);
 });
 
 describe('Extractor', () => {
   const extractor = new Extractor('.config');
-  const pkg = new Package({
-    name: 'test',
-    dependencies: {
-      '@types/jest': '1.x',
-      'ts-jest': '26.x',
-    },
-  });
-  let files: [string, string][] = [];
-
-  jest.spyOn(fs, 'writeFile').mockImplementation((name, data) => {
+  const files: [string, string][] = [];
+  const appendFile = (name: any, data: any): void => {
     files.push([path.relative(process.cwd(), name.toString()), data.toString()]);
+  };
 
-    return Promise.resolve();
-  });
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  jest.spyOn(pkg, 'save').mockImplementation(() => {});
-  jest.spyOn(pkg, 'install').mockImplementation(() => Promise.resolve());
+  jest.spyOn(fs, 'writeFile').mockImplementation((name, data) => Promise.resolve(appendFile(name, data)));
+  jest
+    .spyOn(Package.prototype, 'install')
+    .mockImplementation(dependencies =>
+      Promise.resolve(appendFile('package.json', JSON.stringify([...dependencies.entries()])))
+    );
 
   it('extract', async () => {
-    files = [];
-
-    await extractor.extract(
-      {
-        dependencies: [
-          ['@types/jest', '1.x'],
-          ['ts-jest', '26.x'],
-        ],
-        scripts: [
-          ['test', 'jest'],
-          ['build', 'tsc'],
-        ],
-        snapshots: [
-          {
-            path: 'test/config2.json',
-            hash: '1',
-            merge: false,
-            executable: false,
-            type: FileType.JSON,
-            content: JSON.stringify({}),
-          },
-          {
-            path: 'config1.json',
-            hash: '2',
-            merge: false,
-            executable: false,
-            type: FileType.JSON,
-            content: JSON.stringify({}),
-          },
-          {
-            path: '.gitignore',
-            hash: '3',
-            merge: true,
-            executable: false,
-            type: FileType.GLOB,
-            content: '.env\nnode_modules/',
-          },
-        ],
-      },
-      pkg
-    );
+    await extractor.extract({
+      dependencies: [
+        ['@types/jest', '1.x'],
+        ['ts-jest', '26.x'],
+        ['jest', '8.x'],
+      ],
+      scripts: [
+        ['test', 'jest'],
+        ['build', 'tsc'],
+      ],
+      snapshots: [
+        {
+          path: 'test/config2.json',
+          hash: '1',
+          merge: false,
+          executable: false,
+          type: FileType.JSON,
+          content: JSON.stringify({}),
+        },
+        {
+          path: 'config1.json',
+          hash: '2',
+          merge: false,
+          executable: false,
+          type: FileType.JSON,
+          content: JSON.stringify({}),
+        },
+        {
+          path: '.gitignore',
+          hash: '3',
+          merge: true,
+          executable: false,
+          type: FileType.GLOB,
+          content: '.env\nnode_modules/',
+        },
+      ],
+    });
 
     expect(files).toMatchSnapshot();
   });
