@@ -22,6 +22,8 @@ export default class Extractor {
     await this.extractFiles(snapshots);
     this.insertScripts(scripts, pkg);
     this.installDependencies(dependencies, pkg);
+
+    // TODO: add packageOptions
   }
 
   private async extractFiles(snapshots: ISnapshot[]): Promise<void> {

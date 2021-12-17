@@ -1,11 +1,11 @@
 import { promises as fs } from 'fs';
 import Package from 'package-json-helper';
+import { PackageManager, PackageType } from 'package-json-helper/lib/types';
+import { cast } from 'package-json-helper/lib/utils/parsers';
 import path from 'path';
 import yaml from 'yaml';
 
-import {
-    EntityName, IDependency, INormalizedSharedConfig, ISharedConfig, OUTPUT_DIR, PackageManager, SHARED_DIR,
-} from '../types';
+import { EntityName, IDependency, INormalizedSharedConfig, ISharedConfig, OUTPUT_DIR, SHARED_DIR } from '../types';
 import { createSnapshots, readFile, writeFile } from '../utils/file';
 import { stringify } from '../utils/json';
 
@@ -38,7 +38,9 @@ export default class Builder {
       "import SharedConfig from 'standard-shared-config'",
       ...entities.map(entity => `import ${entity} from './${PARTS_DIR_NAME}/${entity}'`),
       '',
-      `await new SharedConfig().share("${sharedDir}", { ${entities.join(', ')} });`,
+      `await new SharedConfig().share("${sharedDir}", { ${entities.join(', ')}, package: ${stringify(
+        config.package
+      )} });`,
     ]);
 
     await writeFile(`bin/${this.name}.js`, ['#!/usr/bin/env node', `import '../${outputDir}/index.js';`]);
@@ -54,6 +56,7 @@ export default class Builder {
     const outputDir = path.relative(process.cwd(), config.outputDir ?? OUTPUT_DIR);
     const sharedDir = config.sharedDir ?? SHARED_DIR;
     const snapshots = await createSnapshots(process.cwd(), config);
+    const exports = cast.toExportsMap(config.package?.exports);
 
     return {
       snapshots,
@@ -67,7 +70,12 @@ export default class Builder {
           )) ??
         [],
       scripts: Object.entries(config.scripts ?? {}),
-      manager: config.manager ?? PackageManager.NPM,
+      package: {
+        manager: config.package?.manager ?? PackageManager.NPM,
+        type: config.package?.type ?? PackageType.Module,
+        exports: exports && exports.getSnapshot(),
+        types: cast.toString(config.package?.types),
+      },
     };
   }
 
