@@ -1,6 +1,6 @@
-# :memo: Internal changes
+# :bug: Bug Fixes
 
-- Add description for new config parameters for `package.json` [`db0df1b`](https://github.com/keindev/standard-shared-config/commit/db0df1b4e0043f5aa0f4018b77cd6eabd236d754)
+- Fix setting shared config package parameters [`dde2d81`](https://github.com/keindev/standard-shared-config/commit/dde2d8123b66bc720bc80b4a5588dfdf207a7b09)
 
 ---
 

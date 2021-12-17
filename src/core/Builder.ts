@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import Package from 'package-json-helper';
 import { ExportMap } from 'package-json-helper/lib/fields/ExportMap';
-import { JSONObject } from 'package-json-helper/lib/types';
+import { JSONObject, PackageType } from 'package-json-helper/lib/types';
 import path from 'path';
 import yaml from 'yaml';
 
@@ -42,15 +42,16 @@ export default class Builder {
 
   private async createBinCallback(outputDir: string): Promise<void> {
     const pkg = new Package();
-    const indexPath = path.join(outputDir, 'index.js');
+    const indexPath = `./${path.join(outputDir, 'index.js')}`;
 
     await pkg.read();
-    await writeFile(`bin/${pkg.name}.js`, ['#!/usr/bin/env node', `import '../${outputDir}/index.js';`]);
+    await writeFile(`bin/${pkg.nameWithoutScope}.js`, ['#!/usr/bin/env node', `import '../${outputDir}/index.js';`]);
 
     if (pkg.exports) pkg.exports.map.set('.', indexPath);
     else pkg.exports = new ExportMap({ map: new Map([['.', indexPath]]) });
 
-    pkg.bin.set(pkg.name, `bin/${pkg.name}.js`);
+    pkg.type = PackageType.Module;
+    pkg.bin.set(pkg.nameWithoutScope, `bin/${pkg.nameWithoutScope}.js`);
     await pkg.save();
   }
 

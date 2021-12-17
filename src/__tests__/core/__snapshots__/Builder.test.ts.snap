@@ -95,8 +95,8 @@ import '../lib/index.js';",
     "package.json",
     "{
   \\"name\\": \\"test\\",
-  \\"type\\": \\"commonjs\\",
-  \\"exports\\": \\"lib/index.js\\",
+  \\"type\\": \\"module\\",
+  \\"exports\\": \\"./lib/index.js\\",
   \\"bin\\": {
     \\"test\\": \\"bin/test.js\\"
   }
