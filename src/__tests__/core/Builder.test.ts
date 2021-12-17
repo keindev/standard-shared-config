@@ -32,6 +32,14 @@ scripts:
 dependencies:
   - "@types/jest": "1.x"
   - "ts-jest": "26.x"
+
+package:
+  manager: npm
+  type: module
+  types: './lib/index.d.ts'
+  exports:
+    ".": "./lib/index.js"
+    "lib": "./lib/index.js"
 `;
 
 jest.spyOn(glob, 'sync').mockImplementation(() => ['config1.json', 'test/config2.json']);
