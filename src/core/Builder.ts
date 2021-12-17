@@ -9,6 +9,8 @@ import {
 import { createSnapshots, readFile, writeFile } from '../utils/file';
 import { stringify } from '../utils/json';
 
+const PARTS_DIR_NAME = 'parts';
+
 export default class Builder {
   readonly name: string;
 
@@ -34,15 +36,12 @@ export default class Builder {
       '',
       '/* eslint-disable */',
       "import SharedConfig from 'standard-shared-config'",
-      ...entities.map(entity => `import ${entity} from './parts/${entity}'`),
+      ...entities.map(entity => `import ${entity} from './${PARTS_DIR_NAME}/${entity}'`),
       '',
-      `await new SharedConfig().share("${path.relative(outputDir, sharedDir)}", { ${entities.join(', ')} });`,
+      `await new SharedConfig().share("${sharedDir}", { ${entities.join(', ')} });`,
     ]);
 
-    await writeFile(path.resolve(process.cwd(), `bin/${this.name}.js`), [
-      '#!/usr/bin/env node',
-      `import '../${outputDir}/index.js';`,
-    ]);
+    await writeFile(`bin/${this.name}.js`, ['#!/usr/bin/env node', `import '../${outputDir}/index.js';`]);
 
     pkg.exports.map.set('.', path.join(outputDir, 'index.js'));
     pkg.bin.set(this.name, `bin/${this.name}.js`);
@@ -50,14 +49,16 @@ export default class Builder {
   }
 
   private async readConfig(configPath: string): Promise<INormalizedSharedConfig> {
-    const content = await readFile(path.resolve(process.cwd(), configPath));
+    const content = await readFile(path.relative(process.cwd(), configPath));
     const config: ISharedConfig = content ? yaml.parse(content) : {};
-    const sharedDir = path.resolve(process.cwd(), config.sharedDir ?? SHARED_DIR);
-    const snapshots = await createSnapshots(sharedDir, config);
+    const outputDir = path.relative(process.cwd(), config.outputDir ?? OUTPUT_DIR);
+    const sharedDir = config.sharedDir ?? SHARED_DIR;
+    const snapshots = await createSnapshots(process.cwd(), config);
 
     return {
       snapshots,
       sharedDir,
+      outputDir,
       dependencies:
         (config.dependencies &&
           config.dependencies.map(
@@ -65,14 +66,13 @@ export default class Builder {
               (typeof dependency === 'string' ? [dependency] : Object.entries(dependency).pop()) as IDependency
           )) ??
         [],
-      outputDir: path.resolve(process.cwd(), config.outputDir ?? OUTPUT_DIR),
       scripts: Object.entries(config.scripts ?? {}),
       manager: config.manager ?? PackageManager.NPM,
     };
   }
 
   private async writeScript<T>(name: EntityName, values: T[], outputDir: string): Promise<string> {
-    const filePath = `${outputDir}/parts/${name}.js`;
+    const filePath = `${outputDir}/${PARTS_DIR_NAME}/${name}.js`;
 
     if (values.length) {
       await writeFile(filePath, [

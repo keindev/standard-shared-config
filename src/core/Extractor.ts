@@ -10,10 +10,10 @@ import {
 import { getHash, mergeFiles, readFile, writeFile } from '../utils/file';
 
 export default class Extractor {
-  #dir: string;
+  #sharedDir: string;
 
-  constructor(dir: string) {
-    this.#dir = dir;
+  constructor(sharedDir: string) {
+    this.#sharedDir = sharedDir;
   }
 
   async extract({ snapshots = [], ...options }: IExtractionOptions, pkg: Package): Promise<void> {
@@ -28,7 +28,8 @@ export default class Extractor {
     const task = TaskTree.add('Processing config files...');
     const extract = async (snapshot: ISnapshot): Promise<void> => {
       const filePath = path.resolve(process.cwd(), snapshot.path);
-      const extendFilePath = snapshot.type === FileType.GLOB ? snapshot.path : path.join(this.#dir, snapshot.path);
+      const extendFilePath =
+        snapshot.type === FileType.GLOB ? snapshot.path : path.join(this.#sharedDir, snapshot.path);
       const extendFileData = snapshot.merge ? await readFile(path.resolve(process.cwd(), extendFilePath)) : false;
 
       if (extendFileData) {
@@ -86,7 +87,7 @@ export default class Extractor {
     dependencies = [],
     scripts = [],
   }: Pick<IExtractionOptions, EntityName.Dependencies | EntityName.Scripts>): Promise<INormalizedExtractionConfig> {
-    const content = await readFile(path.resolve(process.cwd(), this.#dir, CONFIG_FILE));
+    const content = await readFile(path.resolve(process.cwd(), this.#sharedDir, CONFIG_FILE));
     const config: IExtractionConfig = content ? yaml.parse(content) : {};
     const overrideScripts = new Map(Object.entries(config.overrideScripts ?? {}));
     const ignoreDependencies = new Set(config.ignoreDependencies ?? []);

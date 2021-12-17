@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Config build 1`] = `
+exports[`Builder build 1`] = `
 Array [
   Array [
-    "dependencies.js",
+    "lib/parts/dependencies.js",
     "/* eslint-disable */
 /* prettier-ignore */
 export default [
@@ -18,7 +18,7 @@ export default [
 ]",
   ],
   Array [
-    "scripts.js",
+    "lib/parts/scripts.js",
     "/* eslint-disable */
 /* prettier-ignore */
 export default [
@@ -33,12 +33,12 @@ export default [
 ]",
   ],
   Array [
-    "snapshots.js",
+    "lib/parts/snapshots.js",
     "/* eslint-disable */
 /* prettier-ignore */
 export default [
   {
-    \\"path\\": \\"../test/config1.json\\",
+    \\"path\\": \\"test/config2.json\\",
     \\"hash\\": \\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\\",
     \\"merge\\": false,
     \\"executable\\": false,
@@ -46,7 +46,7 @@ export default [
     \\"content\\": \\"\\"
   },
   {
-    \\"path\\": \\"../test/config2.json\\",
+    \\"path\\": \\"config1.json\\",
     \\"hash\\": \\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\\",
     \\"merge\\": false,
     \\"executable\\": false,
@@ -64,7 +64,7 @@ export default [
 ]",
   ],
   Array [
-    "index.js",
+    "lib/index.js",
     "/* --------------------------------------------------------------- */
 /* This file generated automatically                               */
 /* @see https://www.npmjs.com/package/standard-shared-config       */
@@ -72,34 +72,16 @@ export default [
 
 /* eslint-disable */
 import SharedConfig from 'standard-shared-config'
-import dependencies from './dependencies'
-import scripts from './scripts'
-import snapshots from './snapshots'
+import dependencies from './parts/dependencies'
+import scripts from './parts/scripts'
+import snapshots from './parts/snapshots'
 
 await new SharedConfig().share(\\".config\\", { dependencies, scripts, snapshots });",
   ],
   Array [
     "bin/test.js",
     "#!/usr/bin/env node
-import '../index.js';",
-  ],
-]
-`;
-
-exports[`Config process 1`] = `
-Array [
-  Array [
-    "../test/.gitignore",
-    "*.log
-.env
-coverage
-logs
-yarn-debug.log*
-yarn-error.log*",
-  ],
-  Array [
-    "../test/config2.json",
-    "{}",
+import '../lib/index.js';",
   ],
 ]
 `;

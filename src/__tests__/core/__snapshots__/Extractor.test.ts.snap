@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Extractor extract 1`] = `
+Array [
+  Array [
+    "test/config2.json",
+    "{}",
+  ],
+  Array [
+    "config1.json",
+    "{}",
+  ],
+  Array [
+    ".gitignore",
+    "*.log
+.env
+coverage
+logs
+node_modules/
+yarn-debug.log*
+yarn-error.log*",
+  ],
+]
+`;

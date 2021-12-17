@@ -103,7 +103,7 @@ export const createSnapshots = async (
       .map(filePath => createSnapshot(filePath, dir, mergeRules, executableFiles))
   );
 
-  return {
+  return [
     ...snapshots,
     ...Object.entries(config.ignorePatterns ?? {}).map(([filePath, rows]) => {
       const content = rows.join('\n');
@@ -117,7 +117,7 @@ export const createSnapshots = async (
         content,
       };
     }),
-  };
+  ];
 };
 
 export const mergeFiles = ({ type, merge: rules, content: snapshot }: ISnapshot, content: string): string => {
