@@ -12,6 +12,15 @@
 | **executableFiles** | List of files to be executable (`chmod 0755`)                                                                                                                                                                                                               |
 | **scripts**         | Script commands like in `package.json`, which will be added to the `package.json` file of the package using your shared config                                                                                                                              |
 | **dependencies**    | List of `devDependencies`, with the ability to specify the minimum required version in the `SemVer` format, which are required to work correctly with your shared configuration                                                                             |
+| **package.exports** | Standard entry points of the package, with enhanced support for ECMAScript Modules. configuration                                                                                                                                                           |
+| **package.manager** | Default package manager `npm` or `yarn`                                                                                                                                                                                                                     |
+| **package.type**    | [Resolution algorithm](https://nodejs.org/api/esm.html#esm_package_json_type_field) for importing `.js` files from packages scope.                                                                                                                          |
+| **package.types**   | Location of the bundled TypeScript declaration file.                                                                                                                                                                                                        |
+
+?: JSONValue;
+?: PackageManager;
+?: PackageType;
+?: string;
 
 #### Example
 
