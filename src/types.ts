@@ -1,3 +1,6 @@
+import { ExportMap } from 'package-json-helper/lib/fields/ExportMap';
+import { JSONValue, PackageManager, PackageType } from 'package-json-helper/lib/types';
+
 export enum FileType {
   Text = 'text',
   GLOB = 'glob',
@@ -9,11 +12,7 @@ export enum EntityName {
   Dependencies = 'dependencies',
   Scripts = 'scripts',
   Snapshots = 'snapshots',
-}
-
-export enum PackageManager {
-  NPM = 'npm',
-  Yarn = 'yarn',
+  Package = 'package',
 }
 
 export const CONFIG_FILE = '.sharedconfig.yml';
@@ -24,14 +23,6 @@ export type IMergeRule = string[] | null | boolean;
 export type IScript = [string, string];
 export type IDependency = [string, string | undefined];
 export type IMergeMap = { [key: string]: IMergeRule };
-export type IExtractionOptions = {
-  /** Package devDependencies list */
-  [EntityName.Dependencies]?: IDependency[];
-  /** List of package scripts */
-  [EntityName.Scripts]?: IScript[];
-  /** Configuration files snapshots */
-  [EntityName.Snapshots]?: ISnapshot[];
-};
 
 export interface ISnapshot {
   content: string;
@@ -42,22 +33,29 @@ export interface ISnapshot {
   type: FileType;
 }
 
+export interface IPackageParams {
+  exports?: JSONValue;
+  manager?: PackageManager;
+  type?: PackageType;
+  types?: string;
+}
+
 export interface ISharedConfig {
   dependencies?: (string | { [key: string]: string })[];
   executableFiles?: string[];
   ignorePatterns?: { [key: string]: string[] };
   include?: string[];
-  manager?: PackageManager;
   mergeRules?: IMergeMap;
   outputDir?: string;
+  package?: IPackageParams;
   scripts?: { [key: string]: string };
   sharedDir?: string;
 }
 
 export interface INormalizedSharedConfig {
   dependencies: IDependency[];
-  manager: PackageManager;
   outputDir: string;
+  package: IPackageParams;
   scripts: IScript[];
   sharedDir: string;
   snapshots: ISnapshot[];
@@ -68,7 +66,23 @@ export interface IExtractionConfig {
   overrideScripts?: { [key: string]: string };
 }
 
+export interface INormalizedPackageParams extends Pick<IPackageParams, 'manager' | 'type' | 'types'> {
+  exports?: ExportMap;
+}
+
 export interface INormalizedExtractionConfig {
   dependencies: IDependency[];
+  package: INormalizedPackageParams;
   scripts: IScript[];
+}
+
+export interface IExtractionOptions {
+  /** Package devDependencies list */
+  [EntityName.Dependencies]?: IDependency[];
+  /** Package parameters */
+  [EntityName.Package]?: IPackageParams;
+  /** List of package scripts */
+  [EntityName.Scripts]?: IScript[];
+  /** Configuration files snapshots */
+  [EntityName.Snapshots]?: ISnapshot[];
 }

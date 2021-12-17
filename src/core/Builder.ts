@@ -1,24 +1,18 @@
 import { promises as fs } from 'fs';
 import Package from 'package-json-helper';
+import { ExportMap } from 'package-json-helper/lib/fields/ExportMap';
+import { JSONObject } from 'package-json-helper/lib/types';
 import path from 'path';
 import yaml from 'yaml';
 
-import {
-    EntityName, IDependency, INormalizedSharedConfig, ISharedConfig, OUTPUT_DIR, PackageManager, SHARED_DIR,
-} from '../types';
+import { EntityName, IDependency, INormalizedSharedConfig, ISharedConfig, OUTPUT_DIR, SHARED_DIR } from '../types';
 import { createSnapshots, readFile, writeFile } from '../utils/file';
 import { stringify } from '../utils/json';
 
 const PARTS_DIR_NAME = 'parts';
 
 export default class Builder {
-  readonly name: string;
-
-  constructor(name: string) {
-    this.name = name;
-  }
-
-  async build(configPath: string, pkg: Package): Promise<void> {
+  async build(configPath: string): Promise<void> {
     const { outputDir, sharedDir, ...config } = await this.readConfig(configPath);
     const entities = (
       await Promise.all([
@@ -38,14 +32,26 @@ export default class Builder {
       "import SharedConfig from 'standard-shared-config'",
       ...entities.map(entity => `import ${entity} from './${PARTS_DIR_NAME}/${entity}'`),
       '',
-      `await new SharedConfig().share("${sharedDir}", { ${entities.join(', ')} });`,
+      `await new SharedConfig().share("${sharedDir}", { ${entities.join(', ')}, package: ${stringify(
+        config.package as JSONObject
+      )} });`,
     ]);
 
-    await writeFile(`bin/${this.name}.js`, ['#!/usr/bin/env node', `import '../${outputDir}/index.js';`]);
+    await this.createBinCallback(outputDir);
+  }
 
-    pkg.exports.map.set('.', path.join(outputDir, 'index.js'));
-    pkg.bin.set(this.name, `bin/${this.name}.js`);
-    pkg.save();
+  private async createBinCallback(outputDir: string): Promise<void> {
+    const pkg = new Package();
+    const indexPath = path.join(outputDir, 'index.js');
+
+    await pkg.read();
+    await writeFile(`bin/${pkg.name}.js`, ['#!/usr/bin/env node', `import '../${outputDir}/index.js';`]);
+
+    if (pkg.exports) pkg.exports.map.set('.', indexPath);
+    else pkg.exports = new ExportMap({ map: new Map([['.', indexPath]]) });
+
+    pkg.bin.set(pkg.name, `bin/${pkg.name}.js`);
+    await pkg.save();
   }
 
   private async readConfig(configPath: string): Promise<INormalizedSharedConfig> {
@@ -67,7 +73,7 @@ export default class Builder {
           )) ??
         [],
       scripts: Object.entries(config.scripts ?? {}),
-      manager: config.manager ?? PackageManager.NPM,
+      package: config.package ?? {},
     };
   }
 

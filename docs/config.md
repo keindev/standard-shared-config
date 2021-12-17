@@ -51,10 +51,10 @@ dependencies:
 
 ## Override `.sharedconfig.yml` configuration parameters
 
-| Name                   | Description                                                                                                                                                                                   |
-| :--------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **overrideScripts**    | Override values of package scripts defined in [`.sharedconfig.yml`](https://github.com/keindev/standard-shared-config/blob/master/docs/library-config.md) configuration of used shared config |
-| **ignoreDependencies** | Ignore dependencies defined in [`.sharedconfig.yml`](https://github.com/keindev/standard-shared-config/blob/master/docs/library-config.md) configuration of used shared config                |
+| Name                   | Description                                                                                           |
+| :--------------------- | ----------------------------------------------------------------------------------------------------- |
+| **overrideScripts**    | Override values of package scripts defined in `.sharedconfig.yml` configuration of used shared config |
+| **ignoreDependencies** | Ignore dependencies defined in `.sharedconfig.yml` configuration of used shared config                |
 
 #### Example
 

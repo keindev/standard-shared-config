@@ -1,11 +1,13 @@
 import Package from 'package-json-helper';
+import { PackageManager } from 'package-json-helper/lib/types';
+import { cast } from 'package-json-helper/lib/utils/parsers';
 import path from 'path';
 import TaskTree from 'tasktree-cli';
 import yaml from 'yaml';
 
 import {
     CONFIG_FILE, EntityName, FileType, IDependency, IExtractionConfig, IExtractionOptions, INormalizedExtractionConfig,
-    IScript, ISnapshot,
+    INormalizedPackageParams, IScript, ISnapshot,
 } from '../types';
 import { getHash, mergeFiles, readFile, writeFile } from '../utils/file';
 
@@ -16,12 +18,16 @@ export default class Extractor {
     this.#sharedDir = sharedDir;
   }
 
-  async extract({ snapshots = [], ...options }: IExtractionOptions, pkg: Package): Promise<void> {
-    const { dependencies, scripts } = await this.readConfig(options);
+  async extract({ snapshots = [], ...options }: IExtractionOptions): Promise<void> {
+    const config = await this.readConfig(options);
+    const pkg = new Package(path.join(process.cwd(), 'package.json'), config.package.manager ?? PackageManager.NPM);
 
+    await pkg.read();
     await this.extractFiles(snapshots);
-    this.insertScripts(scripts, pkg);
-    this.installDependencies(dependencies, pkg);
+    this.installDependencies(config.dependencies, pkg);
+    this.insertScripts(config.scripts, pkg);
+    this.updatePackage(config.package, pkg);
+    await pkg.save();
   }
 
   private async extractFiles(snapshots: ISnapshot[]): Promise<void> {
@@ -62,8 +68,7 @@ export default class Extractor {
       pkg.scripts.set(key, value);
     });
 
-    pkg.save();
-    task.complete('Package scripts have been updated!');
+    task.complete('Package scripts was updated!');
   }
 
   private installDependencies(dependencies: IDependency[], pkg: Package): void {
@@ -86,7 +91,8 @@ export default class Extractor {
   private async readConfig({
     dependencies = [],
     scripts = [],
-  }: Pick<IExtractionOptions, EntityName.Dependencies | EntityName.Scripts>): Promise<INormalizedExtractionConfig> {
+    ...options
+  }: Omit<IExtractionOptions, EntityName.Snapshots>): Promise<INormalizedExtractionConfig> {
     const content = await readFile(path.resolve(process.cwd(), this.#sharedDir, CONFIG_FILE));
     const config: IExtractionConfig = content ? yaml.parse(content) : {};
     const overrideScripts = new Map(Object.entries(config.overrideScripts ?? {}));
@@ -95,6 +101,30 @@ export default class Extractor {
     return {
       scripts: scripts.map(([key, value]) => [key, overrideScripts.get(key) ?? value]),
       dependencies: dependencies.filter(([key]) => !ignoreDependencies.has(key)),
+      package: {
+        manager: options.package?.manager ?? PackageManager.NPM,
+        type: options.package?.type,
+        exports: cast.toExportsMap(options.package?.exports),
+        types: cast.toString(options.package?.types),
+      },
     };
+  }
+
+  private updatePackage(config: INormalizedPackageParams, pkg: Package): void {
+    const task = TaskTree.add('Update package params:');
+
+    if (config.type && pkg.type !== config.type) pkg.type = config.type;
+    if (config.types && pkg.types !== config.types) pkg.types = config.types;
+    if (config.exports) {
+      if (pkg.exports) {
+        const { map } = pkg.exports;
+
+        config.exports.map.forEach((value, key) => map.set(key, value));
+      } else {
+        pkg.exports = config.exports;
+      }
+    }
+
+    task.complete('Package parameters was updated!');
   }
 }

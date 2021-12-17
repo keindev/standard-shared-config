@@ -76,12 +76,31 @@ import dependencies from './parts/dependencies'
 import scripts from './parts/scripts'
 import snapshots from './parts/snapshots'
 
-await new SharedConfig().share(\\".config\\", { dependencies, scripts, snapshots });",
+await new SharedConfig().share(\\".config\\", { dependencies, scripts, snapshots, package: {
+  \\"manager\\": \\"npm\\",
+  \\"type\\": \\"module\\",
+  \\"types\\": \\"./lib/index.d.ts\\",
+  \\"exports\\": {
+    \\".\\": \\"./lib/index.js\\",
+    \\"lib\\": \\"./lib/index.js\\"
+  }
+} });",
   ],
   Array [
     "bin/test.js",
     "#!/usr/bin/env node
 import '../lib/index.js';",
+  ],
+  Array [
+    "package.json",
+    "{
+  \\"name\\": \\"test\\",
+  \\"type\\": \\"commonjs\\",
+  \\"exports\\": \\"lib/index.js\\",
+  \\"bin\\": {
+    \\"test\\": \\"bin/test.js\\"
+  }
+}",
   ],
 ]
 `;

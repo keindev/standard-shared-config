@@ -20,5 +20,24 @@ node_modules/
 yarn-debug.log*
 yarn-error.log*",
   ],
+  Array [
+    "package.json",
+    "[[\\"jest\\",\\"8.x\\"]]",
+  ],
+  Array [
+    "package.json",
+    "{
+  \\"name\\": \\"test\\",
+  \\"type\\": \\"commonjs\\",
+  \\"scripts\\": {
+    \\"build\\": \\"tsc\\",
+    \\"test\\": \\"jest\\"
+  },
+  \\"devDependencies\\": {
+    \\"@types/jest\\": \\"^1.x\\",
+    \\"ts-jest\\": \\"^26.x\\"
+  }
+}",
+  ],
 ]
 `;
