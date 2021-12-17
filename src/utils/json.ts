@@ -1,29 +1,29 @@
 import isEqual from 'lodash.isequal';
 import unionWith from 'lodash.unionwith';
-import { JsonValue } from 'type-fest';
+import { JSONValue } from 'package-json-helper/lib/types';
 import yaml from 'yaml';
 
 export type IParserType = 'json' | 'yaml';
 export type IMergeOptions = {
-  left?: JsonValue;
-  right?: JsonValue;
   excludes?: Set<string>;
+  left?: JSONValue;
   path?: (string | number)[];
+  right?: JSONValue;
 };
 
-export const parse = (str: string, type?: IParserType): JsonValue => {
+export const parse = (str: string, type?: IParserType): JSONValue => {
   const isJSON = !type || type === 'json';
 
   return isJSON ? JSON.parse(str) : yaml.parse(str);
 };
 
-export const stringify = (value: JsonValue, type?: IParserType): string => {
+export const stringify = (value: JSONValue, type?: IParserType): string => {
   const isJSON = !type || type === 'json';
 
   return isJSON ? JSON.stringify(value, undefined, 2) : yaml.stringify(value);
 };
 
-export const merge = ({ left, right, excludes = new Set<string>(), path = [] }: IMergeOptions): JsonValue => {
+export const merge = ({ left, right, excludes = new Set<string>(), path = [] }: IMergeOptions): JSONValue => {
   const isMerge = excludes.delete(path.join('.'));
   let result = isMerge ? left : right;
 

@@ -1,32 +1,34 @@
 import { promises as fs } from 'fs';
+import Package from 'package-json-helper';
 import path from 'path';
-import TaskTree from 'tasktree-cli';
-import { Task } from 'tasktree-cli/lib/Task';
+import yaml from 'yaml';
 
-import { EntityName, FileType, ISnapshot } from '../types';
-import { getHash, getType, readFile, writeFile } from '../utils/file';
-import { merge, parse, stringify } from '../utils/json';
-import LibraryConfig from './LibraryConfig';
+import {
+    EntityName, IDependency, INormalizedSharedConfig, ISharedConfig, OUTPUT_DIR, PackageManager, SHARED_DIR,
+} from '../types';
+import { createSnapshots, readFile, writeFile } from '../utils/file';
+import { stringify } from '../utils/json';
+
+const PARTS_DIR_NAME = 'parts';
 
 export default class Builder {
-  async build(name: string, config: LibraryConfig): Promise<void> {
-    if (!config.isInitialized) await config.init();
+  readonly name: string;
 
-    const { dependencies, scripts, outDir } = config;
-    const snapshots = await Promise.all(config.paths.map(filePath => this.createSnapshot(filePath, config)));
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  async build(configPath: string, pkg: Package): Promise<void> {
+    const { outputDir, sharedDir, ...config } = await this.readConfig(configPath);
     const entities = (
       await Promise.all([
-        this.writeScript(EntityName.Dependencies, dependencies, outDir),
-        this.writeScript(EntityName.Scripts, scripts, outDir),
-        this.writeScript(
-          EntityName.Snapshots,
-          [...snapshots, ...this.createSnapshotsFromIgnorePatterns(config)],
-          outDir
-        ),
+        this.writeScript(EntityName.Dependencies, config.dependencies, outputDir),
+        this.writeScript(EntityName.Scripts, config.scripts, outputDir),
+        this.writeScript(EntityName.Snapshots, config.snapshots, outputDir),
       ])
     ).filter(Boolean);
 
-    await writeFile(`${outDir}/index.js`, [
+    await writeFile(`${outputDir}/index.js`, [
       '/* --------------------------------------------------------------- */',
       '/* This file generated automatically                               */',
       '/* @see https://www.npmjs.com/package/standard-shared-config       */',
@@ -34,65 +36,43 @@ export default class Builder {
       '',
       '/* eslint-disable */',
       "import SharedConfig from 'standard-shared-config'",
-      ...entities.map(entity => `import ${entity} from './${entity}'`),
+      ...entities.map(entity => `import ${entity} from './${PARTS_DIR_NAME}/${entity}'`),
       '',
-      `await new SharedConfig().share("${path.relative(process.cwd(), config.root)}", { ${entities.join(', ')} });`,
+      `await new SharedConfig().share("${sharedDir}", { ${entities.join(', ')} });`,
     ]);
 
-    await writeFile(`${outDir}/bin/${name}.js`, ['#!/usr/bin/env node', "import '../index.js';"]);
+    await writeFile(`bin/${this.name}.js`, ['#!/usr/bin/env node', `import '../${outputDir}/index.js';`]);
+
+    pkg.exports.map.set('.', path.join(outputDir, 'index.js'));
+    pkg.bin.set(this.name, `bin/${this.name}.js`);
+    pkg.save();
   }
 
-  async process(rootDir: string, snapshots: ISnapshot[]): Promise<void> {
-    const task = TaskTree.add('Processing config files...');
+  private async readConfig(configPath: string): Promise<INormalizedSharedConfig> {
+    const content = await readFile(path.relative(process.cwd(), configPath));
+    const config: ISharedConfig = content ? yaml.parse(content) : {};
+    const outputDir = path.relative(process.cwd(), config.outputDir ?? OUTPUT_DIR);
+    const sharedDir = config.sharedDir ?? SHARED_DIR;
+    const snapshots = await createSnapshots(process.cwd(), config);
 
-    await Promise.all(snapshots.map(snapshot => this.shareConfig(rootDir, snapshot, task)));
-    task.complete('Processed configs:');
+    return {
+      snapshots,
+      sharedDir,
+      outputDir,
+      dependencies:
+        (config.dependencies &&
+          config.dependencies.map(
+            dependency =>
+              (typeof dependency === 'string' ? [dependency] : Object.entries(dependency).pop()) as IDependency
+          )) ??
+        [],
+      scripts: Object.entries(config.scripts ?? {}),
+      manager: config.manager ?? PackageManager.NPM,
+    };
   }
 
-  private async shareConfig(rootDir: string, snapshot: ISnapshot, task: Task): Promise<void> {
-    const filePath = path.resolve(process.cwd(), snapshot.path);
-    const extendFilePath = snapshot.type === FileType.GLOB ? snapshot.path : path.join(rootDir, snapshot.path);
-    const extendFileData = snapshot.merge ? await readFile(path.resolve(process.cwd(), extendFilePath)) : false;
-
-    if (extendFileData) {
-      await writeFile(filePath, this.mergeFilesContent(snapshot, extendFileData), snapshot.executable);
-      task.log(`${snapshot.path} merged`);
-    } else {
-      const currentFileData = await readFile(filePath);
-      const hash = currentFileData ? getHash(currentFileData) : undefined;
-
-      if (hash !== snapshot.hash) {
-        await writeFile(filePath, snapshot.content, snapshot.executable);
-        task.log(`${snapshot.path} ${currentFileData ? 'updated' : 'created'}`);
-      }
-    }
-  }
-
-  private mergeFilesContent({ type, merge: rules, content: snapshot }: ISnapshot, content: string): string {
-    const excludes = Array.isArray(rules) ? new Set(rules) : undefined;
-    let result;
-
-    switch (type) {
-      case FileType.GLOB:
-        result = [...new Set([...content.split('\n'), ...snapshot.split('\n')].filter(Boolean)).values()]
-          .sort()
-          .join('\n');
-        break;
-      case FileType.JSON:
-      case FileType.YAML:
-        result = stringify(merge({ left: parse(content, type), right: parse(snapshot, type), excludes }), type);
-        break;
-      case FileType.Text:
-      default:
-        result = content;
-        break;
-    }
-
-    return result;
-  }
-
-  private async writeScript<T>(name: EntityName, values: T[], outDir: string): Promise<string> {
-    const filePath = `${outDir}/${name}.js`;
+  private async writeScript<T>(name: EntityName, values: T[], outputDir: string): Promise<string> {
+    const filePath = `${outputDir}/${PARTS_DIR_NAME}/${name}.js`;
 
     if (values.length) {
       await writeFile(filePath, [
@@ -105,36 +85,5 @@ export default class Builder {
     }
 
     return values.length ? name : '';
-  }
-
-  private async createSnapshot(filePath: string, config: LibraryConfig): Promise<ISnapshot> {
-    const content = (await readFile(filePath)) ?? '';
-    const relativePath = path.relative(config.root, filePath);
-    const type = getType(filePath);
-    const rule = config.findMergeRule(relativePath);
-
-    return {
-      path: relativePath,
-      hash: getHash(content),
-      merge: [FileType.GLOB, FileType.Text].includes(type) && rule ? true : rule ?? false,
-      executable: config.isExecutable(relativePath),
-      type,
-      content,
-    };
-  }
-
-  private createSnapshotsFromIgnorePatterns(config: LibraryConfig): ISnapshot[] {
-    return config.ignorePatterns.map(([filePath, rows]) => {
-      const content = rows.join('\n');
-
-      return {
-        path: filePath,
-        hash: getHash(content),
-        merge: !!config.findMergeRule(filePath),
-        executable: config.isExecutable(filePath),
-        type: FileType.GLOB,
-        content,
-      };
-    });
   }
 }

@@ -1,3 +1,81 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`File utils Get file hash 1`] = `"27a40f27cd71808962e218cfa221d14ff53b7f0d9db5ea56666d3422bb5d4e94"`;
+exports[`File utils Create snapshots 1`] = `
+Array [
+  Object {
+    "content": "
+  // Comment 1
+  # Comment 2
+  /* Comment 3 */
+  test: true
+  ",
+    "executable": false,
+    "hash": "278533b89f743b2ba504346f6915b3cce59680cd7d01ad5e2274611a423f3e7f",
+    "merge": false,
+    "path": "../file.yml",
+    "type": "yaml",
+  },
+  Object {
+    "content": "{\\"configurations\\":[{\\"name\\":\\"Build configs map\\",\\"type\\":\\"node\\",\\"request\\":\\"launch\\",\\"outputCapture\\":\\"std\\",\\"console\\":\\"integratedTerminal\\",\\"runtimeExecutable\\":\\"node\\",\\"runtimeArgs\\":[\\"--experimental-specifier-resolution=node\\",\\"--nolazy\\",\\"--inspect-brk=9229\\",\\"--loader\\",\\"ts-node/esm\\",\\"src/cli/bin.ts\\",\\"build\\"],\\"port\\":9229}]}",
+    "executable": false,
+    "hash": "5db3d0fdca70f204d4c0ff86c98eb5d45df4838422eb1f15b3c381d92b978627",
+    "merge": Array [
+      "configurations",
+    ],
+    "path": "../snapshot.json",
+    "type": "json",
+  },
+]
+`;
+
+exports[`File utils Get file hash 1`] = `"278533b89f743b2ba504346f6915b3cce59680cd7d01ad5e2274611a423f3e7f"`;
+
+exports[`File utils Merge GLOB files 1`] = `
+"      *.log
+      *.pid
+      *.pid.lock
+      *.seed
+      *.tgz
+      .editorconfig
+      .env
+      .eslintcache
+      .eslintignore
+      .eslintrc
+      media/
+      node_modules/
+      src/"
+`;
+
+exports[`File utils Merge JSON files 1`] = `
+"{
+  \\"text\\": \\"text\\",
+  \\"object1\\": {
+    \\"value1\\": true,
+    \\"value2\\": true
+  },
+  \\"object2\\": {
+    \\"value1\\": true,
+    \\"value2\\": false,
+    \\"value3\\": null
+  },
+  \\"list\\": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ]
+}"
+`;
+
+exports[`File utils Merge YAML files 1`] = `
+"version: 2
+updates:
+  - package-ecosystem: yarn
+    directory: /
+    schedule:
+      interval: weekly
+      day: friday
+      time: 23:00
+"
+`;

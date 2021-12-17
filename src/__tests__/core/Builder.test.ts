@@ -1,14 +1,18 @@
+// @see https://github.com/facebook/jest/issues/9430
+// eslint-disable-next-line node/no-extraneous-import
+import { jest } from '@jest/globals';
 import { promises as fs } from 'fs';
 import glob from 'glob';
+import Package from 'package-json-helper';
 import path from 'path';
 
 import Builder from '../../core/Builder';
-import LibraryConfig from '../../core/LibraryConfig';
-import { FileType } from '../../types';
 
-const LIBRARY_CONFIG_CONTENT = `
-rootDir: ".config"
-outDir: "."
+jest.useFakeTimers();
+
+const CONFIG = `
+sharedDir: ".config"
+outputDir: "lib"
 
 mergeRules:
   ".vscode/launch.json": [ "configurations" ]
@@ -30,7 +34,7 @@ dependencies:
   - "ts-jest": "26.x"
 `;
 
-jest.spyOn(glob, 'sync').mockImplementation(() => ['test/config1.json', 'test/config2.json']);
+jest.spyOn(glob, 'sync').mockImplementation(() => ['config1.json', 'test/config2.json']);
 jest.spyOn(fs, 'access').mockImplementation(() => Promise.resolve());
 jest.spyOn(fs, 'unlink').mockImplementation(() => Promise.resolve());
 jest.spyOn(fs, 'mkdir').mockImplementation(() => Promise.resolve(''));
@@ -38,15 +42,14 @@ jest.spyOn(fs, 'readFile').mockImplementation(filePath => {
   const basename = path.basename(filePath as string);
   let content = '';
 
-  if (basename === '.sharedconfig.yml') content = LIBRARY_CONFIG_CONTENT;
-  if (basename === '.gitignore') content = 'logs\ncoverage\n*.log\nyarn-debug.log*\nyarn-error.log*\n.env';
+  if (basename === '.sharedconfig.yml') content = CONFIG;
 
   return Promise.resolve(content);
 });
 
-describe('Config', () => {
-  const config = new LibraryConfig();
-  const builder = new Builder();
+describe('Builder', () => {
+  const builder = new Builder('test');
+  const pkg = new Package();
   let files: [string, string][] = [];
 
   jest.spyOn(fs, 'writeFile').mockImplementation((name, data) => {
@@ -55,35 +58,13 @@ describe('Config', () => {
     return Promise.resolve();
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  jest.spyOn(pkg, 'save').mockImplementation(() => {});
+
   it('build', async () => {
     files = [];
 
-    await builder.build('test', config);
-
-    expect(files).toMatchSnapshot();
-  });
-
-  it('process', async () => {
-    files = [];
-
-    await builder.process('.config', [
-      {
-        path: '../test/.gitignore',
-        hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
-        merge: true,
-        executable: false,
-        type: FileType.GLOB,
-        content: 'logs\ncoverage\n*.log\nyarn-debug.log*\nyarn-error.log*',
-      },
-      {
-        path: '../test/config2.json',
-        hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
-        merge: false,
-        executable: false,
-        type: FileType.JSON,
-        content: '{}',
-      },
-    ]);
+    await builder.build('.sharedconfig.yml', pkg);
 
     expect(files).toMatchSnapshot();
   });
