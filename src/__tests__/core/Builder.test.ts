@@ -41,7 +41,7 @@ package:
     "lib": "./lib/index.js"
 `;
 
-jest.spyOn(glob, 'sync').mockImplementation(() => ['config1.json', 'test/config2.json']);
+jest.spyOn(glob, 'sync').mockImplementation(() => ['.config/config1.json', '.config/test/config2.json']);
 jest.spyOn(fs, 'access').mockImplementation(() => Promise.resolve());
 jest.spyOn(fs, 'unlink').mockImplementation(() => Promise.resolve());
 jest.spyOn(fs, 'mkdir').mockImplementation(() => Promise.resolve(''));

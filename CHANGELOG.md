@@ -1,6 +1,6 @@
 # :bug: Bug Fixes
 
-- Fix setting shared config package parameters [`dde2d81`](https://github.com/keindev/standard-shared-config/commit/dde2d8123b66bc720bc80b4a5588dfdf207a7b09)
+- Fix snapshot paths [`49bd98b`](https://github.com/keindev/standard-shared-config/commit/49bd98b27d3124896f40bc3496bf4e12adfb01b5)
 
 ---
 
