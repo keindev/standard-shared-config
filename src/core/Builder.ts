@@ -56,11 +56,11 @@ export default class Builder {
   }
 
   private async readConfig(configPath: string): Promise<INormalizedSharedConfig> {
-    const content = await readFile(path.relative(process.cwd(), configPath));
+    const content = await readFile(configPath);
     const config: ISharedConfig = content ? yaml.parse(content) : {};
-    const outputDir = path.relative(process.cwd(), config.outputDir ?? OUTPUT_DIR);
+    const outputDir = config.outputDir ?? OUTPUT_DIR;
     const sharedDir = config.sharedDir ?? SHARED_DIR;
-    const snapshots = await createSnapshots(process.cwd(), config);
+    const snapshots = await createSnapshots(sharedDir, config);
 
     return {
       snapshots,
