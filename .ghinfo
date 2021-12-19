@@ -1,15 +1,15 @@
 {
   "name": "standard-shared-config",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "One shared config to rule them all",
   "keywords": [
     "automated",
-    "shared",
-    "config",
     "cli",
-    "unify",
+    "config",
+    "one",
+    "shared",
     "standard",
-    "one"
+    "unify"
   ],
   "repo": "keindev/standard-shared-config",
   "type": "utils",
