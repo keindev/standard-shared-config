@@ -100,7 +100,8 @@ import '../lib/index.js';",
   \\"bin\\": {
     \\"test\\": \\"bin/test.js\\"
   }
-}",
+}
+",
   ],
 ]
 `;
