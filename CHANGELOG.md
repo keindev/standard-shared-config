@@ -5,7 +5,7 @@
 <details>
 <summary>Dependencies</summary>
 
-- Bumped **[package-json-helper](https://www.npmjs.com/package/package-json-helper/v/2.0.3)** from `2.0.0` to `2.0.3`
+- Bumped **[package-json-helper](https://www.npmjs.com/package/package-json-helper/v/3.0.0)** from `2.0.0` to `3.0.0`
 
 </details>
 
