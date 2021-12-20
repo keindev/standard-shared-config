@@ -52,13 +52,13 @@
     "jsonfile": "^6.1.0",
     "lodash.isequal": "^4.5.0",
     "lodash.unionwith": "^4.6.0",
-    "package-json-helper": "^3.0.2",
+    "package-json-helper": "^3.0.4",
     "tasktree-cli": "^5.1.0",
     "yaml": "^1.10.2",
     "yargs": "^17.3.0"
   },
   "devDependencies": {
-    "@tagproject/ts-package-shared-config": "^6.1.1",
+    "@tagproject/ts-package-shared-config": "^6.2.1",
     "@types/glob": "^7.2.0",
     "@types/jest": "^27.0.3",
     "@types/lodash.isequal": "^4.5.5",

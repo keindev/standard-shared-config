@@ -11,8 +11,16 @@
 .prettierignore
 .prettierrc
 .yarn-integrity
+/.editorconfig
+/.eslintcache
+/.eslintignore
+/.eslintrc
 /.husky/
+/.prettierignore
+/.prettierrc
 /.vscode/
+/jest.config.js
+/tsconfig.json
 coverage
 jest.config.js
 lib
