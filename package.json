@@ -1,35 +1,35 @@
 {
   "name": "standard-shared-config",
-  "version": "4.0.3",
+  "version": "4.0.5",
   "description": "One shared config to rule them all",
-  "homepage": "https://github.com/keindev/standard-shared-config#readme",
   "license": "MIT",
+  "homepage": "https://github.com/keindev/standard-shared-config#readme",
   "author": {
     "name": "Daniil Ryazanov",
     "email": "kein@tagproject.ru"
   },
   "keywords": [
     "automated",
-    "shared",
-    "config",
     "cli",
-    "unify",
+    "config",
+    "one",
+    "shared",
     "standard",
-    "one"
+    "unify"
   ],
+  "types": "./lib/index.d.ts",
   "type": "module",
   "exports": "./lib/index.js",
-  "types": "./lib/index.d.ts",
   "bin": {
-    "standard-shared-config": "bin/shared-config.js",
-    "shared-config": "bin/shared-config.js"
+    "shared-config": "bin/shared-config.js",
+    "standard-shared-config": "bin/shared-config.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/keindev/standard-shared-config.git"
   },
-  "bugs": {
-    "url": "https://github.com/keindev/standard-shared-config/issues"
+  "engines": {
+    "node": "^14.13.1 || >=16.0.0"
   },
   "scripts": {
     "build": "npm-run-all build:*",
@@ -47,26 +47,23 @@
     "test": "npm-run-all test:*",
     "test:jest": "node --experimental-vm-modules node_modules/.bin/jest"
   },
-  "engines": {
-    "node": "^14.13.1 || >=16.0.0"
-  },
   "dependencies": {
     "glob": "^7.2.0",
     "jsonfile": "^6.1.0",
     "lodash.isequal": "^4.5.0",
     "lodash.unionwith": "^4.6.0",
-    "package-json-helper": "^2.0.0",
+    "package-json-helper": "^3.0.0",
     "tasktree-cli": "^5.1.0",
     "yaml": "^1.10.2",
     "yargs": "^17.3.0"
   },
   "devDependencies": {
-    "@tagproject/ts-package-shared-config": "^6.0.1",
+    "@tagproject/ts-package-shared-config": "^6.1.1",
     "@types/glob": "^7.2.0",
     "@types/jest": "^27.0.3",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.unionwith": "^4.6.6",
-    "@types/node": "^17.0.0",
+    "@types/node": "^17.0.1",
     "@types/semver": "^7.3.9",
     "@types/strip-comments": "^2.0.1",
     "@types/yargs": "^17.0.7",
@@ -74,14 +71,14 @@
     "@typescript-eslint/parser": "^5.7.0",
     "babel-jest": "^27.4.5",
     "changelog-guru": "3.0.2",
-    "cspell": "^5.13.3",
-    "eslint": "^8.4.1",
+    "cspell": "^5.13.4",
+    "eslint": "^8.5.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jest": "^25.3.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-optimize-regex": "^1.2.1",
-    "eslint-plugin-promise": "^5.2.0",
+    "eslint-plugin-promise": "^6.0.0",
     "ghinfo": "^2.0.3",
     "husky": "^7.0.4",
     "jest": "^27.4.5",

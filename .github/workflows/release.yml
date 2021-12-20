@@ -20,10 +20,10 @@ jobs:
   publish:
     name: Publish
     needs: [sync]
-    runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [15.x]
+        node-version: [16.x]
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v1
@@ -56,10 +56,10 @@ jobs:
   release:
     name: Create Release
     needs: [publish]
-    runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [15.x]
+        node-version: [16.x]
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
