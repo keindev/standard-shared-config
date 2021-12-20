@@ -24,7 +24,7 @@ export default class Extractor {
 
     await pkg.read();
     await this.extractFiles(snapshots);
-    this.installDependencies(config.dependencies, pkg);
+    await this.installDependencies(config.dependencies, pkg);
     this.insertScripts(config.scripts, pkg);
     this.updatePackage(config.package, pkg);
     await pkg.save();
@@ -71,7 +71,7 @@ export default class Extractor {
     task.complete('Package scripts was updated!');
   }
 
-  private installDependencies(dependencies: IDependency[], pkg: Package): void {
+  private async installDependencies(dependencies: IDependency[], pkg: Package): Promise<void> {
     const task = TaskTree.add('Lint package devDependencies:');
     const installationMap = new Map<string, string | undefined>();
 
@@ -83,7 +83,7 @@ export default class Extractor {
     });
 
     if (task.haveErrors) task.fail('Some dependencies are missing or have wrong version:');
-    if (installationMap.size) pkg.install(installationMap);
+    if (installationMap.size) await pkg.install(installationMap, ['--save-dev']);
 
     task.complete('All dependencies from shared config is presented in package.json');
   }

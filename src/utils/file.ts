@@ -11,6 +11,8 @@ enum FileMode {
   Executable = 0o0755,
 }
 
+const GLOB_OPTIONS = { dot: true, strict: true, nodir: true, ignore: ['**/.sharedconfig.yml'] };
+
 export const readFile = async (filePath: string): Promise<string | undefined> => {
   const isExists = await fs
     .access(filePath, constants.R_OK)
@@ -84,9 +86,7 @@ export const createSnapshots = async (
   dir: string,
   config: Pick<ISharedConfig, 'include' | 'mergeRules' | 'executableFiles' | 'ignorePatterns'>
 ): Promise<ISnapshot[]> => {
-  const files = (config.include ?? ['**/*'])
-    .map(pattern => glob.sync(`${dir}/${pattern}`, { dot: true, strict: true, nodir: true }))
-    .flat();
+  const files = (config.include ?? ['**/*']).map(pattern => glob.sync(`${dir}/${pattern}`, GLOB_OPTIONS)).flat();
   const mergeRules = new Map(
     Object.entries(config.mergeRules ?? {}).reduce((acc, [key, value]) => {
       if (Array.isArray(value)) acc.push([key, value.filter(item => typeof item === 'string')]);
