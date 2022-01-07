@@ -52,7 +52,7 @@
     "jsonfile": "^6.1.0",
     "lodash.isequal": "^4.5.0",
     "lodash.unionwith": "^4.6.0",
-    "package-json-helper": "^3.0.4",
+    "package-json-helper": "^4.0.0",
     "tasktree-cli": "^5.1.0",
     "yaml": "^1.10.2",
     "yargs": "^17.3.0"
