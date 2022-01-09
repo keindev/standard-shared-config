@@ -1,6 +1,6 @@
 {
   "name": "standard-shared-config",
-  "version": "4.0.7",
+  "version": "4.0.8",
   "description": "One shared config to rule them all",
   "keywords": [
     "automated",
@@ -14,12 +14,12 @@
   "repo": "keindev/standard-shared-config",
   "type": "utils",
   "links": {
+    "homepage": "https://github.com/keindev/standard-shared-config#readme",
     "git": "https://github.com/keindev/standard-shared-config",
-    "npm": "https://www.npmjs.com/package/standard-shared-config",
-    "homepage": "https://github.com/keindev/standard-shared-config#readme"
+    "npm": "https://www.npmjs.com/package/standard-shared-config"
   },
   "files": {
-    "logo": "media/logo.svg",
-    "social-preview": "media/social-preview.png"
+    "banner": "media/banner.svg",
+    "logo": "media/logo.svg"
   }
 }
