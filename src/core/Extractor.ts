@@ -7,7 +7,7 @@ import yaml from 'yaml';
 
 import {
     CONFIG_FILE, EntityName, FileType, IDependency, IExtractionConfig, IExtractionOptions, INormalizedExtractionConfig,
-    INormalizedPackageParams, IScript, ISnapshot,
+    ISnapshot,
 } from '../types';
 import { getHash, mergeFiles, readFile, writeFile } from '../utils/file';
 
@@ -24,10 +24,9 @@ export default class Extractor {
 
     await pkg.read();
     await this.extractFiles(snapshots);
-    await this.installDependencies(config.dependencies, pkg);
-    this.insertScripts(config.scripts, pkg);
-    this.updatePackage(config.package, pkg);
+    this.updatePackage(config, pkg);
     await pkg.save();
+    await this.installDependencies(config.dependencies, pkg);
   }
 
   private async extractFiles(snapshots: ISnapshot[]): Promise<void> {
@@ -54,21 +53,6 @@ export default class Extractor {
 
     await Promise.all(snapshots.map(extract));
     task.complete('Processed configs:');
-  }
-
-  private insertScripts(scripts: IScript[], pkg: Package): void {
-    const task = TaskTree.add('Inserting the required scripts:');
-
-    scripts.forEach(([key, value]) => {
-      const script = pkg.scripts.get(key);
-
-      if (!script) task.log(`{bold ${key}} script added`);
-      if (script && script !== value) task.log(`{bold ${key}} script replaced`);
-
-      pkg.scripts.set(key, value);
-    });
-
-    task.complete('Package scripts was updated!');
   }
 
   private async installDependencies(dependencies: IDependency[], pkg: Package): Promise<void> {
@@ -116,18 +100,33 @@ export default class Extractor {
     };
   }
 
-  private updatePackage(config: INormalizedPackageParams, pkg: Package): void {
-    const task = TaskTree.add('Update package params:');
+  private updatePackage(
+    { scripts, package: { type, types, exports } }: INormalizedExtractionConfig,
+    pkg: Package
+  ): void {
+    let task = TaskTree.add('Inserting the required scripts:');
 
-    if (config.type && pkg.type !== config.type) pkg.type = config.type;
-    if (config.types && pkg.types !== config.types) pkg.types = config.types;
-    if (config.exports) {
+    scripts.forEach(([key, value]) => {
+      const script = pkg.scripts.get(key);
+
+      if (!script) task.log(`{bold ${key}} script added`);
+      if (script && script !== value) task.log(`{bold ${key}} script replaced`);
+
+      pkg.scripts.set(key, value);
+    });
+
+    task.complete('Package scripts was updated!');
+    task = TaskTree.add('Update package params:');
+
+    if (type && pkg.type !== type) pkg.type = type;
+    if (types && pkg.types !== types) pkg.types = types;
+    if (exports) {
       if (pkg.exports) {
         const { map } = pkg.exports;
 
-        config.exports.map.forEach((value, key) => map.set(key, value));
+        exports.map.forEach((value, key) => map.set(key, value));
       } else {
-        pkg.exports = config.exports;
+        pkg.exports = exports;
       }
     }
 
