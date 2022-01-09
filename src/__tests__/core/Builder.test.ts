@@ -67,7 +67,6 @@ describe('Builder', () => {
     });
 
     await builder.build('.sharedconfig.yml');
-    await Promise.resolve();
 
     expect(files).toMatchSnapshot();
   });

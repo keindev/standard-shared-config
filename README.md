@@ -1,4 +1,4 @@
-<p align="center"><img width="400" src="https://cdn.jsdelivr.net/gh/keindev/standard-shared-config/media/logo.svg" alt="Standard shared config logo"></p>
+<p align="center"><img src="https://cdn.jsdelivr.net/gh/keindev/standard-shared-config/media/banner.svg" alt="Package logo"></p>
 
 <p align="center">
     <a href="https://github.com/keindev/standard-shared-config/actions"><img src="https://github.com/keindev/standard-shared-config/actions/workflows/build.yml/badge.svg" alt="Build Status"></a>

@@ -1,9 +1,12 @@
 import TaskTree from 'tasktree-cli';
+import { Arguments } from 'yargs';
 
 import SharedConfig from '../../SharedConfig';
 import { CONFIG_FILE } from '../../types';
 
-const build = async (configPath: string): Promise<void> => {
+type IArguments = Arguments<{ configPath: string }>;
+
+const build = async ({ configPath }: IArguments): Promise<void> => {
   const tree = TaskTree.tree().start();
   const config = new SharedConfig();
 
@@ -30,5 +33,5 @@ export default {
       default: CONFIG_FILE,
     },
   },
-  handler: ({ configPath }: { configPath: string }): Promise<void> => build(configPath),
+  handler: (args: IArguments): Promise<void> => build(args),
 };
