@@ -3,13 +3,7 @@
 *.pid.lock
 *.seed
 *.tgz
-.editorconfig
 .env
-.eslintcache
-.eslintignore
-.eslintrc
-.prettierignore
-.prettierrc
 .yarn-integrity
 /.editorconfig
 /.eslintcache
@@ -23,12 +17,10 @@
 /jest.config.js
 /tsconfig.json
 coverage
-jest.config.js
 lib
 logs
 node_modules/
 pids
-tsconfig.json
 tsconfig.tsbuildinfo
 yarn-debug.log*
 yarn-error.log*
