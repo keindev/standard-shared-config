@@ -70,7 +70,7 @@ export default class Extractor {
     if (installationMap.size) {
       const subtask = task.add('Installing packages:');
 
-      installationMap.forEach((version, name) => subtask.log(`{bold ${name}}: ${version}`));
+      installationMap.forEach((version, name) => subtask.log(`{bold ${name}}: ${version ?? '{italic latest}'}`));
       await pkg.install(installationMap, ['--save-dev']);
       subtask.complete('Installed packages');
     }
