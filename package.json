@@ -45,6 +45,7 @@
     "prepare": "npm-run-all prepare:*",
     "prepare:config": "node --experimental-specifier-resolution=node node_modules/.bin/ts-package-shared-config",
     "prepare:husky": "husky install",
+    "prepare:vscode": "node --experimental-specifier-resolution=node node_modules/.bin/vscode-shared-config",
     "release": "npm-run-all prepare lint test build generate",
     "test": "npm-run-all test:*",
     "test:jest": "node --experimental-vm-modules node_modules/.bin/jest"
@@ -54,13 +55,14 @@
     "jsonfile": "^6.1.0",
     "lodash.isequal": "^4.5.0",
     "lodash.unionwith": "^4.6.0",
-    "package-json-helper": "^4.0.1",
+    "package-json-helper": "^4.0.2",
     "tasktree-cli": "^6.0.1",
     "yaml": "^1.10.2",
     "yargs": "^17.3.1"
   },
   "devDependencies": {
-    "@tagproject/ts-package-shared-config": "^6.4.1",
+    "@tagproject/ts-package-shared-config": "^7.0.1",
+    "@tagproject/vscode-shared-config": "^1.1.2",
     "@types/glob": "^7.2.0",
     "@types/jest": "^27.4.0",
     "@types/lodash.isequal": "^4.5.5",
@@ -71,7 +73,7 @@
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
     "babel-jest": "^27.4.6",
-    "changelog-guru": "4.0.1",
+    "changelog-guru": "4.0.2",
     "cspell": "^5.15.2",
     "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
