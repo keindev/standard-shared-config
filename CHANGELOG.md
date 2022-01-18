@@ -3,24 +3,17 @@
 ## Dependencies
 
 <details>
-<summary>Dependencies</summary>
-
-- Changed **[package-json-helper](https://www.npmjs.com/package/package-json-helper)** from `^4.0.1` to `^4.0.2`
-
-</details>
-
-<details>
 <summary>Dev Dependencies</summary>
 
-- Added **[@tagproject/vscode-shared-config](https://www.npmjs.com/package/@tagproject/vscode-shared-config)** with `^1.1.2`
-- Changed **[changelog-guru](https://www.npmjs.com/package/changelog-guru)** from `4.0.1` to `4.0.2`
-- Bumped **[@tagproject/ts-package-shared-config](https://www.npmjs.com/package/@tagproject/ts-package-shared-config)** from `^6.4.1` to `^7.0.1`
+- Changed **[@types/node](https://www.npmjs.com/package/@types/node)** from `^17.0.8` to `^17.0.10`
+- Changed **[@typescript-eslint/eslint-plugin](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin)** from `^5.9.1` to `^5.10.0`
+- Changed **[@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser)** from `^5.9.1` to `^5.10.0`
 
 </details>
 
 # :bug: Bug Fixes
 
-- Fix package installing log with undefined version [`5e2f112`](https://github.com/keindev/standard-shared-config/commit/5e2f1128d277bf3befaef289166d927375d1bebc)
+- Fix file unlink, add exists check [`89d4763`](https://github.com/keindev/standard-shared-config/commit/89d4763972a3930017029e2a5c637082f34c51ef)
 
 ---
 
