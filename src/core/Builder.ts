@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs';
+import { existsSync, promises as fs } from 'fs';
 import Package from 'package-json-helper';
 import { ExportMap } from 'package-json-helper/lib/fields/ExportMap';
 import { JSONObject, PackageType } from 'package-json-helper/lib/types';
@@ -88,7 +88,7 @@ export default class Builder {
         `export default ${stringify(values)}`,
       ]);
     } else {
-      await fs.unlink(filePath);
+      if (existsSync(filePath)) await fs.unlink(filePath);
     }
 
     return values.length ? name : '';
