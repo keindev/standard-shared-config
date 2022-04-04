@@ -25,7 +25,7 @@ export const stringify = (value: JSONValue, type?: IParserType): string => {
 
 export const merge = ({ left, right, excludes = new Set<string>(), path = [] }: IMergeOptions): JSONValue => {
   const isMerge = excludes.delete(path.join('.'));
-  let result = isMerge ? left : right;
+  let result = isMerge ? left ?? right : right ?? left;
 
   if (typeof right === 'object' && typeof left === 'object' && right !== null && left !== null) {
     if (Array.isArray(right) && Array.isArray(left)) {
