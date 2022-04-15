@@ -58,7 +58,7 @@
     "lodash.unionwith": "^4.6.0",
     "package-json-helper": "^4.0.4",
     "tasktree-cli": "^6.0.4",
-    "yaml": "^1.10.2",
+    "yaml": "^2.0.1",
     "yargs": "^17.4.0"
   },
   "devDependencies": {
