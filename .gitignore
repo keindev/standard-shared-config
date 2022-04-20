@@ -15,12 +15,13 @@
 /.prettierrc
 /.vscode/
 /jest.config.js
+/src/**/tsconfig.json
+/tsconfig.json
 coverage
 lib
 logs
 node_modules/
 pids
-tsconfig.json
 tsconfig.tsbuildinfo
 yarn-debug.log*
 yarn-error.log*
