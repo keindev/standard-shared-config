@@ -5,9 +5,9 @@ import { JSONObject, PackageType } from 'package-json-helper/lib/types';
 import path from 'path';
 import yaml from 'yaml';
 
-import { EntityName, IDependency, INormalizedSharedConfig, ISharedConfig, OUTPUT_DIR, SHARED_DIR } from '../types';
-import { createSnapshots, readFile, writeFile } from '../utils/file';
-import { stringify } from '../utils/json';
+import { EntityName, IDependency, INormalizedSharedConfig, ISharedConfig, OUTPUT_DIR, SHARED_DIR } from '../types.js';
+import { createSnapshots, readFile, writeFile } from '../utils/file.js';
+import { stringify } from '../utils/json.js';
 
 const PARTS_DIR_NAME = 'parts';
 

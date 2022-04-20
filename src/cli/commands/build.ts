@@ -1,8 +1,8 @@
 import TaskTree from 'tasktree-cli';
 import { Arguments } from 'yargs';
 
-import SharedConfig from '../../SharedConfig';
-import { CONFIG_FILE } from '../../types';
+import SharedConfig from '../../SharedConfig.js';
+import { CONFIG_FILE } from '../../types.js';
 
 type IArguments = Arguments<{ configPath: string }>;
 

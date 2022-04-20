@@ -1,8 +1,8 @@
 import TaskTree from 'tasktree-cli';
 
-import Builder from './core/Builder';
-import Extractor from './core/Extractor';
-import { CONFIG_FILE, IExtractionOptions } from './types';
+import Builder from './core/Builder.js';
+import Extractor from './core/Extractor.js';
+import { CONFIG_FILE, IExtractionOptions } from './types.js';
 
 /** Shared configuration manager */
 export class SharedConfig {

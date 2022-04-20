@@ -1,4 +1,4 @@
-import { merge } from '../../utils/json';
+import { merge } from '../../utils/json.js';
 
 describe('JSON utils', () => {
   it('merge', () => {

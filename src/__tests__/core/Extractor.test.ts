@@ -6,8 +6,8 @@ import glob from 'glob';
 import Package from 'package-json-helper';
 import path from 'path';
 
-import Extractor from '../../core/Extractor';
-import { FileType } from '../../types';
+import Extractor from '../../core/Extractor.js';
+import { FileType } from '../../types.js';
 
 jest.useFakeTimers();
 

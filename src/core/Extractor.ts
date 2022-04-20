@@ -8,8 +8,8 @@ import yaml from 'yaml';
 import {
     CONFIG_FILE, EntityName, FileType, IDependency, IExtractionConfig, IExtractionOptions, INormalizedExtractionConfig,
     ISnapshot,
-} from '../types';
-import { getHash, mergeFiles, readFile, writeFile } from '../utils/file';
+} from '../types.js';
+import { getHash, mergeFiles, readFile, writeFile } from '../utils/file.js';
 
 export default class Extractor {
   #sharedDir: string;

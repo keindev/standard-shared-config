@@ -3,8 +3,8 @@ import { constants, promises as fs } from 'fs';
 import glob from 'glob';
 import path from 'path';
 
-import { FileType, IMergeRule, ISharedConfig, ISnapshot } from '../types';
-import { merge, parse, stringify } from './json';
+import { FileType, IMergeRule, ISharedConfig, ISnapshot } from '../types.js';
+import { merge, parse, stringify } from './json.js';
 
 enum FileMode {
   Default = 0o0666,
