@@ -1,1 +1,1 @@
-export { default } from './SharedConfig';
+export { default } from './SharedConfig.js';

@@ -4,8 +4,8 @@ import { jest } from '@jest/globals';
 import { promises as fs } from 'fs';
 import glob from 'glob';
 
-import { FileType, IMergeRule } from '../../types';
-import { createSnapshot, createSnapshots, getHash, getType, mergeFiles, readFile } from '../../utils/file';
+import { FileType, IMergeRule } from '../../types.js';
+import { createSnapshot, createSnapshots, getHash, getType, mergeFiles, readFile } from '../../utils/file.js';
 
 enum FilePath {
   BASE = 'file.yml',
