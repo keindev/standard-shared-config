@@ -74,7 +74,7 @@
     "@types/strip-comments": "^2.0.1",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
-    "babel-jest": "^27.5.1",
+    "babel-jest": "^28.0.3",
     "changelog-guru": "^4.0.5",
     "cspell": "^5.19.7",
     "eslint": "^8.13.0",
