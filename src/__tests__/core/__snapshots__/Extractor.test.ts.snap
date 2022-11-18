@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Extractor extract 1`] = `
-Array [
-  Array [
+[
+  [
     "test/config2.json",
     "{}",
   ],
-  Array [
+  [
     "config1.json",
     "{}",
   ],
-  Array [
+  [
     ".gitignore",
     "*.log
 .env
@@ -20,25 +20,25 @@ node_modules/
 yarn-debug.log*
 yarn-error.log*",
   ],
-  Array [
+  [
     "package.json",
     "{
-  \\"name\\": \\"test\\",
-  \\"type\\": \\"commonjs\\",
-  \\"scripts\\": {
-    \\"build\\": \\"tsc\\",
-    \\"test\\": \\"jest\\"
+  "name": "test",
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
   },
-  \\"devDependencies\\": {
-    \\"@types/jest\\": \\"^1.x\\",
-    \\"ts-jest\\": \\"^26.x\\"
+  "devDependencies": {
+    "@types/jest": "^1.x",
+    "ts-jest": "^26.x"
   }
 }
 ",
   ],
-  Array [
+  [
     "package.json",
-    "[[\\"jest\\",\\"8.x\\"]]",
+    "[["jest","8.x"]]",
   ],
 ]
 `;

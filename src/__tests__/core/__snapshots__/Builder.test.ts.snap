@@ -1,69 +1,69 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Builder build 1`] = `
-Array [
-  Array [
+[
+  [
     "lib/parts/dependencies.js",
     "/* eslint-disable */
 /* prettier-ignore */
 export default [
   [
-    \\"@types/jest\\",
-    \\"1.x\\"
+    "@types/jest",
+    "1.x"
   ],
   [
-    \\"ts-jest\\",
-    \\"26.x\\"
+    "ts-jest",
+    "26.x"
   ]
 ]",
   ],
-  Array [
+  [
     "lib/parts/scripts.js",
     "/* eslint-disable */
 /* prettier-ignore */
 export default [
   [
-    \\"test\\",
-    \\"jest\\"
+    "test",
+    "jest"
   ],
   [
-    \\"build\\",
-    \\"tsc\\"
+    "build",
+    "tsc"
   ]
 ]",
   ],
-  Array [
+  [
     "lib/parts/snapshots.js",
     "/* eslint-disable */
 /* prettier-ignore */
 export default [
   {
-    \\"path\\": \\"test/config2.json\\",
-    \\"hash\\": \\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\\",
-    \\"merge\\": false,
-    \\"executable\\": false,
-    \\"type\\": \\"json\\",
-    \\"content\\": \\"\\"
+    "path": "test/config2.json",
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "merge": false,
+    "executable": false,
+    "type": "json",
+    "content": ""
   },
   {
-    \\"path\\": \\"config1.json\\",
-    \\"hash\\": \\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\\",
-    \\"merge\\": false,
-    \\"executable\\": false,
-    \\"type\\": \\"json\\",
-    \\"content\\": \\"\\"
+    "path": "config1.json",
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "merge": false,
+    "executable": false,
+    "type": "json",
+    "content": ""
   },
   {
-    \\"path\\": \\".gitignore\\",
-    \\"hash\\": \\"4526306b7856fe85c9b78e58e5160485994d718cdd48ad32643d220ab5897c72\\",
-    \\"merge\\": true,
-    \\"executable\\": false,
-    \\"type\\": \\"glob\\",
-    \\"content\\": \\".env\\\\nnode_modules/\\"
+    "path": ".gitignore",
+    "hash": "4526306b7856fe85c9b78e58e5160485994d718cdd48ad32643d220ab5897c72",
+    "merge": true,
+    "executable": false,
+    "type": "glob",
+    "content": ".env\\nnode_modules/"
   }
 ]",
   ],
-  Array [
+  [
     "lib/index.js",
     "/* --------------------------------------------------------------- */
 /* This file generated automatically                               */
@@ -72,33 +72,33 @@ export default [
 
 /* eslint-disable */
 import SharedConfig from 'standard-shared-config'
-import dependencies from './parts/dependencies'
-import scripts from './parts/scripts'
-import snapshots from './parts/snapshots'
+import dependencies from './parts/dependencies.js'
+import scripts from './parts/scripts.js'
+import snapshots from './parts/snapshots.js'
 
-await new SharedConfig().share(\\".config\\", { dependencies, scripts, snapshots, package: {
-  \\"manager\\": \\"npm\\",
-  \\"type\\": \\"module\\",
-  \\"types\\": \\"./lib/index.d.ts\\",
-  \\"exports\\": {
-    \\".\\": \\"./lib/index.js\\",
-    \\"lib\\": \\"./lib/index.js\\"
+await new SharedConfig().share(".config", { dependencies, scripts, snapshots, package: {
+  "manager": "npm",
+  "type": "module",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": "./lib/index.js",
+    "lib": "./lib/index.js"
   }
 } });",
   ],
-  Array [
+  [
     "bin/test.js",
     "#!/usr/bin/env node
 import '../lib/index.js';",
   ],
-  Array [
+  [
     "package.json",
     "{
-  \\"name\\": \\"test\\",
-  \\"type\\": \\"module\\",
-  \\"exports\\": \\"./lib/index.js\\",
-  \\"bin\\": {
-    \\"test\\": \\"bin/test.js\\"
+  "name": "test",
+  "type": "module",
+  "exports": "./lib/index.js",
+  "bin": {
+    "test": "bin/test.js"
   }
 }
 ",
