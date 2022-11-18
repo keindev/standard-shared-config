@@ -1,7 +1,7 @@
 import { existsSync, promises as fs } from 'fs';
 import Package from 'package-json-helper';
 import { ExportMap } from 'package-json-helper/lib/fields/ExportMap';
-import { JSONObject, PackageType } from 'package-json-helper/lib/types';
+import { JSONObject, JSONValue, PackageType } from 'package-json-helper/lib/types';
 import path from 'path';
 import yaml from 'yaml';
 
@@ -30,7 +30,7 @@ export default class Builder {
       '',
       '/* eslint-disable */',
       "import SharedConfig from 'standard-shared-config'",
-      ...entities.map(entity => `import ${entity} from './${PARTS_DIR_NAME}/${entity}'`),
+      ...entities.map(entity => `import ${entity} from './${PARTS_DIR_NAME}/${entity}.js'`),
       '',
       `await new SharedConfig().share("${sharedDir}", { ${entities.join(', ')}, package: ${stringify(
         config.package as JSONObject
@@ -85,7 +85,7 @@ export default class Builder {
       await writeFile(filePath, [
         '/* eslint-disable */',
         '/* prettier-ignore */',
-        `export default ${stringify(values)}`,
+        `export default ${stringify(values as JSONValue[])}`,
       ]);
     } else {
       if (existsSync(filePath)) await fs.unlink(filePath);

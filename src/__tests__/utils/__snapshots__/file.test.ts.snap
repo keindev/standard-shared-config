@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`File utils Create snapshots 1`] = `
-Array [
-  Object {
+[
+  {
     "content": "
   // Comment 1
   # Comment 2
@@ -15,11 +15,11 @@ Array [
     "path": "../file.yml",
     "type": "yaml",
   },
-  Object {
-    "content": "{\\"configurations\\":[{\\"name\\":\\"Build configs map\\",\\"type\\":\\"node\\",\\"request\\":\\"launch\\",\\"outputCapture\\":\\"std\\",\\"console\\":\\"integratedTerminal\\",\\"runtimeExecutable\\":\\"node\\",\\"runtimeArgs\\":[\\"--experimental-specifier-resolution=node\\",\\"--nolazy\\",\\"--inspect-brk=9229\\",\\"--loader\\",\\"ts-node/esm\\",\\"src/cli/bin.ts\\",\\"build\\"],\\"port\\":9229}]}",
+  {
+    "content": "{"configurations":[{"name":"Build configs map","type":"node","request":"launch","outputCapture":"std","console":"integratedTerminal","runtimeExecutable":"node","runtimeArgs":["--experimental-specifier-resolution=node","--nolazy","--inspect-brk=9229","--loader","ts-node/esm","src/cli/bin.ts","build"],"port":9229}]}",
     "executable": false,
     "hash": "5db3d0fdca70f204d4c0ff86c98eb5d45df4838422eb1f15b3c381d92b978627",
-    "merge": Array [
+    "merge": [
       "configurations",
     ],
     "path": "../snapshot.json",
@@ -48,17 +48,17 @@ exports[`File utils Merge GLOB files 1`] = `
 
 exports[`File utils Merge JSON files 1`] = `
 "{
-  \\"text\\": \\"text\\",
-  \\"object1\\": {
-    \\"value1\\": true,
-    \\"value2\\": true
+  "text": "text",
+  "object1": {
+    "value1": true,
+    "value2": true
   },
-  \\"object2\\": {
-    \\"value1\\": true,
-    \\"value2\\": false,
-    \\"value3\\": null
+  "object2": {
+    "value1": true,
+    "value2": false,
+    "value3": null
   },
-  \\"list\\": [
+  "list": [
     1,
     2,
     3,
