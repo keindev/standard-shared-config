@@ -39,6 +39,9 @@ package:
   exports:
     ".": "./lib/index.js"
     "lib": "./lib/index.js"
+  peerDependencies:
+    "react": "18.x"
+    "react-dom": "18.x"
 `;
 
 jest.spyOn(glob, 'sync').mockImplementation(() => ['.config/config1.json', '.config/test/config2.json']);

@@ -83,6 +83,10 @@ await new SharedConfig().share(".config", { dependencies, scripts, snapshots, pa
   "exports": {
     ".": "./lib/index.js",
     "lib": "./lib/index.js"
+  },
+  "peerDependencies": {
+    "react": "18.x",
+    "react-dom": "18.x"
   }
 } });",
   ],
