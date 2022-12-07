@@ -92,16 +92,17 @@ export default class Extractor {
       scripts: scripts.map(([key, value]) => [key, overrideScripts.get(key) ?? value]),
       dependencies: dependencies.filter(([key]) => !ignoreDependencies.has(key)),
       package: {
-        manager: options.package?.manager ?? PackageManager.NPM,
-        type: options.package?.type,
         exports: cast.toExportsMap(options.package?.exports),
+        manager: options.package?.manager ?? PackageManager.NPM,
+        peerDependencies: options.package?.peerDependencies,
+        type: options.package?.type,
         types: cast.toString(options.package?.types),
       },
     };
   }
 
   private updatePackage(
-    { scripts, package: { type, types, exports } }: INormalizedExtractionConfig,
+    { scripts, package: { type, types, exports, peerDependencies = {} } }: INormalizedExtractionConfig,
     pkg: Package
   ): void {
     let task = TaskTree.add('Inserting the required scripts:');
@@ -115,6 +116,7 @@ export default class Extractor {
       pkg.scripts.set(key, value);
     });
 
+    cast.toDependencyMap(peerDependencies, pkg.peerDependencies);
     task.complete('Package scripts was updated!');
     task = TaskTree.add('Update package params:');
 
