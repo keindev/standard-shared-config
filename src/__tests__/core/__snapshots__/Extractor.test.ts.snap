@@ -32,6 +32,10 @@ yarn-error.log*",
   "devDependencies": {
     "@types/jest": "^1.x",
     "ts-jest": "^26.x"
+  },
+  "peerDependencies": {
+    "react": "18.x",
+    "react-dom": "18.x"
   }
 }
 ",

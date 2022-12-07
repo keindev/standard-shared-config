@@ -29,16 +29,7 @@ const CONTENT = {
         outputCapture: 'std',
         console: 'integratedTerminal',
         runtimeExecutable: 'node',
-        runtimeArgs: [
-          '--experimental-specifier-resolution=node',
-          '--nolazy',
-          '--inspect-brk=9229',
-          '--loader',
-          'ts-node/esm',
-          'src/cli/bin.ts',
-          'build',
-        ],
-        port: 9229,
+        runtimeArgs: ['--nolazy', '--inspect-brk=9229', '--loader', 'ts-node/esm', 'src/cli/bin.ts', 'build'],
       },
     ],
   }),
@@ -73,7 +64,7 @@ describe('File utils', () => {
     const mergeRules = new Map<string, IMergeRule>([[relativePath, ['configurations']]]);
     const snapshotBase = {
       path: relativePath,
-      hash: '5db3d0fdca70f204d4c0ff86c98eb5d45df4838422eb1f15b3c381d92b978627',
+      hash: 'd3ad7d184db5cd15a795d0713fe5c5115743f52d44776a130ed53a5e3a60124d',
       type: FileType.JSON,
       content: CONTENT[FilePath.SNAPSHOT],
     };

@@ -78,6 +78,12 @@ describe('Extractor', () => {
           content: '.env\nnode_modules/',
         },
       ],
+      package: {
+        peerDependencies: {
+          react: '18.x',
+          'react-dom': '18.x',
+        },
+      },
     });
 
     expect(files).toMatchSnapshot();

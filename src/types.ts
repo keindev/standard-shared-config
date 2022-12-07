@@ -36,6 +36,7 @@ export interface ISnapshot {
 export interface IPackageParams {
   exports?: JSONValue;
   manager?: PackageManager;
+  peerDependencies?: Record<string, string>;
   type?: PackageType;
   types?: string;
 }
@@ -68,6 +69,7 @@ export interface IExtractionConfig {
 
 export interface INormalizedPackageParams extends Pick<IPackageParams, 'manager' | 'type' | 'types'> {
   exports?: ExportMap;
+  peerDependencies?: Record<string, string>;
 }
 
 export interface INormalizedExtractionConfig {
