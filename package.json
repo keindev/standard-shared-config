@@ -68,7 +68,7 @@
     "@types/jest": "^29.2.4",
     "@types/lodash.isequal": "^4.5.6",
     "@types/lodash.unionwith": "^4.6.7",
-    "@types/node": "^18.11.11",
+    "@types/node": "^20.3.2",
     "@types/semver": "^7.3.13",
     "@types/strip-comments": "^2.0.1",
     "@typescript-eslint/eslint-plugin": "^5.45.1",
