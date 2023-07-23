@@ -1,5 +1,6 @@
-import { ExportMap } from 'package-json-helper/lib/fields/ExportMap';
-import { JSONValue, PackageManager, PackageType } from 'package-json-helper/lib/types';
+import { ExportMap } from 'package-json-helper';
+import { JSONValue } from 'package-json-helper/types/base';
+import { ManagerType, PackageType } from 'package-json-helper/types/package';
 
 export enum FileType {
   Text = 'text',
@@ -35,7 +36,7 @@ export interface ISnapshot {
 
 export interface IPackageParams {
   exports?: JSONValue;
-  manager?: PackageManager;
+  manager?: ManagerType;
   peerDependencies?: Record<string, string>;
   type?: PackageType;
   types?: string;

@@ -1,7 +1,7 @@
 import { existsSync, promises as fs } from 'fs';
-import Package from 'package-json-helper';
-import { ExportMap } from 'package-json-helper/lib/fields/ExportMap';
-import { JSONObject, JSONValue, PackageType } from 'package-json-helper/lib/types';
+import { ExportMap, Package } from 'package-json-helper';
+import { JSONObject, JSONValue } from 'package-json-helper/types/base';
+import { PackageType } from 'package-json-helper/types/package';
 import path from 'path';
 import yaml from 'yaml';
 

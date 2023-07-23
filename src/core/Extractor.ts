@@ -1,6 +1,6 @@
-import Package from 'package-json-helper';
-import { PackageManager } from 'package-json-helper/lib/types';
-import { cast } from 'package-json-helper/lib/utils/parsers';
+import { Package } from 'package-json-helper';
+import { ManagerType } from 'package-json-helper/types/package';
+import { cast } from 'package-json-helper/utils/parsers';
 import path from 'path';
 import TaskTree from 'tasktree-cli';
 import yaml from 'yaml';
@@ -20,7 +20,7 @@ export default class Extractor {
 
   async extract({ snapshots = [], ...options }: IExtractionOptions): Promise<void> {
     const config = await this.readConfig(options);
-    const pkg = new Package(path.join(process.cwd(), 'package.json'), config.package.manager ?? PackageManager.NPM);
+    const pkg = new Package(path.join(process.cwd(), 'package.json'), config.package.manager ?? ManagerType.NPM);
 
     await pkg.read();
     await this.extractFiles(snapshots);
@@ -93,7 +93,7 @@ export default class Extractor {
       dependencies: dependencies.filter(([key]) => !ignoreDependencies.has(key)),
       package: {
         exports: cast.toExportsMap(options.package?.exports),
-        manager: options.package?.manager ?? PackageManager.NPM,
+        manager: options.package?.manager ?? ManagerType.NPM,
         peerDependencies: options.package?.peerDependencies,
         type: options.package?.type,
         types: cast.toString(options.package?.types),

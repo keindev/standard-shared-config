@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { constants, promises as fs } from 'fs';
-import glob from 'glob';
+import { glob } from 'glob';
 import path from 'path';
 
 import { FileType, IMergeRule, ISharedConfig, ISnapshot } from '../types.js';

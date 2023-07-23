@@ -1,5 +1,5 @@
 import TaskTree from 'tasktree-cli';
-import { ArgumentsCamelCase } from 'yargs';
+import { ArgumentsCamelCase, CommandModule, Options } from 'yargs';
 
 import SharedConfig from '../../SharedConfig.js';
 import { CONFIG_FILE } from '../../types.js';
@@ -22,11 +22,10 @@ const build = async ({ configPath }: ArgumentsCamelCase<IArguments>): Promise<vo
   }
 };
 
-export default {
+export const command: CommandModule<{ [key: string]: Options }, IArguments> = {
   command: 'build',
-  alias: 'b',
-  desc: 'Build shared config map',
-  showInHelp: true,
+  aliases: 'b',
+  describe: 'Build shared config map',
   builder: {
     configPath: {
       string: true,
