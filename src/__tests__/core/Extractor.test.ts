@@ -1,10 +1,11 @@
 // @see https://github.com/facebook/jest/issues/9430
+import { promises as fs } from 'fs';
+import { glob } from 'glob';
+import { Package } from 'package-json-helper';
+import path from 'path';
+
 // eslint-disable-next-line node/no-extraneous-import
 import { jest } from '@jest/globals';
-import { promises as fs } from 'fs';
-import glob from 'glob';
-import Package from 'package-json-helper';
-import path from 'path';
 
 import Extractor from '../../core/Extractor.js';
 import { FileType } from '../../types.js';
