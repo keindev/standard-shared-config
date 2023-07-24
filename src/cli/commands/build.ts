@@ -2,7 +2,7 @@ import TaskTree from 'tasktree-cli';
 import { ArgumentsCamelCase, CommandModule, Options } from 'yargs';
 
 import SharedConfig from '../../SharedConfig.js';
-import { CONFIG_FILE } from '../../types.js';
+import { CONFIG_FILE } from '../../types/constants.js';
 
 interface IArguments {
   configPath: string;

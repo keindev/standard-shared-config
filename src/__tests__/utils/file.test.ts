@@ -5,7 +5,7 @@ import { glob } from 'glob';
 // eslint-disable-next-line node/no-extraneous-import
 import { jest } from '@jest/globals';
 
-import { FileType, IMergeRule } from '../../types.js';
+import { FileType, IMergeRule } from '../../types/base.js';
 import { createSnapshot, createSnapshots, getHash, getType, mergeFiles, readFile } from '../../utils/file.js';
 
 enum FilePath {

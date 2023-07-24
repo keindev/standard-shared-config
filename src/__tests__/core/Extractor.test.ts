@@ -8,7 +8,7 @@ import path from 'path';
 import { jest } from '@jest/globals';
 
 import Extractor from '../../core/Extractor.js';
-import { FileType } from '../../types.js';
+import { FileType } from '../../types/base.js';
 
 jest.useFakeTimers();
 

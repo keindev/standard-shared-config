@@ -5,7 +5,9 @@ import { PackageType } from 'package-json-helper/types/package';
 import path from 'path';
 import yaml from 'yaml';
 
-import { EntityName, IDependency, INormalizedSharedConfig, ISharedConfig, OUTPUT_DIR, SHARED_DIR } from '../types.js';
+import { EntityName, IDependency } from '../types/base.js';
+import { INormalizedSharedConfig, ISharedConfig } from '../types/config.js';
+import { OUTPUT_DIR, SHARED_DIR } from '../types/constants.js';
 import { createSnapshots, readFile, writeFile } from '../utils/file.js';
 import { stringify } from '../utils/json.js';
 

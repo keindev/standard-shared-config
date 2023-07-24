@@ -3,7 +3,8 @@ import { constants, promises as fs } from 'fs';
 import { glob } from 'glob';
 import path from 'path';
 
-import { FileType, IMergeRule, ISharedConfig, ISnapshot } from '../types.js';
+import { FileType, IMergeRule, ISnapshot } from '../types/base.js';
+import { ISharedConfig } from '../types/config.js';
 import { merge, parse, stringify } from './json.js';
 
 enum FileMode {
@@ -88,13 +89,16 @@ export const createSnapshots = async (
 ): Promise<ISnapshot[]> => {
   const files = (config.include ?? ['**/*']).map(pattern => glob.sync(`${dir}/${pattern}`, GLOB_OPTIONS)).flat();
   const mergeRules = new Map(
-    Object.entries(config.mergeRules ?? {}).reduce((acc, [key, value]) => {
-      if (Array.isArray(value)) acc.push([key, value.filter(item => typeof item === 'string')]);
-      if (value === null) acc.push([key, !value]);
-      if (typeof value === 'boolean') acc.push([key, value]);
+    Object.entries(config.mergeRules ?? {}).reduce(
+      (acc, [key, value]) => {
+        if (Array.isArray(value)) acc.push([key, value.filter(item => typeof item === 'string')]);
+        if (value === null) acc.push([key, !value]);
+        if (typeof value === 'boolean') acc.push([key, value]);
 
-      return acc;
-    }, [] as [string, IMergeRule][])
+        return acc;
+      },
+      [] as [string, IMergeRule][]
+    )
   );
   const executableFiles = new Set(config.executableFiles ?? []);
   const snapshots = await Promise.all(

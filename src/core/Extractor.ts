@@ -5,10 +5,10 @@ import path from 'path';
 import TaskTree from 'tasktree-cli';
 import yaml from 'yaml';
 
-import {
-    CONFIG_FILE, EntityName, FileType, IDependency, IExtractionConfig, IExtractionOptions, INormalizedExtractionConfig,
-    ISnapshot,
-} from '../types.js';
+import { EntityName, FileType, IDependency, ISnapshot } from '../types/base.js';
+import { IExtractionConfig, INormalizedExtractionConfig } from '../types/config.js';
+import { CONFIG_FILE } from '../types/constants.js';
+import { IExtractionOptions } from '../types/options.js';
 import { getHash, mergeFiles, readFile, writeFile } from '../utils/file.js';
 
 export default class Extractor {
