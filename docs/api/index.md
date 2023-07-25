@@ -20,9 +20,8 @@ Create configuration files by shared config structure
 
 #### Parameters
 
-| Name                    | Type            | Description                             |
-| :---------------------- | :-------------- | :-------------------------------------- |
-| `sharedDir`             | `string`        | Package root directory to share configs |
-| `options.dependencies?` | `IDependency[]` | Package devDependencies list            |
-| `options.scripts?`      | `IScript[]`     | List of package scripts                 |
-| `options.snapshots?`    | `ISnapshot[]`   | Configuration files snapshots           |
+| Name                 | Type          | Description                             |
+| :------------------- | :------------ | :-------------------------------------- |
+| `sharedDir`          | `string`      | Package root directory to share configs |
+| `options.scripts?`   | `IScript[]`   | List of package scripts                 |
+| `options.snapshots?` | `ISnapshot[]` | Configuration files snapshots           |
