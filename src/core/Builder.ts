@@ -5,7 +5,7 @@ import { PackageType } from 'package-json-helper/types/package';
 import path from 'path';
 import yaml from 'yaml';
 
-import { EntityName, IDependency } from '../types/base.js';
+import { EntityName } from '../types/base.js';
 import { INormalizedSharedConfig, ISharedConfig } from '../types/config.js';
 import { OUTPUT_DIR, SHARED_DIR } from '../types/constants.js';
 import { createSnapshots, readFile, writeFile } from '../utils/file.js';
@@ -18,7 +18,6 @@ export default class Builder {
     const { outputDir, sharedDir, ...config } = await this.readConfig(configPath);
     const entities = (
       await Promise.all([
-        this.writeScript(EntityName.Dependencies, config.dependencies, outputDir),
         this.writeScript(EntityName.Scripts, config.scripts, outputDir),
         this.writeScript(EntityName.Snapshots, config.snapshots, outputDir),
       ])
@@ -68,13 +67,6 @@ export default class Builder {
       snapshots,
       sharedDir,
       outputDir,
-      dependencies:
-        (config.dependencies &&
-          config.dependencies.map(
-            dependency =>
-              (typeof dependency === 'string' ? [dependency] : Object.entries(dependency).pop()) as IDependency
-          )) ??
-        [],
       scripts: Object.entries(config.scripts ?? {}),
       package: config.package ?? {},
     };

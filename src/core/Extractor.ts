@@ -5,7 +5,7 @@ import path from 'path';
 import TaskTree from 'tasktree-cli';
 import yaml from 'yaml';
 
-import { EntityName, FileType, IDependency, ISnapshot } from '../types/base.js';
+import { EntityName, FileType, ISnapshot } from '../types/base.js';
 import { IExtractionConfig, INormalizedExtractionConfig } from '../types/config.js';
 import { CONFIG_FILE } from '../types/constants.js';
 import { IExtractionOptions } from '../types/options.js';
@@ -26,7 +26,6 @@ export default class Extractor {
     await this.extractFiles(snapshots);
     this.updatePackage(config, pkg);
     await pkg.save();
-    await this.installDependencies(config.dependencies, pkg);
   }
 
   private async extractFiles(snapshots: ISnapshot[]): Promise<void> {
@@ -55,42 +54,16 @@ export default class Extractor {
     task.complete('Processed configs:');
   }
 
-  private async installDependencies(dependencies: IDependency[], pkg: Package): Promise<void> {
-    const task = TaskTree.add('Check package devDependencies:');
-    const installationMap = new Map<string, string | undefined>();
-
-    dependencies.forEach(([name, version]) => {
-      const dependency = pkg.devDependencies.get(name);
-
-      if (!dependency) installationMap.set(name, version);
-      else if (version && !dependency.isSatisfy(version)) task.error(`${name} version is must be: ${version}`, false);
-    });
-
-    if (task.haveErrors) task.fail('Some dependencies are missing or have wrong version:');
-    if (installationMap.size) {
-      const subtask = task.add('Installing packages:');
-
-      installationMap.forEach((version, name) => subtask.log(`{bold ${name}}: ${version ?? '{italic latest}'}`));
-      await pkg.install(installationMap, ['--save-dev']);
-      subtask.complete('Installed packages');
-    }
-
-    task.complete('All dependencies from shared config is presented in package.json');
-  }
-
   private async readConfig({
-    dependencies = [],
     scripts = [],
     ...options
   }: Omit<IExtractionOptions, EntityName.Snapshots>): Promise<INormalizedExtractionConfig> {
     const content = await readFile(path.resolve(process.cwd(), this.#sharedDir, CONFIG_FILE));
     const config: IExtractionConfig = content ? yaml.parse(content) : {};
     const overrideScripts = new Map(Object.entries(config.overrideScripts ?? {}));
-    const ignoreDependencies = new Set(config.ignoreDependencies ?? []);
 
     return {
       scripts: scripts.map(([key, value]) => [key, overrideScripts.get(key) ?? value]),
-      dependencies: dependencies.filter(([key]) => !ignoreDependencies.has(key)),
       package: {
         exports: cast.toExportsMap(options.package?.exports),
         manager: options.package?.manager ?? ManagerType.NPM,

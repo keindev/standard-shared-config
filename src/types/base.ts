@@ -6,7 +6,6 @@ export enum FileType {
 }
 
 export enum EntityName {
-  Dependencies = 'dependencies',
   Scripts = 'scripts',
   Snapshots = 'snapshots',
   Package = 'package',
@@ -14,7 +13,6 @@ export enum EntityName {
 
 export type IMergeRule = string[] | null | boolean;
 export type IScript = [string, string];
-export type IDependency = [string, string | undefined];
 export type IMergeMap = { [key: string]: IMergeRule };
 
 export interface ISnapshot {
