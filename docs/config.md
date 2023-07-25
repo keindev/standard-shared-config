@@ -44,6 +44,12 @@ scripts:
   'build': 'tsc --extendedDiagnostics'
 ```
 
+## Shared `dev` dependencies
+
+To define a list of shared dependencies, use [peerDependencies](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#peerdependencies) in package.json.
+
+> As of `npm` `v7`, `peerDependencies` are installed by **_default_**.
+
 ## Override `.sharedconfig.yml` configuration parameters
 
 | Name                | Description                                                                                           |
