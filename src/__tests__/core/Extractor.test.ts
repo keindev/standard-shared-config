@@ -1,7 +1,6 @@
 // @see https://github.com/facebook/jest/issues/9430
 import { promises as fs } from 'fs';
 import { glob } from 'glob';
-import { Package } from 'package-json-helper';
 import path from 'path';
 
 // eslint-disable-next-line node/no-extraneous-import
@@ -36,19 +35,9 @@ describe('Extractor', () => {
   };
 
   jest.spyOn(fs, 'writeFile').mockImplementation((name, data) => Promise.resolve(appendFile(name, data)));
-  jest
-    .spyOn(Package.prototype, 'install')
-    .mockImplementation(dependencies =>
-      Promise.resolve(appendFile('package.json', JSON.stringify([...dependencies.entries()])))
-    );
 
   it('extract', async () => {
     await extractor.extract({
-      dependencies: [
-        ['@types/jest', '1.x'],
-        ['ts-jest', '26.x'],
-        ['jest', '8.x'],
-      ],
       scripts: [
         ['test', 'jest'],
         ['build', 'tsc'],

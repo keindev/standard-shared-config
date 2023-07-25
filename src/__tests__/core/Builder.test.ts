@@ -29,10 +29,6 @@ scripts:
   "test": "jest"
   "build": "tsc"
 
-dependencies:
-  - "@types/jest": "1.x"
-  - "ts-jest": "26.x"
-
 package:
   manager: npm
   type: module
