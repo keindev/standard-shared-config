@@ -1,6 +1,6 @@
 import isEqual from 'lodash.isequal';
 import unionWith from 'lodash.unionwith';
-import { JSONValue } from 'package-json-helper/lib/types';
+import { JSONValue } from 'package-json-helper/types/base';
 import yaml from 'yaml';
 
 export type IParserType = 'json' | 'yaml';

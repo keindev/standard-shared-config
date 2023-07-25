@@ -1,10 +1,11 @@
 // @see https://github.com/facebook/jest/issues/9430
+import { promises as fs } from 'fs';
+import { glob } from 'glob';
+
 // eslint-disable-next-line node/no-extraneous-import
 import { jest } from '@jest/globals';
-import { promises as fs } from 'fs';
-import glob from 'glob';
 
-import { FileType, IMergeRule } from '../../types.js';
+import { FileType, IMergeRule } from '../../types/base.js';
 import { createSnapshot, createSnapshots, getHash, getType, mergeFiles, readFile } from '../../utils/file.js';
 
 enum FilePath {

@@ -2,25 +2,20 @@
 
 ## `.sharedconfig.yml` configuration parameters
 
-| Name                | Description                                                                                                                                                                                                                                                 |
-| :------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **sharedDir**       | Directory with shared configuration files, `.config` by default                                                                                                                                                                                             |
-| **outputDir**       | Output directory, `process.cwd` by default.                                                                                                                                                                                                                 |
-| **include**         | Specifies a list of glob patterns that match files to be included                                                                                                                                                                                           |
-| **mergeRules**      | List of configuration rules for merging. If you need to override or add a property inside a json or yaml file, you should specify the file name and path to the property separated by a dot. For files with `glob` patterns, like `.gitignore` - only name. |
-| **ignorePatterns**  | List of ignore patters files, like `.gitignore`                                                                                                                                                                                                             |
-| **executableFiles** | List of files to be executable (`chmod 0755`)                                                                                                                                                                                                               |
-| **scripts**         | Script commands like in `package.json`, which will be added to the `package.json` file of the package using your shared config                                                                                                                              |
-| **dependencies**    | List of `devDependencies`, with the ability to specify the minimum required version in the `SemVer` format, which are required to work correctly with your shared configuration                                                                             |
-| **package.exports** | Standard entry points of the package, with enhanced support for ECMAScript Modules. configuration                                                                                                                                                           |
-| **package.manager** | Default package manager `npm` or `yarn`                                                                                                                                                                                                                     |
-| **package.type**    | [Resolution algorithm](https://nodejs.org/api/esm.html#esm_package_json_type_field) for importing `.js` files from packages scope.                                                                                                                          |
-| **package.types**   | Location of the bundled TypeScript declaration file.                                                                                                                                                                                                        |
-
-?: JSONValue;
-?: PackageManager;
-?: PackageType;
-?: string;
+| Name                         | Description                                                                                                                                                                                                                                                 |
+| :--------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **sharedDir**                | Directory with shared configuration files, `.config` by default                                                                                                                                                                                             |
+| **outputDir**                | Output directory, `process.cwd` by default.                                                                                                                                                                                                                 |
+| **include**                  | Specifies a list of glob patterns that match files to be included                                                                                                                                                                                           |
+| **mergeRules**               | List of configuration rules for merging. If you need to override or add a property inside a json or yaml file, you should specify the file name and path to the property separated by a dot. For files with `glob` patterns, like `.gitignore` - only name. |
+| **ignorePatterns**           | List of ignore patters files, like `.gitignore`                                                                                                                                                                                                             |
+| **executableFiles**          | List of files to be executable (`chmod 0755`)                                                                                                                                                                                                               |
+| **scripts**                  | Script commands like in `package.json`, which will be added to the `package.json` file of the package using your shared config                                                                                                                              |
+| **package.exports**          | Standard entry points of the package, with enhanced support for ECMAScript Modules. configuration                                                                                                                                                           |
+| **package.manager**          | Default package manager `npm` or `yarn`                                                                                                                                                                                                                     |
+| **package.type**             | [Resolution algorithm](https://nodejs.org/api/esm.html#esm_package_json_type_field) for importing `.js` files from packages scope                                                                                                                           |
+| **package.types**            | Location of the bundled TypeScript declaration file                                                                                                                                                                                                         |
+| **package.peerDependencies** | [peerDependencies](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#peerdependencies) which will be added to the `package.json` file of the package using your shared config                                                                      |
 
 #### Example
 
@@ -47,23 +42,19 @@ scripts:
   'prepare': 'husky install'
   'test': 'jest'
   'build': 'tsc --extendedDiagnostics'
-dependencies:
-  - '@types/jest'
-  - '@typescript-eslint/eslint-plugin'
-  - '@typescript-eslint/parser'
-  - 'changelog-guru'
-  - 'eslint'
-  - 'husky': '6.x'
-  - 'jest'
-  - 'typescript': '4.x'
 ```
+
+## Shared `dev` dependencies
+
+To define a list of shared dependencies, use [peerDependencies](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#peerdependencies) in package.json.
+
+> As of `npm` `v7`, `peerDependencies` are installed by **_default_**.
 
 ## Override `.sharedconfig.yml` configuration parameters
 
-| Name                   | Description                                                                                           |
-| :--------------------- | ----------------------------------------------------------------------------------------------------- |
-| **overrideScripts**    | Override values of package scripts defined in `.sharedconfig.yml` configuration of used shared config |
-| **ignoreDependencies** | Ignore dependencies defined in `.sharedconfig.yml` configuration of used shared config                |
+| Name                | Description                                                                                           |
+| :------------------ | ----------------------------------------------------------------------------------------------------- |
+| **overrideScripts** | Override values of package scripts defined in `.sharedconfig.yml` configuration of used shared config |
 
 #### Example
 
@@ -77,16 +68,6 @@ scripts:
   'prepare': 'husky install'
   'test': 'jest'
   'build': 'tsc'
-
-dependencies:
-  - '@types/jest'
-  - '@typescript-eslint/eslint-plugin'
-  - '@typescript-eslint/parser'
-  - 'changelog-guru'
-  - 'eslint'
-  - 'husky': '6.x'
-  - 'jest'
-  - 'typescript': '4.x'
 ```
 
 ##### .sharedconfig.yml - defined in `sharedDir` (`.config` by default) of current package
@@ -94,6 +75,4 @@ dependencies:
 ```yaml
 overrideScripts:
   'build': 'tsc --extendedDiagnostics'
-# ignore this dependency from shared-config
-ignoreDependencies: ['changelog-guru']
 ```

@@ -1,13 +1,13 @@
 // @see https://github.com/facebook/jest/issues/9430
-// eslint-disable-next-line node/no-extraneous-import
-import { jest } from '@jest/globals';
 import { promises as fs } from 'fs';
-import glob from 'glob';
-import Package from 'package-json-helper';
+import { glob } from 'glob';
 import path from 'path';
 
+// eslint-disable-next-line node/no-extraneous-import
+import { jest } from '@jest/globals';
+
 import Extractor from '../../core/Extractor.js';
-import { FileType } from '../../types.js';
+import { FileType } from '../../types/base.js';
 
 jest.useFakeTimers();
 
@@ -35,19 +35,9 @@ describe('Extractor', () => {
   };
 
   jest.spyOn(fs, 'writeFile').mockImplementation((name, data) => Promise.resolve(appendFile(name, data)));
-  jest
-    .spyOn(Package.prototype, 'install')
-    .mockImplementation(dependencies =>
-      Promise.resolve(appendFile('package.json', JSON.stringify([...dependencies.entries()])))
-    );
 
   it('extract', async () => {
     await extractor.extract({
-      dependencies: [
-        ['@types/jest', '1.x'],
-        ['ts-jest', '26.x'],
-        ['jest', '8.x'],
-      ],
       scripts: [
         ['test', 'jest'],
         ['build', 'tsc'],

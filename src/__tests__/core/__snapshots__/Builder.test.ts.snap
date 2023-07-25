@@ -3,21 +3,6 @@
 exports[`Builder build 1`] = `
 [
   [
-    "lib/parts/dependencies.js",
-    "/* eslint-disable */
-/* prettier-ignore */
-export default [
-  [
-    "@types/jest",
-    "1.x"
-  ],
-  [
-    "ts-jest",
-    "26.x"
-  ]
-]",
-  ],
-  [
     "lib/parts/scripts.js",
     "/* eslint-disable */
 /* prettier-ignore */
@@ -72,11 +57,10 @@ export default [
 
 /* eslint-disable */
 import SharedConfig from 'standard-shared-config'
-import dependencies from './parts/dependencies.js'
 import scripts from './parts/scripts.js'
 import snapshots from './parts/snapshots.js'
 
-await new SharedConfig().share(".config", { dependencies, scripts, snapshots, package: {
+await new SharedConfig().share(".config", { scripts, snapshots, package: {
   "manager": "npm",
   "type": "module",
   "types": "./lib/index.d.ts",
