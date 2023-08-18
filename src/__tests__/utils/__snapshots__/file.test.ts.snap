@@ -31,19 +31,35 @@ exports[`File utils Create snapshots 1`] = `
 exports[`File utils Get file hash 1`] = `"278533b89f743b2ba504346f6915b3cce59680cd7d01ad5e2274611a423f3e7f"`;
 
 exports[`File utils Merge GLOB files 1`] = `
-"      *.log
-      *.pid
-      *.pid.lock
-      *.seed
-      *.tgz
-      .editorconfig
-      .env
-      .eslintcache
-      .eslintignore
-      .eslintrc
-      media/
-      node_modules/
-      src/"
+"*.log
+*.pid
+*.pid.lock
+*.seed
+*.tgz
+.editorconfig
+.env
+.eslintcache
+.eslintignore
+.eslintrc
+
+# !ignorefile-merge block-open
+# ---------------------------------------------------------------
+# This block generated automatically
+# @see https://www.npmjs.com/package/ignorefile-merge
+# ---------------------------------------------------------------
+
+# *.pid.lock
+# *.seed
+# *.tgz
+# *.log
+# .eslintignore
+# .eslintrc
+media/
+node_modules/
+src/
+
+# !ignorefile-merge block-close
+"
 `;
 
 exports[`File utils Merge JSON files 1`] = `

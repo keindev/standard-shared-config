@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import { constants, promises as fs } from 'fs';
 import { glob } from 'glob';
+import { merge as ignoreFileMerge } from 'ignorefile-merge';
 import path from 'path';
 
 import { FileType, IMergeRule, ISnapshot } from '../types/base.js';
@@ -130,9 +131,7 @@ export const mergeFiles = ({ type, merge: rules, content: snapshot }: ISnapshot,
 
   switch (type) {
     case FileType.GLOB:
-      result = [...new Set([...content.split('\n'), ...snapshot.split('\n')].filter(Boolean)).values()]
-        .sort()
-        .join('\n');
+      result = ignoreFileMerge(content, snapshot);
       break;
     case FileType.JSON:
     case FileType.YAML:
