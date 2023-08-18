@@ -161,17 +161,6 @@ describe('File utils', () => {
 
   it('Merge GLOB files', () => {
     const source = `
-      *.log
-      *.pid
-      *.pid.lock
-      *.seed
-      *.tgz
-      .editorconfig
-      .env
-      .eslintcache
-      .eslintignore
-      .eslintrc`;
-    const current = `
       *.pid.lock
       *.seed
       *.seed
@@ -182,6 +171,17 @@ describe('File utils', () => {
       media/
       node_modules/
       src/`;
+    const current = `
+      *.log
+      *.pid
+      *.pid.lock
+      *.seed
+      *.tgz
+      .editorconfig
+      .env
+      .eslintcache
+      .eslintignore
+      .eslintrc`;
 
     expect(
       mergeFiles(

@@ -12,13 +12,24 @@ exports[`Extractor extract 1`] = `
   ],
   [
     ".gitignore",
-    "*.log
-.env
+    "logs
 coverage
-logs
-node_modules/
+*.log
 yarn-debug.log*
-yarn-error.log*",
+yarn-error.log*
+.env
+
+# !ignorefile-merge block-open
+# ---------------------------------------------------------------
+# This block generated automatically
+# @see https://www.npmjs.com/package/ignorefile-merge
+# ---------------------------------------------------------------
+
+# .env
+node_modules/
+
+# !ignorefile-merge block-close
+",
   ],
   [
     "package.json",
