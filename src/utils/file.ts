@@ -125,13 +125,17 @@ export const createSnapshots = async (
   ];
 };
 
-export const mergeFiles = ({ type, merge: rules, content: snapshot }: ISnapshot, content: string): string => {
+export const mergeFiles = (
+  name: string,
+  content: string,
+  { type, merge: rules, content: snapshot }: ISnapshot
+): string => {
   const excludes = Array.isArray(rules) ? new Set(rules) : undefined;
   let result;
 
   switch (type) {
     case FileType.GLOB:
-      result = ignoreFileMerge(content, snapshot);
+      result = ignoreFileMerge(content, snapshot, { name });
       break;
     case FileType.JSON:
     case FileType.YAML:

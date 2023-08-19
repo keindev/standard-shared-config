@@ -50,7 +50,7 @@ jest.spyOn(fs, 'readFile').mockImplementation(filePath => {
   let content = '';
 
   if (basename === '.sharedconfig.yml') content = CONFIG;
-  if (basename === 'package.json') content = JSON.stringify({ name: 'test' });
+  if (basename === 'package.json') content = JSON.stringify({ name: 'test-shared-config' });
 
   return Promise.resolve(content);
 });

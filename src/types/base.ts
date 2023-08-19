@@ -9,6 +9,7 @@ export enum EntityName {
   Scripts = 'scripts',
   Snapshots = 'snapshots',
   Package = 'package',
+  Name = 'name',
 }
 
 export type IMergeRule = string[] | null | boolean;

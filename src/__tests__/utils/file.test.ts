@@ -110,17 +110,14 @@ describe('File utils', () => {
     };
 
     expect(
-      mergeFiles(
-        {
-          path: '',
-          hash: '',
-          executable: false,
-          type: FileType.JSON,
-          merge: ['object1.value1', 'list'],
-          content: JSON.stringify(source),
-        },
-        JSON.stringify(current)
-      )
+      mergeFiles('', JSON.stringify(current), {
+        path: '',
+        hash: '',
+        executable: false,
+        type: FileType.JSON,
+        merge: ['object1.value1', 'list'],
+        content: JSON.stringify(source),
+      })
     ).toMatchSnapshot();
   });
 
@@ -145,17 +142,14 @@ describe('File utils', () => {
     `;
 
     expect(
-      mergeFiles(
-        {
-          path: '',
-          hash: '',
-          executable: false,
-          type: FileType.YAML,
-          merge: ['updates.0.schedule.time', 'updates.0.package-ecosystem'],
-          content: source,
-        },
-        current
-      )
+      mergeFiles('', current, {
+        path: '',
+        hash: '',
+        executable: false,
+        type: FileType.YAML,
+        merge: ['updates.0.schedule.time', 'updates.0.package-ecosystem'],
+        content: source,
+      })
     ).toMatchSnapshot();
   });
 
@@ -184,17 +178,14 @@ describe('File utils', () => {
       .eslintrc`;
 
     expect(
-      mergeFiles(
-        {
-          path: '',
-          hash: '',
-          executable: false,
-          type: FileType.GLOB,
-          merge: true,
-          content: source,
-        },
-        current
-      )
+      mergeFiles('test-shared-config', current, {
+        path: '',
+        hash: '',
+        executable: false,
+        type: FileType.GLOB,
+        merge: true,
+        content: source,
+      })
     ).toMatchSnapshot();
   });
 });
