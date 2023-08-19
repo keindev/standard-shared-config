@@ -5,13 +5,20 @@
 <details>
 <summary>Dependencies</summary>
 
-- Changed **[ignorefile-merge](https://www.npmjs.com/package/ignorefile-merge)** from `^1.0.1` to `^1.1.0`
+- Changed **[ignorefile-merge](https://www.npmjs.com/package/ignorefile-merge)** from `^1.1.0` to `^1.1.1`
+- Bumped **[package-json-helper](https://www.npmjs.com/package/package-json-helper)** from `^5.0.2` to `^6.0.0`
+- Bumped **[tasktree-cli](https://www.npmjs.com/package/tasktree-cli)** from `^7.0.0` to `^8.0.0`
 
 </details>
 
-# :fire: Improvements
+<details>
+<summary>Dev Dependencies</summary>
 
-- Add named glob files merge [`d0b2291`](https://github.com/keindev/standard-shared-config/commit/d0b2291ba971ece20606de02df39895510e9569f)
+- Changed **[@tagproject/ts-package-shared-config](https://www.npmjs.com/package/@tagproject/ts-package-shared-config)** from `^11.0.0` to `^11.0.1`
+- Removed **[@tagproject/docs-shared-config](https://www.npmjs.com/package/@tagproject/docs-shared-config)**, with `^3.0.0`
+- Removed **[@tagproject/vscode-shared-config](https://www.npmjs.com/package/@tagproject/vscode-shared-config)**, with `^3.0.0`
+
+</details>
 
 ---
 

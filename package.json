@@ -1,6 +1,6 @@
 {
   "name": "standard-shared-config",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "One shared config to rule them all",
   "license": "MIT",
   "homepage": "https://github.com/keindev/standard-shared-config#readme",
@@ -53,19 +53,17 @@
   },
   "dependencies": {
     "glob": "^10.3.3",
-    "ignorefile-merge": "^1.1.0",
+    "ignorefile-merge": "^1.1.1",
     "jsonfile": "^6.1.0",
     "lodash.isequal": "^4.5.0",
     "lodash.unionwith": "^4.6.0",
-    "package-json-helper": "^5.0.2",
-    "tasktree-cli": "^7.0.0",
+    "package-json-helper": "^6.0.0",
+    "tasktree-cli": "^8.0.0",
     "yaml": "^2.3.1",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@tagproject/docs-shared-config": "^3.0.0",
-    "@tagproject/ts-package-shared-config": "^11.0.0",
-    "@tagproject/vscode-shared-config": "^3.0.0",
+    "@tagproject/ts-package-shared-config": "^11.0.1",
     "@types/glob": "^8.1.0",
     "@types/lodash.isequal": "^4.5.6",
     "@types/lodash.unionwith": "^4.6.7",
