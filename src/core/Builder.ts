@@ -16,6 +16,12 @@ const PARTS_DIR_NAME = 'parts';
 export default class Builder {
   async build(configPath: string): Promise<void> {
     const { outputDir, sharedDir, ...config } = await this.readConfig(configPath);
+    const pkg = new Package();
+
+    await pkg.read();
+    await this.createBinCallback(pkg, outputDir);
+
+    const name = pkg.name ?? 'shared-config';
     const entities = (
       await Promise.all([
         this.writeScript(EntityName.Scripts, config.scripts, outputDir),
@@ -35,17 +41,13 @@ export default class Builder {
       '',
       `await new SharedConfig().share("${sharedDir}", { ${entities.join(', ')}, package: ${stringify(
         config.package as JSONObject
-      )} });`,
+      )}, name: "${name}" });`,
     ]);
-
-    await this.createBinCallback(outputDir);
   }
 
-  private async createBinCallback(outputDir: string): Promise<void> {
-    const pkg = new Package();
+  private async createBinCallback(pkg: Package, outputDir: string): Promise<void> {
     const indexPath = `./${path.join(outputDir, 'index.js')}`;
 
-    await pkg.read();
     await writeFile(`bin/${pkg.nameWithoutScope}.js`, ['#!/usr/bin/env node', `import '../${outputDir}/index.js';`]);
 
     if (pkg.exports) pkg.exports.map.set('.', indexPath);

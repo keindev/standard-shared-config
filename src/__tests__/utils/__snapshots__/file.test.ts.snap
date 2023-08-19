@@ -42,7 +42,7 @@ exports[`File utils Merge GLOB files 1`] = `
 .eslintignore
 .eslintrc
 
-# !ignorefile-merge block-open
+# !ignorefile-merge block-open test-shared-config
 # ---------------------------------------------------------------
 # This block generated automatically
 # @see https://www.npmjs.com/package/ignorefile-merge
@@ -58,7 +58,7 @@ media/
 node_modules/
 src/
 
-# !ignorefile-merge block-close
+# !ignorefile-merge block-close test-shared-config
 "
 `;
 

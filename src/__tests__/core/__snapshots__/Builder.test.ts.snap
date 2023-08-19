@@ -3,6 +3,23 @@
 exports[`Builder build 1`] = `
 [
   [
+    "bin/test-shared-config.js",
+    "#!/usr/bin/env node
+import '../lib/index.js';",
+  ],
+  [
+    "package.json",
+    "{
+  "name": "test-shared-config",
+  "type": "module",
+  "exports": "./lib/index.js",
+  "bin": {
+    "test-shared-config": "bin/test-shared-config.js"
+  }
+}
+",
+  ],
+  [
     "lib/parts/scripts.js",
     "/* eslint-disable */
 /* prettier-ignore */
@@ -72,24 +89,7 @@ await new SharedConfig().share(".config", { scripts, snapshots, package: {
     "react": "18.x",
     "react-dom": "18.x"
   }
-} });",
-  ],
-  [
-    "bin/test.js",
-    "#!/usr/bin/env node
-import '../lib/index.js';",
-  ],
-  [
-    "package.json",
-    "{
-  "name": "test",
-  "type": "module",
-  "exports": "./lib/index.js",
-  "bin": {
-    "test": "bin/test.js"
-  }
-}
-",
+}, name: "test-shared-config" });",
   ],
 ]
 `;

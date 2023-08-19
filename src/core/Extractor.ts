@@ -18,26 +18,26 @@ export default class Extractor {
     this.#sharedDir = sharedDir;
   }
 
-  async extract({ snapshots = [], ...options }: IExtractionOptions): Promise<void> {
+  async extract({ snapshots = [], name = '', ...options }: IExtractionOptions): Promise<void> {
     const config = await this.readConfig(options);
     const pkg = new Package(path.join(process.cwd(), 'package.json'), config.package.manager ?? ManagerType.NPM);
 
     await pkg.read();
-    await this.extractFiles(snapshots);
+    await this.extractFiles(name, snapshots);
     this.updatePackage(config, pkg);
     await pkg.save();
   }
 
-  private async extractFiles(snapshots: ISnapshot[]): Promise<void> {
+  private async extractFiles(name: string, snapshots: ISnapshot[]): Promise<void> {
     const task = TaskTree.add('Processing config files...');
     const extract = async (snapshot: ISnapshot): Promise<void> => {
       const filePath = path.resolve(process.cwd(), snapshot.path);
       const extendFilePath =
         snapshot.type === FileType.GLOB ? snapshot.path : path.join(this.#sharedDir, snapshot.path);
-      const extendFileData = snapshot.merge ? await readFile(path.resolve(process.cwd(), extendFilePath)) : false;
+      const content = snapshot.merge ? await readFile(path.resolve(process.cwd(), extendFilePath)) : false;
 
-      if (extendFileData) {
-        await writeFile(filePath, mergeFiles(snapshot, extendFileData), snapshot.executable);
+      if (content) {
+        await writeFile(filePath, mergeFiles(name, content, snapshot), snapshot.executable);
         task.log(`${snapshot.path} merged`);
       } else {
         const currentFileData = await readFile(filePath);
