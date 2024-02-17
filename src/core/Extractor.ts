@@ -12,7 +12,7 @@ import { IExtractionOptions } from '../types/options.js';
 import { getHash, mergeFiles, readFile, writeFile } from '../utils/file.js';
 
 export default class Extractor {
-  #sharedDir: string;
+  readonly #sharedDir: string;
 
   constructor(sharedDir: string) {
     this.#sharedDir = sharedDir;

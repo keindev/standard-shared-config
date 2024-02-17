@@ -1,13 +1,10 @@
 {
   "name": "standard-shared-config",
-  "version": "5.1.1",
+  "version": "5.1.2",
   "description": "One shared config to rule them all",
   "license": "MIT",
   "homepage": "https://github.com/keindev/standard-shared-config#readme",
-  "author": {
-    "name": "Daniil Ryazanov",
-    "email": "kein@tagproject.ru"
-  },
+  "author": "Daniil Ryazanov <kein@tagproject.ru>",
   "keywords": [
     "automated",
     "cli",
@@ -52,24 +49,23 @@
     "test:jest": "node --experimental-vm-modules node_modules/.bin/jest"
   },
   "dependencies": {
-    "glob": "^10.3.3",
-    "ignorefile-merge": "^1.1.1",
+    "glob": "^10.3.10",
+    "ignorefile-merge": "^1.1.2",
     "jsonfile": "^6.1.0",
     "lodash.isequal": "^4.5.0",
     "lodash.unionwith": "^4.6.0",
-    "package-json-helper": "^6.0.0",
-    "tasktree-cli": "^8.0.0",
-    "yaml": "^2.3.1",
+    "package-json-helper": "^6.0.1",
+    "tasktree-cli": "^8.1.0",
+    "yaml": "^2.3.4",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@tagproject/ts-package-shared-config": "^11.0.1",
-    "@types/glob": "^8.1.0",
-    "@types/lodash.isequal": "^4.5.6",
-    "@types/lodash.unionwith": "^4.6.7",
-    "@types/semver": "^7.5.0",
-    "@types/strip-comments": "^2.0.1",
+    "@tagproject/ts-package-shared-config": "^11.0.4",
+    "@types/lodash.isequal": "^4.5.8",
+    "@types/lodash.unionwith": "^4.6.9",
+    "@types/semver": "^7.5.7",
+    "@types/strip-comments": "^2.0.4",
     "strip-ansi": "^7.1.0",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.2"
   }
 }
