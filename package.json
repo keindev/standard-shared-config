@@ -57,7 +57,7 @@
     "package-json-helper": "^6.0.1",
     "tasktree-cli": "^8.1.0",
     "yaml": "^2.3.4",
-    "yargs": "^17.7.2"
+    "yargs": "^18.1.0"
   },
   "devDependencies": {
     "@tagproject/ts-package-shared-config": "^11.0.4",
